@@ -15,7 +15,8 @@ unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1145138680]
+[node name="Area2D" type="Area2D" parent="." unique_id=484343168]
+unique_name_in_owner = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1009359081]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
 shape = SubResource("RectangleShape2D_2m5a4")
