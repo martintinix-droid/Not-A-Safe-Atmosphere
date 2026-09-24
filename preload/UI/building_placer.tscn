@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://df3auwtkj8ls8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
+size = Vector2(40, 40)
+
+[node name="building placer" type="Node2D" unique_id=149407173]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=716076049]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.43529412, 0.7529412, 0, 0.48235294)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=489196644]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1796610245]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_2m5a4")

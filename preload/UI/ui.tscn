@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://clg3kgq26j7lh"]
+
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="1_2fwl4"]
+[ext_resource type="Script" uid="uid://nfxhy08pqcqs" path="res://UI/ui.gd" id="1_dajm1"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=2096557628]
+
+[node name="UI" type="Control" parent="." unique_id=420013395]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_dajm1")
+
+[node name="Button" type="Button" parent="UI" unique_id=2006149911]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -144.0
+offset_top = -85.0
+offset_right = -35.0
+offset_bottom = -28.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_2fwl4")
+text = "Spawn"
