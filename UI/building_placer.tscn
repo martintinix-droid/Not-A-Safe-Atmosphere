@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://df3auwtkj8ls8"]
+
+[ext_resource type="Script" uid="uid://c8cfhtmdy0ypp" path="res://UI/building_placer.gd" id="1_7owq1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
+size = Vector2(40, 40)
+
+[node name="building placer" type="Node2D" unique_id=149407173]
+script = ExtResource("1_7owq1")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=716076049]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.43529412, 0.7529412, 0, 0.48235294)
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="ColorRect" unique_id=489196644]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ColorRect/StaticBody2D" unique_id=1796610245]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_2m5a4")
