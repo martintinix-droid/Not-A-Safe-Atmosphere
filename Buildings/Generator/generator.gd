@@ -54,7 +54,7 @@ func _on_clicked() -> void:
 func _on_object_entered(_object_collided: Object) -> void:
 	overlap_count += 1
 	if is_placing:
-		modulate = Color(1, 0, 0)  # rojo = no se puede colocar acá
+		modulate = Color(1, 0, 0,0.5)  # rojo = no se puede colocar acá
 
 func _on_object_exited(_object_collided: Object) -> void:
 	overlap_count = max(overlap_count - 1, 0)

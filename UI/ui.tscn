@@ -14,7 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_dajm1")
 
-[node name="Button" type="Button" parent="UI" unique_id=2006149911]
+[node name="building button" type="Button" parent="UI" unique_id=2006149911]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
@@ -29,4 +29,40 @@ offset_bottom = -28.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_2fwl4")
-text = "Spawn"
+text = "Buildings"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=692524242]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -238.0
+offset_top = 38.0
+offset_right = -35.0
+offset_bottom = -67.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="energy" type="Button" parent="UI/VBoxContainer" unique_id=568386727]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_2fwl4")
+text = "Energy"
+
+[node name="minerals" type="Button" parent="UI/VBoxContainer" unique_id=883965661]
+layout_mode = 2
+theme = ExtResource("1_2fwl4")
+text = "Minerals"
+
+[node name="heat" type="Button" parent="UI/VBoxContainer" unique_id=673167593]
+layout_mode = 2
+theme = ExtResource("1_2fwl4")
+text = "Heat shield"
+
+[node name="water" type="Button" parent="UI/VBoxContainer" unique_id=117816619]
+layout_mode = 2
+theme = ExtResource("1_2fwl4")
+text = "Water"
