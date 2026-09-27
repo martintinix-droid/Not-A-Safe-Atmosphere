@@ -2,3 +2,5 @@
 
 [resource]
 Button/font_sizes/font_size = 40
+HBoxContainer/constants/separation = 10
+VBoxContainer/constants/separation = 10

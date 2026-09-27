@@ -33,7 +33,7 @@ func _ready() -> void:
 	# El timer arranca recién cuando el edificio se coloca, no antes.
 	timer.stop()
 	timer.timeout.connect(func() -> void:
-		SignalManager.energy_ready.emit())
+		SignalManager.water_ready.emit())
 
 	state_changed.connect(_on_state_changed)
 	clicked.connect(_on_clicked)

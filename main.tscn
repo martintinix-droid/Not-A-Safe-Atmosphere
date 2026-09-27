@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dql4hoiidp688"]
 
 [ext_resource type="Script" uid="uid://7u60pllmwgvs" path="res://main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cqj5jm08bknao" path="res://Buildings/Main Base/base.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://clg3kgq26j7lh" path="res://UI/ui.tscn" id="3_h2yge"]
 
 [node name="main" type="Node2D" unique_id=1255075818]
@@ -9,3 +10,6 @@ script = ExtResource("1_ig7tw")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1935537473]
 
 [node name="CanvasLayer" parent="Camera2D" unique_id=2096557628 instance=ExtResource("3_h2yge")]
+
+[node name="Base" parent="." unique_id=355884804 instance=ExtResource("3_1bvp3")]
+position = Vector2(-199, -27)
