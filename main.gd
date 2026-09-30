@@ -24,12 +24,13 @@ var buildings_preload := {
 # Info de cada edificio disponible. La posición de cada elemento en este
 # array es el "index" que usa la UI (ver ui.gd) para pedir que se instancie.
 var buildings_info: Array = [
-	{"building": "energy", "cost": 10, "preload": buildings_preload["energy"]},
-	{"building": "water", "cost": 5, "preload": buildings_preload["water"]}
+	{"building": "energy", "cost": 10, "build_time":6,"preload": buildings_preload["energy"]},
+	{"building": "water", "cost": 5,"build_time":6 ,"preload": buildings_preload["water"]}
 ]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	NodeRefs.main_ref =self
 	SignalManager.energy_ready.connect(_on_energy_ready)
 	SignalManager.water_ready.connect(_on_water_ready)
 	SignalManager.spawn_building.connect(_on_spawn_building_ready)
@@ -47,8 +48,9 @@ func _handle_click(click_position: Vector2) -> void:
 	var target_building := _find_clicked_building(click_position)
 	if target_building != null:
 		target_building.clicked.emit()
+		SignalManager.builidng_placed.emit(target_building)
 		return
-
+   
 	# No había ningún edificio bajo el click: acá es donde va a engancharse
 	# el point-and-click del rover más adelante (por ejemplo, emitiendo
 	SignalManager.ground_clicked.emit(click_position) 
@@ -92,7 +94,7 @@ func _on_spawn_building_ready(index: int) -> void:
 	var current_building = buildings_info[index]
 	var new_building = current_building["preload"].instantiate()
 	add_child(new_building)
-
+	new_building.build_time = current_building["build_time"]
 	_placing_building = new_building
 	# CONNECT_ONE_SHOT: una vez que se coloca (is_placing pasa a false y
 	# emite state_changed), se libera el "candado" solo, sin tener que

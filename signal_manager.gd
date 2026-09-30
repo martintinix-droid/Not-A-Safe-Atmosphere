@@ -10,4 +10,5 @@ signal food_ready
 signal research_ready
 signal mineral_ready
 signal ground_clicked
+signal builidng_placed(building)
 signal spawn_building(index: int)  # se emite cuando hay que instanciar un edificio nuevo

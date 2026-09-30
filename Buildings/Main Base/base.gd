@@ -6,13 +6,13 @@ extends Sprite2D
 
 const MAX_ROVERS := 3
 
-var rover_scene = preload("uid://diy8tkismxt1k")
+var rover_scene = preload("uid://np2aojdufexy")
 
 var _active_rovers := 0
 
 func _ready() -> void:
 	SignalManager.ground_clicked.connect(_on_ground_clicked)
-
+	SignalManager.builidng_placed.connect(_on_building_placed)
 func _on_ground_clicked(click_position: Vector2) -> void:
 	if _active_rovers >= MAX_ROVERS:
 		return
@@ -23,6 +23,7 @@ func _on_ground_clicked(click_position: Vector2) -> void:
 	new_rover.target_position = click_position
 
 	_active_rovers += 1
+	print(_active_rovers)
 	# CONNECT_ONE_SHOT: cuando el rover llega de vuelta y se destruye solo,
 	# la base se entera y libera el cupo. No hace falta guardar una lista
 	# de rovers ni desconectar nada a mano; cada rover se maneja a sí mismo.
@@ -30,4 +31,26 @@ func _on_ground_clicked(click_position: Vector2) -> void:
 		_active_rovers -= 1
 	, CONNECT_ONE_SHOT)
 
+	get_tree().root.add_child(new_rover)
+
+func _on_building_placed(building)->void:
+	if _active_rovers >= MAX_ROVERS:
+		return
+	
+	var new_rover = rover_scene.instantiate()
+	new_rover.position = global_position
+	new_rover.base_position = global_position
+	new_rover.target_position = building.global_position
+	new_rover.building = building
+
+	_active_rovers += 1
+	
+	
+	# CONNECT_ONE_SHOT: cuando el rover llega de vuelta y se destruye solo,
+	# la base se entera y libera el cupo. No hace falta guardar una lista
+	# de rovers ni desconectar nada a mano; cada rover se maneja a sí mismo.
+	new_rover.returned_to_base.connect(func() -> void:
+		_active_rovers -= 1
+	, CONNECT_ONE_SHOT)
+	
 	get_tree().root.add_child(new_rover)

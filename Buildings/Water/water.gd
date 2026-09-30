@@ -14,6 +14,7 @@ extends Sprite2D
 var is_placing := true   # true mientras el edificio está en modo fantasma (sin colocar todavía)
 var overlap_count := 0   # cantidad de cuerpos/áreas que están tocando el Area2D ahora mismo
 
+var build_time:=0
 # Solo es colocable si no hay nada encimado. Usar un contador (en vez de un
 # simple bool) evita que quede "colocable" cuando todavía hay OTRO objeto
 # distinto tapando el lugar (bug si hay varios objetos superpuestos).
