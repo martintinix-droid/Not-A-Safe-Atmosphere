@@ -8,10 +8,12 @@ extends Sprite2D
 ## global, decide qué objeto fue clickeado (edificio, suelo para el rover,
 ## etc.) y emite "clicked" sobre el que corresponda.
 
+@onready var building_timer: Timer = $building_timer
 @onready var timer: Timer = %Timer
 @onready var area_2d: Area2D = %Area2D
 
-var is_placing := true   # true mientras el edificio está en modo fantasma (sin colocar todavía)
+var is_placing := true 
+var is_building :=false  # true mientras el edificio está en modo fantasma (sin colocar todavía)
 var overlap_count := 0   # cantidad de cuerpos/áreas que están tocando el Area2D ahora mismo
 
 var build_time:=0
@@ -32,6 +34,12 @@ func _ready() -> void:
 	add_to_group("buildings")
 
 	# El timer arranca recién cuando el edificio se coloca, no antes.
+	building_timer.timeout.connect(func()->void:
+		is_building = false
+		timer.start()
+		modulate = Color(1, 1, 1, 1)
+		)
+	
 	timer.stop()
 	timer.timeout.connect(func() -> void:
 		SignalManager.water_ready.emit())
@@ -51,6 +59,7 @@ func _on_clicked() -> void:
 	if is_placing && placeable:
 		is_placing = false
 		state_changed.emit()
+		is_building = true
 	else:
 		# TODO: lógica futura para inspeccionar el edificio ya colocado
 		pass
@@ -69,8 +78,8 @@ func _on_object_exited(_object_collided: Object) -> void:
 func _on_state_changed() -> void:
 	# El edificio quedó colocado de forma definitiva: se vuelve opaco y
 	# arranca a generar energía cada vez que pasa el tiempo del Timer.
-	timer.start()
-	modulate = Color(1, 1, 1, 1)
+	#timer.start()
+	modulate = Color(0, 0.5, 1, 0.5)
 
 func _process(_delta: float) -> void:
 	if is_placing:

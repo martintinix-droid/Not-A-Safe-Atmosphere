@@ -23,3 +23,5 @@ unique_name_in_owner = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
 position = Vector2(-0.47250366, 0.22494507)
 shape = SubResource("RectangleShape2D_2m5a4")
+
+[node name="building_timer" type="Timer" parent="." unique_id=33920334]

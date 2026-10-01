@@ -12,7 +12,8 @@ extends Sprite2D
 @onready var timer: Timer = %Timer
 @onready var area_2d: Area2D = %Area2D
 
-var is_placing := true   # true mientras el edificio está en modo fantasma (sin colocar todavía)
+var is_placing := true 
+var is_building :=false  # true mientras el edificio está en modo fantasma (sin colocar todavía)
 var overlap_count := 0   # cantidad de cuerpos/áreas que están tocando el Area2D ahora mismo
 
 var build_time:=0
@@ -34,7 +35,8 @@ func _ready() -> void:
 
 	# El timer arranca recién cuando el edificio se coloca, no antes.
 	building_timer.timeout.connect(func()->void:
-		#timer.start()
+		is_building = false
+		timer.start()
 		modulate = Color(1, 1, 1, 1)
 		)
 	
@@ -57,6 +59,7 @@ func _on_clicked() -> void:
 	if is_placing && placeable:
 		is_placing = false
 		state_changed.emit()
+		is_building = true
 	else:
 		# TODO: lógica futura para inspeccionar el edificio ya colocado
 		pass
