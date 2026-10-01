@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ovcji07wmgt" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/rover.png" id="2_a2a4v"]
 
 [node name="outpost rover" type="CharacterBody2D" unique_id=559955422]
+z_index = -1
 script = ExtResource("1_jet0e")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1942634719]
