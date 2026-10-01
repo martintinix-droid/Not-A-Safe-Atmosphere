@@ -1,81 +1,73 @@
 extends Sprite2D
-## Base principal: cada vez que se clickea el suelo, manda un rover a esa
-## posición (hasta un máximo de rovers activos a la vez). No le importa a
-## dónde va cada rover ni cuándo vuelve el resto: solo cuenta cuántos hay
-## vivos ahora mismo para saber si puede crear uno más.
+## Base principal: despacha rovers hacia un punto del suelo clickeado o hacia
+## un interactuable que pida uno (hasta MAX_ROVERS activos a la vez).
+##
+## No sabe qué hace el rover en el destino ni cuándo termina: solo cuenta
+## cuántos hay vivos para saber si puede mandar otro.
+##
+## Un interactuable "pide rover" implementando request_rover(); el resto de la
+## interfaz (start_rover_interaction, rover_interaction_finished) la usa el
+## rover. Ver outpost_rover.gd.
 
 const MAX_ROVERS := 3
-
-var qued_rovers:=0
-var qued_objects=[]
-
-
-var rover_scene = preload("uid://np2aojdufexy")
+const ROVER_SCENE := preload("uid://np2aojdufexy")
 
 var _active_rovers := 0
+# Interactuables que pidieron rover cuando no había cupo (FIFO).
+var _pending_targets: Array = []
+
 
 func _ready() -> void:
 	SignalManager.ground_clicked.connect(_on_ground_clicked)
-	SignalManager.builidng_placed.connect(_on_building_placed)
-	
-func _process(_delta: float) -> void:
-	if qued_rovers>0:
-		if !_active_rovers>=MAX_ROVERS:
-			spawn_rover(qued_objects[0])
-			qued_objects.remove_at(0)
-			qued_rovers-=1
-			
+	SignalManager.interactable_clicked.connect(_on_interactable_clicked)
+
 
 func _on_ground_clicked(click_position: Vector2) -> void:
-	if _active_rovers >= MAX_ROVERS:
+	# Los clicks al suelo sin cupo se descartan (no se encolan).
+	if _has_free_rover():
+		_spawn_rover(click_position)
+
+
+func _on_interactable_clicked(target: Node) -> void:
+	# request_rover() es quien decide (y recuerda) si el target quiere un rover,
+	# así un mismo target no se encola ni se atiende dos veces por re-clicks.
+	if not target.has_method("request_rover") or not target.request_rover():
 		return
-	print("accesed ground clicked")
-	spawn_rover(click_position)
-	
 
-func _on_building_placed(building)->void:
-	if building.is_building:
-		if _active_rovers >= MAX_ROVERS:
-			qued_rovers+=1
-			qued_objects.append(building)
-			return
-		
-		spawn_rover(building)
-
-func spawn_rover(object):
-	if object is Sprite2D:
-		if object.is_in_group("buildings"):
-			var new_rover = rover_scene.instantiate()
-			new_rover.position = global_position
-			new_rover.base_position = global_position
-			new_rover.target_position = object.global_position
-			new_rover.building = object
-
-			_active_rovers += 1
-			
-			
-			# CONNECT_ONE_SHOT: cuando el rover llega de vuelta y se destruye solo,
-			# la base se entera y libera el cupo. No hace falta guardar una lista
-			# de rovers ni desconectar nada a mano; cada rover se maneja a sí mismo.
-			new_rover.returned_to_base.connect(func() -> void:
-				_active_rovers -= 1
-			, CONNECT_ONE_SHOT)
-			
-			get_tree().root.add_child(new_rover)
+	if _has_free_rover():
+		_spawn_rover(target.global_position, target)
 	else:
-		var new_rover = rover_scene.instantiate()
-		new_rover.position = global_position
-		new_rover.base_position = global_position
-		new_rover.target_position = object
+		_pending_targets.append(target)
 
-		_active_rovers += 1
-		print(_active_rovers)
-		# CONNECT_ONE_SHOT: cuando el rover llega de vuelta y se destruye solo,
-		# la base se entera y libera el cupo. No hace falta guardar una lista
-		# de rovers ni desconectar nada a mano; cada rover se maneja a sí mismo.
-		new_rover.returned_to_base.connect(func() -> void:
-			_active_rovers -= 1
-		, CONNECT_ONE_SHOT)
 
-		get_tree().root.add_child(new_rover)
-		
+func _has_free_rover() -> bool:
+	return _active_rovers < MAX_ROVERS
+
+
+## Manda un rover a destination. Si se pasa target, el rover interactúa con él al llegar.
+func _spawn_rover(destination: Vector2, target: Node = null) -> void:
+	var rover: OutpostRover = ROVER_SCENE.instantiate()
+	rover.position = global_position
+	rover.base_position = global_position
+	rover.target_position = destination
+	rover.target = target
+
+	# CONNECT_ONE_SHOT: cuando el rover vuelve y se destruye solo, la base
+	# libera el cupo. No hace falta guardar una lista de rovers.
+	rover.returned_to_base.connect(_on_rover_returned, CONNECT_ONE_SHOT)
+
+	_active_rovers += 1
+	get_tree().root.add_child(rover)
+
+
+func _on_rover_returned() -> void:
+	_active_rovers -= 1
+	_dispatch_pending()
+
+
+## Manda rovers a los interactuables en cola mientras haya cupo.
+func _dispatch_pending() -> void:
+	while not _pending_targets.is_empty() and _has_free_rover():
+		var target = _pending_targets.pop_front()
+		if is_instance_valid(target):
+			_spawn_rover(target.global_position, target)
