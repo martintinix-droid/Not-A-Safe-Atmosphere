@@ -13,14 +13,30 @@ const INTERACTABLE_GROUP := "interactables"
 ## Catálogo de edificios construibles. La clave es el id que manda la UI en
 ## SignalManager.spawn_building. Para agregar un edificio nuevo: una entrada
 ## acá y un botón en ui.gd. ("build_time" en segundos; "cost" todavía no se usa.)
+const RESOURCES_REQUIERMENTS :={
+	"energy":{"mineral 1":3, "mineral 2": 4, "rock 1": 2},
+	"water": {"mineral 1":3, "mineral 2": 4, "rock 1": 2}
+}
 const BUILDINGS := {
-	"energy": {"scene": preload("uid://b7ux8e48tnrv3"), "cost": 10, "build_time": 6.0},
-	"water": {"scene": preload("uid://cv1m1r8gxkird"), "cost": 5, "build_time": 6.0},
+	"energy": {"scene": preload("uid://b7ux8e48tnrv3"), "materials": RESOURCES_REQUIERMENTS["energy"], "build_time": 6.0},
+	"water": {"scene": preload("uid://cv1m1r8gxkird"), "materials": RESOURCES_REQUIERMENTS["water"], "build_time": 6.0},
 }
 
-var energy := 0
-var water := 0
 
+var energy := 1110
+var water := 1110
+var mineral1:=10
+var mineral2:=10
+var rock1:=10
+
+var CURRENT_MATERIALS :={
+	"energy":energy,
+	"water": water,
+	"mineral 1":mineral1,
+	"mineral 2" : mineral2,
+	"rock 1" : rock1
+	
+}
 # Edificio en modo fantasma (todavía sin colocar), si hay uno. Evita instanciar
 # un segundo edificio mientras el primero no se colocó, y le da prioridad en el click.
 var _placing_building: Node = null
@@ -82,8 +98,16 @@ func _on_spawn_building(building_id: String) -> void:
 	if not BUILDINGS.has(building_id):
 		push_warning("Edificio desconocido: %s" % building_id)
 		return
-
+	
 	var info: Dictionary = BUILDINGS[building_id]
+	for mat in info["materials"]:
+		if info["materials"][mat]>CURRENT_MATERIALS[mat]:
+			#Logica futura para mostrar mensaje de materiales insuficientes
+			print("not enough materials")
+			return
+		else:
+			CURRENT_MATERIALS[mat]-=info["materials"][mat]
+			
 	var new_building: Node = info["scene"].instantiate()
 	add_child(new_building)
 	new_building.build_time = float(info["build_time"])
