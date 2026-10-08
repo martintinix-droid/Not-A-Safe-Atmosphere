@@ -1,8 +1,8 @@
 extends Node
-## Autoload con referencias globales a nodos clave de la escena.
-## main.gd se registra acá en su _ready().
+## Autoload with global references to key scene nodes.
+## main.gd registers itself here in its _ready().
 ##
-## NOTA: por ahora nadie más lee main_ref. Si no lo vas a usar, se puede
-## borrar este script junto con su entrada en Project Settings > Autoload.
+## NOTE: nothing else reads main_ref yet. If it ends up unused, this script
+## can be deleted along with its entry in Project Settings > Autoload.
 
 var main_ref: Node

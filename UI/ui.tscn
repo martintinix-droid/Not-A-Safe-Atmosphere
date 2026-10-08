@@ -2,6 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="1_2fwl4"]
 [ext_resource type="Script" uid="uid://nfxhy08pqcqs" path="res://UI/ui.gd" id="1_dajm1"]
+[ext_resource type="Script" uid="uid://1edswlo0air2" path="res://UI/inventory_display.gd" id="3_e6gg6"]
+[ext_resource type="Theme" uid="uid://eu3hs7he30ds" path="res://UI/inventory_theme.tres" id="3_hat8c"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wv4nr"]
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=2096557628]
 
@@ -12,6 +16,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_2fwl4")
 script = ExtResource("1_dajm1")
 
 [node name="building button" type="Button" parent="UI" unique_id=2006149911]
@@ -22,10 +27,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -144.0
-offset_top = -85.0
-offset_right = -35.0
-offset_bottom = -28.0
+offset_left = -176.0
+offset_top = -96.0
+offset_right = -67.0
+offset_bottom = -33.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_2fwl4")
@@ -85,3 +90,31 @@ text = "Water"
 [node name="Food" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1407068554]
 layout_mode = 2
 text = "Food"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UI" unique_id=1318165581]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 221.0
+offset_top = 165.0
+offset_right = 942.0
+offset_bottom = 648.0
+mouse_filter = 0
+texture = SubResource("PlaceholderTexture2D_wv4nr")
+metadata/_edit_group_ = true
+
+[node name="inventory_display" type="GridContainer" parent="UI/NinePatchRect" unique_id=22789871]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -360.5
+offset_top = -241.5
+offset_right = 360.5
+offset_bottom = 241.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_hat8c")
+columns = 7
+script = ExtResource("3_e6gg6")

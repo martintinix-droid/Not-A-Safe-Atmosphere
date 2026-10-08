@@ -1,25 +1,29 @@
 extends Node
-## Autoload (singleton) con las señales globales del juego.
-## Sirve para que nodos sin referencia directa entre sí puedan comunicarse
-## (ej: la UI le pide a main.gd que instancie un edificio, o main.gd le avisa
-## a la base que algo fue clickeado).
+## Autoload (singleton) holding the game's global signals.
+## Lets nodes that have no direct reference to each other communicate
+## (e.g. the UI asks main.gd to spawn a building, or main.gd tells the base
+## that something was clicked).
 
-# --- Recursos ---
-## Un generador produjo una unidad del recurso correspondiente.
-signal energy_ready
-signal water_ready
-## Reservadas para recursos futuros (todavía nadie las emite ni las escucha).
-signal food_ready
-signal research_ready
-signal mineral_ready
 
 # --- Input ---
-## Se clickeó terreno libre (no había ningún interactuable bajo el click).
+
+## Free ground was clicked (there was no interactable under the cursor).
 signal ground_clicked(click_position: Vector2)
-## Se clickeó un interactuable. Se emite DESPUÉS de su propia señal "clicked".
-## La base decide si le manda un rover (ver base.gd / outpost_rover.gd).
+
+## An interactable was clicked. Emitted AFTER the interactable's own
+## "clicked" signal. The base decides whether to send a rover
+## (see base.gd / outpost_rover.gd).
 signal interactable_clicked(target: Node)
 
-# --- Construcción ---
-## La UI pide instanciar un edificio. building_id es una clave de BUILDINGS (main.gd).
+## The inventory key was pressed. Emitted by main.gd; ui.gd listens to it and
+## slides the inventory panel in or out.
+## NOTE: "invenotry" is misspelled, but this name is used in main.gd and ui.gd.
+## If you ever fix the spelling, rename it in all three files at once.
+signal invenotry_actioned
+
+
+# --- Construction ---
+
+## The UI asks main.gd to spawn a building. building_id is a key of
+## Buildings.DATA (see Buildings.gd).
 signal spawn_building(building_id: String)

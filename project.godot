@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SignalManager="*uid://ckh5uvym6baxn"
 NodeRefs="*uid://daqeb83dm6076"
+Inventory="*uid://hwylbhp724qj"
 
 [display]
 
@@ -45,6 +46,11 @@ zoom_out={
 zoom_in={
 "deadzone": 0.2,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":8,"position":Vector2(93, 24),"global_position":Vector2(102, 72),"factor":1.0,"button_index":4,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+inventory={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 

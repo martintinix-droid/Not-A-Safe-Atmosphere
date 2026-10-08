@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cv1m1r8gxkird"]
 
-[ext_resource type="Script" uid="uid://carrk3qtvlyw1" path="res://Buildings/Water/water.gd" id="1_6nrb1"]
+[ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="1_6nrb1"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tt8f4"]
 load_path = "res://.godot/imported/water_storage.png-8406df0005de533ee0a36d618e6254ea.ctex"
@@ -11,6 +11,7 @@ size = Vector2(352.945, 449.5501)
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
 texture = SubResource("CompressedTexture2D_tt8f4")
 script = ExtResource("1_6nrb1")
+resource_id = "water"
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

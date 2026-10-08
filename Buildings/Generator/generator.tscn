@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b7ux8e48tnrv3"]
 
 [ext_resource type="Texture2D" uid="uid://brsn0w3g7hjxi" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/space_outpost_buildings_separate/energy_building.png" id="1_aegjf"]
-[ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/Generator/generator.gd" id="2_aegjf"]
+[ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_aegjf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
 size = Vector2(352.945, 449.5501)

@@ -1,38 +1,45 @@
 class_name OutpostRover
 extends CharacterBody2D
-## Rover independiente: sale de la base hacia target_position, interactúa con
-## target (si hay), y vuelve a la base; al llegar, despawnea. No sabe cuántos
-## rovers hay activos: eso lo maneja base.gd escuchando "returned_to_base".
+## Independent rover: leaves the base for target_position, interacts with
+## target (if any), returns to the base and despawns on arrival. It does not
+## know how many rovers are active: base.gd tracks that by listening to
+## "returned_to_base".
 ##
-## Interfaz de un interactuable (cualquier nodo al que el rover pueda ir):
-##   func request_rover() -> bool        - base.gd la llama al clickearlo; true = "mándame un rover"
-##                                         (debe devolver true una sola vez por rover necesitado)
-##   func start_rover_interaction()      - la llama el rover al llegar
-##   signal rover_interaction_finished   - el rover espera esto para volver
-## Si target es null (click al suelo), el rover solo va y vuelve.
+## Interactable interface (any node the rover can be sent to):
+##   func request_rover() -> bool        - base.gd calls it when the node is clicked;
+##                                         true = "send me a rover" (must return true
+##                                         only once per rover needed)
+##   func start_rover_interaction()      - called by the rover when it arrives
+##   signal rover_interaction_finished   - the rover waits for this before heading back
+## If target is null (ground click), the rover just goes there and comes back.
 
-signal returned_to_base  # justo antes de destruirse, para que la base libere el cupo
+## Emitted right before the rover frees itself, so the base can release its slot.
+signal returned_to_base
 
+## Trip phases, in order. The rover despawns after RETURNING_TO_BASE.
 enum State { GOING_TO_TARGET, INTERACTING_WITH_TARGET, RETURNING_TO_BASE }
 
-## Distancia a la que se considera que llegó al destino.
+## Distance at which the rover counts as having reached its destination.
 const ARRIVAL_DISTANCE := 3.0
 
+# --- Movement tuning ---
 var max_speed := 300.0
-var acceleration := 10.0
-var friction := 40.0
-var stopping_distance := 50.0
+var acceleration := 10.0       # Speed gained per physics frame while far from the destination.
+var friction := 40.0           # Speed lost per physics frame while braking.
+var stopping_distance := 50.0  # Starts braking when closer than this to the destination.
 
-var target: Node             # interactuable con el que interactúa al llegar (puede ser null)
-var target_position: Vector2 # a dónde va primero
-var base_position: Vector2   # a dónde vuelve después
+# --- Trip data (set by base.gd right after instantiating the rover) ---
+var target: Node              # Interactable to interact with on arrival (may be null).
+var target_position: Vector2  # Where the rover goes first.
+var base_position: Vector2    # Where the rover returns to afterwards.
 
+# --- Runtime state ---
 var current_speed := 0.0
 var _state: State = State.GOING_TO_TARGET
 
 
 func _physics_process(_delta: float) -> void:
-	# Mientras interactúa, el rover se queda quieto hasta que el target avise que terminó.
+	# While interacting, the rover stays still until the target says it is done.
 	if _state == State.INTERACTING_WITH_TARGET:
 		return
 
@@ -44,11 +51,12 @@ func _physics_process(_delta: float) -> void:
 	else:
 		current_speed = 0.0
 
-	# Llegó cuando se detuvo por completo.
+	# Arrived once it has come to a complete stop.
 	if current_speed == 0.0:
 		_on_reached_destination()
 
 
+## Accelerates towards the destination, braking when it gets close.
 func _move_towards(destination: Vector2, distance: float) -> void:
 	if distance > stopping_distance:
 		current_speed += acceleration
@@ -60,6 +68,7 @@ func _move_towards(destination: Vector2, distance: float) -> void:
 	move_and_slide()
 
 
+## Moves the rover to the next phase of its trip.
 func _on_reached_destination() -> void:
 	match _state:
 		State.GOING_TO_TARGET:
@@ -69,11 +78,13 @@ func _on_reached_destination() -> void:
 			queue_free()
 
 
+## Starts interacting with the target (if it supports it) and waits for it to
+## finish. With no valid target, it skips straight to heading back.
 func _start_interaction() -> void:
 	_state = State.INTERACTING_WITH_TARGET
 
 	if is_instance_valid(target) and target.has_method("start_rover_interaction"):
-		# Se conecta ANTES de empezar, por si el target termina al instante.
+		# Connect BEFORE starting, in case the target finishes instantly.
 		target.rover_interaction_finished.connect(_finish_interaction, CONNECT_ONE_SHOT)
 		target.start_rover_interaction()
 	else:
