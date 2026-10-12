@@ -93,6 +93,7 @@ text = "Food"
 
 [node name="NinePatchRect" type="NinePatchRect" parent="UI" unique_id=1318165581]
 unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.38431373)
 layout_mode = 0
 offset_left = 221.0
 offset_top = 165.0

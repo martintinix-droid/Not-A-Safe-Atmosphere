@@ -1,7 +1,13 @@
 [gd_resource type="Theme" format=3 uid="uid://pwebyi8hkqss"]
 
+[ext_resource type="StyleBox" uid="uid://rfadgr0sbs0f" path="res://UI/UI resources/utton_test.tres" id="1_h32ur"]
+[ext_resource type="StyleBox" uid="uid://d4dsm4dtpvgtv" path="res://UI/UI resources/button_pressed_test.tres" id="2_7m7pu"]
+
 [resource]
 Button/font_sizes/font_size = 40
+Button/styles/normal = ExtResource("1_h32ur")
+Button/styles/normal_mirrored = ExtResource("1_h32ur")
+Button/styles/pressed = ExtResource("2_7m7pu")
 HBoxContainer/constants/separation = 10
 TooltipLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 TooltipLabel/constants/outline_size = 4
