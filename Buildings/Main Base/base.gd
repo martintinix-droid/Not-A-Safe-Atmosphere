@@ -1,19 +1,21 @@
 extends Sprite2D
-## Base principal: despacha rovers hacia un punto del suelo clickeado o hacia
-## un interactuable que pida uno (hasta MAX_ROVERS activos a la vez).
+## Main base: dispatches rovers to a clicked ground point or to an interactable
+## that asks for one (up to MAX_ROVERS active at the same time).
 ##
-## No sabe qué hace el rover en el destino ni cuándo termina: solo cuenta
-## cuántos hay vivos para saber si puede mandar otro.
+## It does not know what the rover does at its destination or when it finishes:
+## it only counts how many are alive to know whether it can send another one.
 ##
-## Un interactuable "pide rover" implementando request_rover(); el resto de la
-## interfaz (start_rover_interaction, rover_interaction_finished) la usa el
-## rover. Ver outpost_rover.gd.
+## An interactable "asks for a rover" by implementing request_rover(); the rest
+## of the interface (start_rover_interaction, rover_interaction_finished) is
+## used by the rover itself. See outpost_rover.gd.
 
+## Maximum number of rovers active at the same time.
 const MAX_ROVERS := 3
 const ROVER_SCENE := preload("uid://np2aojdufexy")
 
+## Rovers currently out (going, interacting or returning).
 var _active_rovers := 0
-# Interactuables que pidieron rover cuando no había cupo (FIFO).
+## Interactables that asked for a rover when none was available (FIFO queue).
 var _pending_targets: Array = []
 
 
@@ -22,15 +24,17 @@ func _ready() -> void:
 	SignalManager.interactable_clicked.connect(_on_interactable_clicked)
 
 
+# --- Click handling ---
+
 func _on_ground_clicked(click_position: Vector2) -> void:
-	# Los clicks al suelo sin cupo se descartan (no se encolan).
+	# Ground clicks with no free rover are discarded (not queued).
 	if _has_free_rover():
 		_spawn_rover(click_position)
 
 
 func _on_interactable_clicked(target: Node) -> void:
-	# request_rover() es quien decide (y recuerda) si el target quiere un rover,
-	# así un mismo target no se encola ni se atiende dos veces por re-clicks.
+	# request_rover() is what decides (and remembers) whether the target wants
+	# a rover, so the same target is never queued or served twice by re-clicks.
 	if not target.has_method("request_rover") or not target.request_rover():
 		return
 
@@ -40,11 +44,14 @@ func _on_interactable_clicked(target: Node) -> void:
 		_pending_targets.append(target)
 
 
+# --- Rover management ---
+
 func _has_free_rover() -> bool:
 	return _active_rovers < MAX_ROVERS
 
 
-## Manda un rover a destination. Si se pasa target, el rover interactúa con él al llegar.
+## Sends a rover to `destination`. If `target` is given, the rover interacts
+## with it on arrival.
 func _spawn_rover(destination: Vector2, target: Node = null) -> void:
 	var rover: OutpostRover = ROVER_SCENE.instantiate()
 	rover.position = global_position
@@ -52,22 +59,24 @@ func _spawn_rover(destination: Vector2, target: Node = null) -> void:
 	rover.target_position = destination
 	rover.target = target
 
-	# CONNECT_ONE_SHOT: cuando el rover vuelve y se destruye solo, la base
-	# libera el cupo. No hace falta guardar una lista de rovers.
+	# CONNECT_ONE_SHOT: when the rover comes back and frees itself, the base
+	# releases its slot. There is no need to keep a list of rovers.
 	rover.returned_to_base.connect(_on_rover_returned, CONNECT_ONE_SHOT)
 
 	_active_rovers += 1
 	get_tree().root.add_child(rover)
 
 
+## A rover is back: free its slot and serve the queue.
 func _on_rover_returned() -> void:
 	_active_rovers -= 1
 	_dispatch_pending()
 
 
-## Manda rovers a los interactuables en cola mientras haya cupo.
+## Sends rovers to the queued interactables while there are free slots.
 func _dispatch_pending() -> void:
 	while not _pending_targets.is_empty() and _has_free_rover():
 		var target = _pending_targets.pop_front()
+		# The queued target may have been freed in the meantime; skip it if so.
 		if is_instance_valid(target):
 			_spawn_rover(target.global_position, target)

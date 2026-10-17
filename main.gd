@@ -9,7 +9,7 @@ extends Node2D
 ## Resource amounts live in the Inventory autoload and the building catalog
 ## lives in Buildings.DATA.
 
-## Group that every clickable node joins (see generator.gd).
+## Group that every clickable node joins (see generator.gd and ground_resource.gd).
 const INTERACTABLE_GROUP := "interactables"
 
 ## Building currently in "ghost" mode (spawned but not placed yet), if any.
@@ -31,7 +31,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_handle_click(get_global_mouse_position())
 	elif event.is_action_pressed("inventory"):
 		# ui.gd listens to this signal and slides the inventory panel in/out.
-		SignalManager.invenotry_actioned.emit()
+		SignalManager.inventory_actioned.emit()
 		print("inventory opened")  # Debug print (it also fires when closing).
 
 

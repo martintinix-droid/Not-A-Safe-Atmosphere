@@ -17,9 +17,7 @@ signal interactable_clicked(target: Node)
 
 ## The inventory key was pressed. Emitted by main.gd; ui.gd listens to it and
 ## slides the inventory panel in or out.
-## NOTE: "invenotry" is misspelled, but this name is used in main.gd and ui.gd.
-## If you ever fix the spelling, rename it in all three files at once.
-signal invenotry_actioned
+signal inventory_actioned
 
 
 # --- Construction ---

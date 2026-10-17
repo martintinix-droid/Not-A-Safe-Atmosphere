@@ -4,7 +4,7 @@ extends Control
 ##     buildable structures slides in. Each building button asks main.gd to
 ##     spawn that building (through SignalManager.spawn_building).
 ##   - Inventory panel: slides up from the bottom of the screen (and back down)
-##     when the inventory key is pressed (SignalManager.invenotry_actioned).
+##     when the inventory key is pressed (SignalManager.inventory_actioned).
 
 
 # --- Constants ---
@@ -87,7 +87,7 @@ func _setup_inventory_panel() -> void:
 	inventory_panel.position = _inventory_closed_pos
 	inventory_panel.visible = false
 
-	SignalManager.invenotry_actioned.connect(swap_inventory)
+	SignalManager.inventory_actioned.connect(swap_inventory)
 
 
 # --- Building panel ---
@@ -166,7 +166,7 @@ func _set_buttons_interactable(interactable: bool) -> void:
 # --- Inventory panel ---
 
 ## Toggles the inventory between shown and hidden (triggered by
-## SignalManager.invenotry_actioned).
+## SignalManager.inventory_actioned).
 ## Unlike the building panel, it does not lock anything: if it is called
 ## mid-animation, it cancels it and starts the opposite one from wherever the
 ## panel currently is.

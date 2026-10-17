@@ -3,7 +3,7 @@ extends Node
 ## Single source of truth for resource amounts: generators add to it, building
 ## costs are paid from it, and inventory_display.gd listens to it to refresh the UI.
 ##
-## Resources are identified by a String id (e.g. "energy", "mineral 1"). The
+## Resources are identified by a String id (e.g. "energy", "Basalt rock"). The
 ## same ids are used in Buildings.DATA (costs), generator.gd (resource_id) and
 ## inventory_display.gd (icons and names).
 
@@ -14,7 +14,7 @@ signal changed(id: String, amount: int)
 var _amounts := {
 	"energy": 100,
 	"water": 100,
-	"mineral 1": 10000,
+	"Basalt rock": 10000,
 	"mineral 2": 10000,
 	"rock 1": 10000,
 }

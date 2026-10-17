@@ -18,12 +18,12 @@ extends Node
 const DATA := {
 	"energy": {
 		"scene": preload("uid://b7ux8e48tnrv3"),
-		"materials": {"mineral 1": 3, "mineral 2": 4, "rock 1": 2},
+		"materials": {"Basalt rock": 3, "mineral 2": 4, "rock 1": 2},
 		"build_time": 6.0,
 	},
 	"water": {
 		"scene": preload("uid://cv1m1r8gxkird"),
-		"materials": {"mineral 1": 3, "mineral 2": 4, "rock 1": 2},
+		"materials": {"Basalt rock": 3, "mineral 2": 4, "rock 1": 2},
 		"build_time": 6.0,
 	},
 }
