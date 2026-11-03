@@ -39,6 +39,7 @@ var _state: State = State.GOING_TO_TARGET
 
 # --- Progress Bar variables ---
 var progress_bar: ProgressBar
+@export var theme : Theme
 var task_duration: float = 0.0
 var current_task_time: float = 0.0
 var tracking_progress: bool = false
@@ -50,7 +51,8 @@ func _ready() -> void:
 	progress_bar.max_value = 100.0
 	progress_bar.value = 0.0
 	progress_bar.visible = false
-	
+	progress_bar.theme = theme
+	progress_bar.z_index = 1
 	# Position it overhead (adjust X and Y offsets to fit your sprite size)
 	progress_bar.position = Vector2(-25, -45)
 	progress_bar.size = Vector2(50, 10)

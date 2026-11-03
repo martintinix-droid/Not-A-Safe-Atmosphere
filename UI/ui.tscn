@@ -119,3 +119,8 @@ grow_vertical = 2
 theme = ExtResource("3_hat8c")
 columns = 7
 script = ExtResource("3_e6gg6")
+
+[node name="ProgressBar" type="ProgressBar" parent="UI" unique_id=221757702]
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
