@@ -29,18 +29,45 @@ var friction := 40.0           # Speed lost per physics frame while braking.
 var stopping_distance := 50.0  # Starts braking when closer than this to the destination.
 
 # --- Trip data (set by base.gd right after instantiating the rover) ---
-var target: Node              # Interactable to interact with on arrival (may be null).
-var target_position: Vector2  # Where the rover goes first.
-var base_position: Vector2    # Where the rover returns to afterwards.
+var target: Node               # Interactable to interact with on arrival (may be null).
+var target_position: Vector2   # Where the rover goes first.
+var base_position: Vector2     # Where the rover returns to afterwards.
 
 # --- Runtime state ---
 var current_speed := 0.0
 var _state: State = State.GOING_TO_TARGET
 
+# --- Progress Bar variables ---
+var progress_bar: ProgressBar
+var task_duration: float = 0.0
+var current_task_time: float = 0.0
+var tracking_progress: bool = false
 
-func _physics_process(_delta: float) -> void:
-	# While interacting, the rover stays still until the target says it is done.
+
+func _ready() -> void:
+	# Programmatically create the ProgressBar above the rover
+	progress_bar = ProgressBar.new()
+	progress_bar.max_value = 100.0
+	progress_bar.value = 0.0
+	progress_bar.visible = false
+	
+	# Position it overhead (adjust X and Y offsets to fit your sprite size)
+	progress_bar.position = Vector2(-25, -45)
+	progress_bar.size = Vector2(50, 10)
+	
+	add_child(progress_bar)
+
+
+func _physics_process(delta: float) -> void:
+	# While interacting, handle the progress bar timer and stay still
 	if _state == State.INTERACTING_WITH_TARGET:
+		if tracking_progress:
+			current_task_time += delta
+			progress_bar.value = current_task_time
+			
+			# Clamp to max value so it doesn't overflow before the signal fires
+			if current_task_time >= progress_bar.max_value:
+				progress_bar.value = progress_bar.max_value
 		return
 
 	var destination := target_position if _state == State.GOING_TO_TARGET else base_position
@@ -84,6 +111,25 @@ func _start_interaction() -> void:
 	_state = State.INTERACTING_WITH_TARGET
 
 	if is_instance_valid(target) and target.has_method("start_rover_interaction"):
+		current_task_time = 0.0
+		
+		# Determine task duration based on what target type it is (generator vs resource)
+		if "build_time" in target and target.build_time > 0.0:
+			task_duration = target.build_time
+		elif target.has_node("building_timer"):
+			var b_timer: Timer = target.get_node("building_timer")
+			task_duration = b_timer.wait_time
+		elif "interaction_time" in target:
+			task_duration = float(target.interaction_time)
+		elif target.has_node("Timer"):
+			var r_timer: Timer = target.get_node("Timer")
+			task_duration = r_timer.wait_time
+		
+		progress_bar.max_value = task_duration
+		progress_bar.value = 0.0
+		progress_bar.visible = true  # Show bar when interaction starts
+		tracking_progress = true
+
 		# Connect BEFORE starting, in case the target finishes instantly.
 		target.rover_interaction_finished.connect(_finish_interaction, CONNECT_ONE_SHOT)
 		target.start_rover_interaction()
@@ -92,4 +138,6 @@ func _start_interaction() -> void:
 
 
 func _finish_interaction() -> void:
+	tracking_progress = false
+	progress_bar.visible = false  # Disappear immediately when the task is done!
 	_state = State.RETURNING_TO_BASE
