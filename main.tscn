@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://clg3kgq26j7lh" path="res://UI/ui.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://de8nb2c83df2x" path="res://camera/camera_manager.tscn" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://c0korjqmjc5se" path="res://misc/Map_Interactables/Basalt_rock.tscn" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://bnf5daxp5k2ka" path="res://event_manager.gd" id="6_7mycd"]
 
 [node name="main" type="Node2D" unique_id=1255075818]
 script = ExtResource("1_ig7tw")
@@ -18,5 +19,8 @@ position = Vector2(-199, -27)
 
 [node name="Sprite2D" parent="." unique_id=1813133776 instance=ExtResource("5_lquwl")]
 position = Vector2(152, -78)
+
+[node name="Event Manager" type="Node" parent="." unique_id=1431144764]
+script = ExtResource("6_7mycd")
 
 [editable path="Camera Manager"]

@@ -25,3 +25,20 @@ signal inventory_actioned
 ## The UI asks main.gd to spawn a building. building_id is a key of
 ## Buildings.DATA (see Buildings.gd).
 signal spawn_building(building_id: String)
+
+# --- Random events ---
+
+## EventManager -> UI: an event is ready, show the corner button.
+signal event_available(event_id: String)
+
+## UI -> EventManager: the player pressed the corner button.
+signal event_open_requested
+
+## UI -> EventManager: the player picked an option (index in "options").
+signal event_option_chosen(index: int)
+
+## EventManager -> UI: the option's effects were applied; show this text.
+signal event_resolved(result_text: String)
+
+## UI -> EventManager: the player closed the result. Unpauses the game.
+signal event_dismissed

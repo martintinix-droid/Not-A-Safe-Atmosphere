@@ -25,6 +25,7 @@ const COLOR_GHOST_VALID := Color(0, 1, 0, 0.5)
 const COLOR_GHOST_INVALID := Color(1, 0, 0, 0.5)
 const COLOR_UNDER_CONSTRUCTION := Color(0, 0.5, 1, 0.5)
 const COLOR_ACTIVE := Color(1, 1, 1, 1)
+const COLOR_DISABLED := Color(0.4, 0.4 ,0.4, 1)
 
 ## Id of the resource it produces (see Inventory). Set per scene.
 @export var resource_id := "energy"
@@ -42,6 +43,9 @@ var overlap_count := 0              # Bodies/areas currently touching the Area2D
 var build_time := 0.0
 
 var _rover_requested := false  # Already asked for its rover; avoids asking again on every re-click.
+
+var is_disabled:=false  # Switched off by an event.
+var _disabled_timer :=Timer.new()  # Re-enables the generator after a duration.
 
 # Placeable only if nothing overlaps it. A counter (instead of a bool) avoids
 # becoming "placeable" while ANOTHER object is still covering the spot.
@@ -69,6 +73,10 @@ func _ready() -> void:
 	area_2d.body_entered.connect(_on_object_entered)
 	area_2d.area_exited.connect(_on_object_exited)
 	area_2d.body_exited.connect(_on_object_exited)
+	
+	_disabled_timer.one_shot = true
+	_disabled_timer.timeout.connect(enable)
+	add_child(_disabled_timer)
 
 
 func _process(_delta: float) -> void:
@@ -136,3 +144,29 @@ func _on_object_exited(_object: Node) -> void:
 	# Only turns green again once nothing is overlapping.
 	if is_placing and placeable:
 		modulate = COLOR_GHOST_VALID
+
+func is_active()-> bool:
+	return not is_placing and not is_under_construction
+
+func disable(duration: float =0.0)->void:
+	if not is_active():
+		return
+	is_disabled =true
+	timer.stop()
+	modulate = COLOR_DISABLED
+	if duration > 0.0:
+		_disabled_timer.start(duration)
+	
+
+func enable()->void:
+	is_disabled=false
+	if is_active():
+		timer.start()
+		modulate = COLOR_ACTIVE
+	
+func destroy() -> void:
+	remove_from_group("buildings")
+	remove_from_group("interactables")
+	queue_free()
+	
+	

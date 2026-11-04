@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://nfxhy08pqcqs" path="res://UI/ui.gd" id="1_dajm1"]
 [ext_resource type="Script" uid="uid://1edswlo0air2" path="res://UI/inventory_display.gd" id="3_e6gg6"]
 [ext_resource type="Theme" uid="uid://eu3hs7he30ds" path="res://UI/inventory_theme.tres" id="3_hat8c"]
+[ext_resource type="Script" uid="uid://c6w7vq1ovsm7" path="res://UI/event_ui.gd" id="5_3sbvi"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wv4nr"]
 
@@ -120,7 +121,39 @@ theme = ExtResource("3_hat8c")
 columns = 7
 script = ExtResource("3_e6gg6")
 
-[node name="ProgressBar" type="ProgressBar" parent="UI" unique_id=221757702]
+[node name="Event UI" type="Control" parent="." unique_id=2079854680]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2fwl4")
+script = ExtResource("5_3sbvi")
+
+[node name="AlertButton" type="Button" parent="Event UI" unique_id=72057014]
+unique_name_in_owner = true
 layout_mode = 0
-offset_right = 4.0
-offset_bottom = 27.0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Panel" type="PanelContainer" parent="Event UI" unique_id=371443495]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Event UI/Panel" unique_id=71990395]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Event UI/Panel/VBoxContainer" unique_id=1242318269]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="Event UI/Panel/VBoxContainer" unique_id=1722853652]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="Event UI/Panel/VBoxContainer" unique_id=2049405552]
+unique_name_in_owner = true
+layout_mode = 2
