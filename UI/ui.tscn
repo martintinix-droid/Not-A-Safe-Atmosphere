@@ -73,10 +73,11 @@ layout_mode = 2
 theme = ExtResource("1_2fwl4")
 text = "Energy"
 
-[node name="minerals" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=883965661]
+[node name="Basatl Rock" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=883965661]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_2fwl4")
-text = "Minerals"
+text = "Basalt Rock"
 
 [node name="heat" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=673167593]
 layout_mode = 2

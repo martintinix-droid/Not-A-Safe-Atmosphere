@@ -11,7 +11,7 @@ extends GridContainer
 const ICON_PATHS := {
 	"energy": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/thunder.jpg",
 	"water": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/water.png",
-	"Basalt rock": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral1.jpg",
+	"Basalt Rock": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral1.jpg",
 	"mineral 2": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral2.jpg",
 	"rock 1": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/rock1.jpg",
 }

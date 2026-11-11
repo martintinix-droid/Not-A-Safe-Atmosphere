@@ -26,4 +26,10 @@ const DATA := {
 		"materials": {"Basalt rock": 3, "mineral 2": 4, "rock 1": 2},
 		"build_time": 6.0,
 	},
+	"Basalt Rock": {
+		"scene": preload("uid://di17c2btd7sur"),
+		"materials": {"energy": 10, "water": 10, "rock 1": 10},
+		"build_time": 6.0,
+	},
+	
 }

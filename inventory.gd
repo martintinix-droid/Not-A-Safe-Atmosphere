@@ -14,7 +14,7 @@ signal changed(id: String, amount: int)
 var _amounts := {
 	"energy": 100,
 	"water": 100,
-	"Basalt rock": 10000,
+	"Basalt Rock": 10000,
 	"mineral 2": 10000,
 	"rock 1": 10000,
 }
