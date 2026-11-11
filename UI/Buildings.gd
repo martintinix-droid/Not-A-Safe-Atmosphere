@@ -20,12 +20,12 @@ extends Node
 const DATA := {
 	"energy": {
 		"scene": preload("uid://b7ux8e48tnrv3"),
-		"materials": {"Basalt rock": 10, "Regolith": 2, "rock 1": 2},
+		"materials": {"Basalt Rock": 10, "Regolith": 2, "rock 1": 2},
 		"build_time": 1.0,
 	},
 	"water": {
 		"scene": preload("uid://cv1m1r8gxkird"),
-		"materials": {"Basalt rock": 15, "Regolith": 10, "rock 1": 4},
+		"materials": {"Basalt Rock": 15, "Regolith": 10, "rock 1": 4},
 		"build_time": 1.0,
 	},
 	"Basalt Rock": {

@@ -21,16 +21,18 @@ extends RefCounted
 ## To add an event: add an entry here. No other file needs to change.
 
 const DATA := {
-	"event1": {
-		"title": "Test event #1",
-		"description": "resource substraction or a generator stops",
+	"Dust Storm": {
+		"title": "Dust Storm",
+		"description": "A Dust Storm Approaches",
 		"weight": 1.0,
 		"options": [
 			{
-				"text": "resource lost",
-				"requires": {},
+				## Reformat
+				"text": "Reinforce Your Generators (Requires: 5 Basalt Rocks and 5 Regolith)",
+				"requires": {"Basalt Rock": 5, "Regolith": 5},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -5},
+					{"type": "resource", "id": "Basalt Rock", "amount": -5},
+					{"type": "resource", "id": "Regolith", "amount": -5},
 				],
 				"result": "you lost some resources",
 			},
