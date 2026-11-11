@@ -30,7 +30,7 @@ const DATA := {
 	},
 	"Basalt Rock": {
 		"scene": preload("uid://di17c2btd7sur"),
-		"materials": {"energy": 10, "water": 10, "Basalt rock": 15},
+		"materials": {"energy": 10, "water": 10, "Basalt Rock": 15},
 		"build_time": 1.0,
 	},
 	"Regolith": {

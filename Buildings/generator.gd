@@ -29,7 +29,8 @@ const COLOR_DISABLED := Color(0.4, 0.4 ,0.4, 1)
 
 ## Id of the resource it produces (see Inventory). Set per scene.
 @export var resource_id := "energy"
-
+@export var water_consumed := 1
+@export var energy_used := 1
 @onready var building_timer: Timer = $building_timer  # Construction duration.
 @onready var timer: Timer = %Timer                    # Production interval.
 @onready var area_2d: Area2D = %Area2D                # Detects overlaps while placing.
@@ -131,6 +132,8 @@ func _on_construction_finished() -> void:
 ## Production tick: adds one unit of this generator's resource to the Inventory.
 func _on_production_tick() -> void:
 	Inventory.add(resource_id)
+	Inventory.substract("water", water_consumed)
+	Inventory.substract("energy", energy_used)
 
 func _on_object_entered(_object: Node) -> void:
 	overlap_count += 1
