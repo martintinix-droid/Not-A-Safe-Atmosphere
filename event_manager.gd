@@ -8,7 +8,7 @@ const MIN_INTERVAL := 300.0  # 5 min
 const MAX_INTERVAL := 360.0  # 6 min
 ## While DEBUG is true: events fire every DEBUG_INTERVAL seconds, and F12
 ## force-closes a pending/active event (emergency unpause).
-const DEBUG := true
+const DEBUG := false
 const DEBUG_INTERVAL := 5.0
 
 enum State { WAITING, PENDING, ACTIVE }

@@ -37,6 +37,9 @@ func add(id: String, amount: int = 1) -> void:
 	_amounts[id] = get_amount(id) + amount
 	changed.emit(id, _amounts[id])
 
+func substract(id: String, amount: int = 1) -> void:
+	_amounts[id] = get_amount(id) - amount
+	changed.emit(id, _amounts[id])
 
 ## True if every resource in `cost` ({id: amount}) is available.
 func can_afford(cost: Dictionary) -> bool:

@@ -131,7 +131,7 @@ func _on_construction_finished() -> void:
 ## Production tick: adds one unit of this generator's resource to the Inventory.
 func _on_production_tick() -> void:
 	Inventory.add(resource_id)
-
+	Inventory.substract("rock 1")
 
 func _on_object_entered(_object: Node) -> void:
 	overlap_count += 1
