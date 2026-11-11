@@ -12,7 +12,7 @@ const ICON_PATHS := {
 	"energy": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/thunder.jpg",
 	"water": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/water.png",
 	"Basalt Rock": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral1.jpg",
-	"mineral 2": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral2.jpg",
+	"Regolith": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral2.jpg",
 	"rock 1": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/rock1.jpg",
 }
 
@@ -21,7 +21,7 @@ const NAMES := {
 	"energy": "Energy",
 	"water": "Water",
 	"Basalt rock": "Basalt rock",
-	"mineral 2": "Mineral 2",
+	"Regolith": "Regolith",
 	"rock 1": "Rock 1",
 }
 

@@ -21,7 +21,7 @@ const SWAP_DURATION := 0.5
 @onready var energy: Button = %energy
 @onready var water: Button = $HBoxContainer/VBoxContainer/water
 @onready var basatl_rock: Button = %"Basatl Rock"
-
+@onready var regolith: Button = %Regolith
 @onready var h_box_container: HBoxContainer = %HBoxContainer
 @onready var back_button: Button = $"HBoxContainer/VBoxContainer2/Back Button"
 ## Inventory background. The resource grid is its child, so it moves with it.
@@ -33,7 +33,8 @@ const SWAP_DURATION := 0.5
 @onready var _building_buttons := {
 	"energy": energy,
 	"water": water,
-	"Basalt Rock": basatl_rock
+	"Basalt Rock": basatl_rock,
+	"Regolith": regolith
 }
 
 

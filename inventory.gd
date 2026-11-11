@@ -15,7 +15,7 @@ var _amounts := {
 	"energy": 100,
 	"water": 100,
 	"Basalt Rock": 10000,
-	"mineral 2": 10000,
+	"Regolith": 10000,
 	"rock 1": 10000,
 }
 

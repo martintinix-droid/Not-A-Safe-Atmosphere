@@ -15,21 +15,28 @@ extends Node
 ## To add a building: add an entry here, plus a button and an entry in
 ## ui.gd (_building_buttons).
 
+##build_time for the thingies
+##E:8, W:10, B:5, R:20
 const DATA := {
 	"energy": {
 		"scene": preload("uid://b7ux8e48tnrv3"),
-		"materials": {"Basalt rock": 3, "mineral 2": 4, "rock 1": 2},
-		"build_time": 6.0,
+		"materials": {"Basalt rock": 10, "Regolith": 2, "rock 1": 2},
+		"build_time": 1.0,
 	},
 	"water": {
 		"scene": preload("uid://cv1m1r8gxkird"),
-		"materials": {"Basalt rock": 3, "mineral 2": 4, "rock 1": 2},
-		"build_time": 6.0,
+		"materials": {"Basalt rock": 15, "Regolith": 10, "rock 1": 4},
+		"build_time": 1.0,
 	},
 	"Basalt Rock": {
 		"scene": preload("uid://di17c2btd7sur"),
-		"materials": {"energy": 10, "water": 10, "rock 1": 10},
-		"build_time": 6.0,
+		"materials": {"energy": 10, "water": 10, "Basalt rock": 15},
+		"build_time": 1.0,
+	},
+	"Regolith": {
+		"scene": preload("uid://cpwyv4m8w6jd0"),
+		"materials": {"energy": 15, "water": 15, "rock 1": 20, "Regolith": 5},
+		"build_time": 1.0,
 	},
 	
 }

@@ -75,9 +75,9 @@ const DATA := {
 		"options": [
 			{
 				"text": "lose resources",
-				"requires": {"mineral 2": 2},
+				"requires": {"Regolith": 2},
 				"effects": [
-					{"type": "resource", "id": "mineral 2", "amount": -2},
+					{"type": "resource", "id": "Regolith", "amount": -2},
 				],
 				"result": "resource lost",
 			},
