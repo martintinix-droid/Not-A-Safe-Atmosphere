@@ -7,7 +7,6 @@
 size = Vector2(352.945, 449.5501)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-visible = false
 texture = ExtResource("1_u5bfg")
 script = ExtResource("2_u5bfg")
 

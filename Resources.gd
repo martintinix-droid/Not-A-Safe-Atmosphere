@@ -23,8 +23,8 @@ const PLACEHOLDER_DIR := "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/It
 
 ## id -> { "name": UI text, "icon": texture path, "start": starting amount }
 const DATA := {
-	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 100},
-	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 100},
+	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 1000},
+	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 1000},
 	BASALT_ROCK: {"name": "Basalt Rock", "icon": PLACEHOLDER_DIR + "mineral1.jpg", "start": 10000},
 	REGOLITH: {"name": "Regolith", "icon": PLACEHOLDER_DIR + "mineral2.jpg", "start": 10000},
 	ROCK_1: {"name": "Rock 1", "icon": PLACEHOLDER_DIR + "rock1.jpg", "start": 10000},

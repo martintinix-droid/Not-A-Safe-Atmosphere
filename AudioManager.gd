@@ -16,6 +16,9 @@ const BUS_MUSIC := "Music"
 const BUS_SFX := "SFX"
 const NO_CLICK_META := "no_click_sound"
 const SFX_POOL_SIZE := 8  # Max sound effects playing at the same time.
+## Prints every button press and every missing sound. Handy to tell "the button
+## was never detected" apart from "the sound plays badly".
+const DEBUG := false
 
 var _music_player := AudioStreamPlayer.new()
 var _construction_player := AudioStreamPlayer.new()
@@ -118,11 +121,17 @@ func _prepare_loop(player: AudioStreamPlayer, stream: AudioStream) -> void:
 
 
 func _on_node_added(node: Node) -> void:
-	if node is BaseButton:
-		node.pressed.connect(_on_button_pressed.bind(node))
+	if not node is BaseButton:
+		return
+	var callback := _on_button_pressed.bind(node)
+	# A button that is reparented enters the tree again: never connect it twice.
+	if not node.pressed.is_connected(callback):
+		node.pressed.connect(callback)
 
 
 func _on_button_pressed(button: BaseButton) -> void:
+	if DEBUG:
+		print("[AudioManager] button pressed: ", button.get_path())
 	if not button.has_meta(NO_CLICK_META):
 		play_sfx(Sounds.CLICK)
 
