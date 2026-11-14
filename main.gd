@@ -105,3 +105,15 @@ func _on_spawn_building(building_id: String) -> void:
 ## The ghost was placed: release the placement lock.
 func _on_placing_finished() -> void:
 	_placing_building = null
+
+
+func _validate_resource_ids() -> void:
+	if not OS.is_debug_build():
+		return
+	for building_id in Buildings.DATA:
+		for bad_id in Resources.unknown_ids(Buildings.DATA[building_id]["materials"]):
+			push_warning("Building '%s' costs unknown resource '%s'" % [building_id, bad_id])
+	for event_id in EventsData.DATA:
+		for option in EventsData.DATA[event_id]["options"]:
+			for bad_id in Resources.unknown_ids(option["requires"]):
+				push_warning("Event '%s' requires unknown resource '%s'" % [event_id, bad_id])
