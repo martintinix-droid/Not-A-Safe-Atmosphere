@@ -13,7 +13,6 @@ const ZOOM_STEP := 0.25
 ## True while the panning action is held down.
 var is_panning := false
 
-
 func _unhandled_input(event: InputEvent) -> void:
 	# Pan: drag the camera while panning is active.
 	# Dividing by the zoom converts screen pixels to world units.

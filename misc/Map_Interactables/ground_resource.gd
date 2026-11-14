@@ -17,7 +17,7 @@ signal rover_interaction_finished
 signal clicked
 
 ## Id of the resource it gives (see Inventory). Set per scene.
-@export var resource_id := "Basalt rock"
+@export var resource_id := "Basalt Rock"
 ## Seconds the rover spends gathering once it arrives.
 @export var interaction_time := 5
 
