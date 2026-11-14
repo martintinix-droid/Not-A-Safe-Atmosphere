@@ -111,8 +111,7 @@ func _clear_options() -> void:
 	for child in options_container.get_children():
 		options_container.remove_child(child)
 		child.queue_free()
-<<<<<<< HEAD
-=======
+
 
 # in _ready(), next to the other SignalManager connects
 	SignalManager.game_won.connect(_on_game_won)
@@ -121,4 +120,3 @@ func _clear_options() -> void:
 func _on_game_won() -> void:
 	alert_button.hide()
 	panel.hide()
->>>>>>> 13c1957f65767d5b37f22c7258cc728030562490

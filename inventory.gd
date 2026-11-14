@@ -57,3 +57,8 @@ func spend(cost: Dictionary) -> bool:
 	for id in cost:
 		add(id, -cost[id])
 	return true
+
+func reset()->void:
+	pass
+	#lock in mithun
+	
