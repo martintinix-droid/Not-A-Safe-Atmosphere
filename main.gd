@@ -11,6 +11,7 @@ extends Node2D
 
 ## Group that every clickable node joins (see generator.gd and ground_resource.gd).
 const INTERACTABLE_GROUP := "interactables"
+@onready var game_time: Timer = %game_time
 
 ## Building currently in "ghost" mode (spawned but not placed yet), if any.
 ## Prevents spawning a second building before the first one is placed, and
@@ -21,6 +22,9 @@ var _placing_building: Node = null
 func _ready() -> void:
 	NodeRefs.main_ref = self
 	SignalManager.spawn_building.connect(_on_spawn_building)
+	game_time.timeout.connect(func()-> void:
+		SignalManager.game_lost.emit()
+		)
 	_validate_resource_ids()
 
 # _unhandled_input (not _input): if a UI Control (e.g. a button) consumes the

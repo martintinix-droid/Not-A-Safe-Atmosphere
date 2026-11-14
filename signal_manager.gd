@@ -49,6 +49,7 @@ signal research_done
 
 ## The research bar reached 100%: the game is won. 
 signal game_won
+signal game_lost
 
 # --- Upgrades ---
 
