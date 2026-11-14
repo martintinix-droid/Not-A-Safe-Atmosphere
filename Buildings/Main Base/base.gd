@@ -10,8 +10,18 @@ extends Sprite2D
 ## used by the rover itself. See outpost_rover.gd.
 
 ## Maximum number of rovers active at the same time.
-const MAX_ROVERS := 3
 const ROVER_SCENE := preload("uid://np2aojdufexy")
+
+## Emitted by main.gd when the base is clicked.
+signal clicked
+
+## Level 1 values; Upgrades.DATA["base"] overrides them per level.
+var upgrade := UpgradeState.new("base", {"max_rovers": 3, "build_time_multiplier": 1.0})
+
+## Multiplies every building's construction time (lower = faster). Read by main.gd.
+var build_time_multiplier: float:
+	get:
+		return upgrade.stats["build_time_multiplier"]
 
 ## Rovers currently out (going, interacting or returning).
 var _active_rovers := 0
@@ -20,9 +30,21 @@ var _pending_targets: Array = []
 
 
 func _ready() -> void:
+	NodeRefs.base_ref = self
+	add_to_group("interactables")  # So main.gd's hit-test can find the base.
+	clicked.connect(_on_clicked)
+	upgrade.leveled_up.connect(_on_leveled_up)
 	SignalManager.ground_clicked.connect(_on_ground_clicked)
 	SignalManager.interactable_clicked.connect(_on_interactable_clicked)
 
+
+func _on_clicked() -> void:
+	SignalManager.upgrade_requested.emit(self)
+
+
+## New rover slots: serve the queue right away.
+func _on_leveled_up(_level: int) -> void:
+	_dispatch_pending()
 
 # --- Click handling ---
 
@@ -47,7 +69,7 @@ func _on_interactable_clicked(target: Node) -> void:
 # --- Rover management ---
 
 func _has_free_rover() -> bool:
-	return _active_rovers < MAX_ROVERS
+	return _active_rovers < upgrade.stats["max_rovers"]
 
 
 ## Sends a rover to `destination`. If `target` is given, the rover interacts

@@ -54,6 +54,7 @@ var placeable: bool:
 	get:
 		return overlap_count == 0
 
+var building_id := ""  # Set by main.gd; the lab is not upgradable yet.
 
 func _ready() -> void:
 	# "interactables": main.gd looks them up for the click hit-test.

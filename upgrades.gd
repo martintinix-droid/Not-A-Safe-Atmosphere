@@ -1,4 +1,4 @@
-class_name Upgrades_info
+class_name UpgradesInfo
 extends RefCounted
 ## Upgrade catalog (static data only), same idea as Buildings.DATA.
 ##

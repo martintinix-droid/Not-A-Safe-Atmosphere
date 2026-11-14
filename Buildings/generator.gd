@@ -43,6 +43,10 @@ var overlap_count := 0              # Bodies/areas currently touching the Area2D
 # If it is 0, the wait_time of building_timer in the scene is used instead.
 var build_time := 0.0
 
+## Key of Buildings.DATA / Upgrades.DATA. main.gd sets it BEFORE add_child().
+var building_id := ""
+var upgrade: UpgradeState
+
 var _rover_requested := false  # Already asked for its rover; avoids asking again on every re-click.
 
 var is_disabled:=false  # Switched off by an event.
@@ -56,6 +60,12 @@ var placeable: bool:
 
 
 func _ready() -> void:
+	# Level 1 stats: output is 1, the rest comes from this scene's exports.
+	upgrade = UpgradeState.new(building_id, {
+		"output": 1,
+		"energy_used": energy_used,
+		"water_consumed": water_consumed,
+	})
 	# "interactables": main.gd looks them up for the click hit-test.
 	add_to_group("interactables")
 	add_to_group("buildings")
@@ -106,16 +116,25 @@ func start_rover_interaction() -> void:
 
 # --- Callbacks ---
 
-## This building was clicked (main.gd emits "clicked").
 func _on_clicked() -> void:
+	# Finished building: open the upgrade panel.
+	if is_active():
+		SignalManager.upgrade_requested.emit(self)
+		return
 	# Only a ghost on a valid spot can be placed.
 	if not (is_placing and placeable):
-		return  # TODO: inspect an already placed building.
+		return
 
 	is_placing = false
-	set_process(false)  # No longer follows the mouse.
+	set_process(false)
 	state_changed.emit()
 	is_under_construction = true
+
+
+func _on_production_tick() -> void:
+	Inventory.add(resource_id, upgrade.stats["output"])
+	Inventory.substract("water", upgrade.stats["water_consumed"])
+	Inventory.substract("energy", upgrade.stats["energy_used"])
 
 
 func _on_state_changed() -> void:
@@ -128,12 +147,6 @@ func _on_construction_finished() -> void:
 	modulate = COLOR_ACTIVE
 	rover_interaction_finished.emit()
 
-
-## Production tick: adds one unit of this generator's resource to the Inventory.
-func _on_production_tick() -> void:
-	Inventory.add(resource_id)
-	Inventory.substract("water", water_consumed)
-	Inventory.substract("energy", energy_used)
 
 func _on_object_entered(_object: Node) -> void:
 	overlap_count += 1

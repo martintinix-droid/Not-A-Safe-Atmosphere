@@ -144,6 +144,17 @@ offset_right = -69.0
 offset_bottom = 33.0
 grow_horizontal = 0
 
+[node name="UpgradePanel" type="PanelContainer" parent="UI" unique_id=186977205]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/UpgradePanel" unique_id=1284487001]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="UI/UpgradePanel/VBoxContainer" unique_id=186854175]
+layout_mode = 2
+
 [node name="Event UI" type="Control" parent="." unique_id=2079854680]
 layout_mode = 3
 anchors_preset = 15

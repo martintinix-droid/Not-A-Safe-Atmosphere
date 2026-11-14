@@ -21,7 +21,7 @@ var _placing_building: Node = null
 func _ready() -> void:
 	NodeRefs.main_ref = self
 	SignalManager.spawn_building.connect(_on_spawn_building)
-
+	_validate_resource_ids()
 
 # _unhandled_input (not _input): if a UI Control (e.g. a button) consumes the
 # click, it never reaches this function, so no rover is sent to the ground
@@ -94,13 +94,18 @@ func _on_spawn_building(building_id: String) -> void:
 		return
 
 	var new_building: Node = info["scene"].instantiate()
+	# Set before add_child(): generator.gd reads building_id in _ready().
+	new_building.building_id = building_id
+	new_building.build_time = float(info["build_time"]) * _build_time_multiplier()
 	add_child(new_building)
-	new_building.build_time = float(info["build_time"])
 	_placing_building = new_building
-	# CONNECT_ONE_SHOT: the placement lock is released automatically once the
-	# building is placed, with no manual disconnect.
 	new_building.state_changed.connect(_on_placing_finished, CONNECT_ONE_SHOT)
 
+## Base upgrade: shorter construction. Rover and building timer both use the result.
+func _build_time_multiplier() -> float:
+	if is_instance_valid(NodeRefs.base_ref):
+		return NodeRefs.base_ref.build_time_multiplier
+	return 1.0
 
 ## The ghost was placed: release the placement lock.
 func _on_placing_finished() -> void:
@@ -117,3 +122,12 @@ func _validate_resource_ids() -> void:
 		for option in EventsData.DATA[event_id]["options"]:
 			for bad_id in Resources.unknown_ids(option["requires"]):
 				push_warning("Event '%s' requires unknown resource '%s'" % [event_id, bad_id])
+	for upgrade_id in UpgradesInfo.DATA:
+		for level_data in UpgradesInfo.levels(upgrade_id):
+			for bad_id in Resources.unknown_ids(level_data["cost"]):
+				push_warning("Upgrade '%s' costs unknown resource '%s'" % [upgrade_id, bad_id])
+	for event_id in EventsData.DATA:
+		for option in EventsData.DATA[event_id]["options"]:
+			for effect in option["effects"]:
+				if effect["type"] == "resource" and not Resources.exists(effect["id"]):
+					push_warning("Event '%s' changes unknown resource '%s'" % [event_id, effect["id"]])
