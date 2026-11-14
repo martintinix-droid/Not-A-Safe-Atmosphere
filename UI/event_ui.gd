@@ -30,6 +30,8 @@ func _ready() -> void:
 	alert_button.pressed.connect(_on_alert_pressed)
 	SignalManager.event_available.connect(_on_event_available)
 	SignalManager.event_resolved.connect(_on_event_resolved)
+	SignalManager.game_won.connect(_on_game_over)
+	SignalManager.game_lost.connect(_on_game_over)
 
 
 ## Centers the panel on the screen and lays the texts out above the options.
@@ -113,10 +115,8 @@ func _clear_options() -> void:
 		child.queue_free()
 
 
-# in _ready(), next to the other SignalManager connects
-	SignalManager.game_won.connect(_on_game_won)
-
-## The game was won: close any event panel so only the win screen is visible.
-func _on_game_won() -> void:
+## The game was won or lost: close any event panel so only the end screen
+## (win_screen.gd) is visible.
+func _on_game_over() -> void:
 	alert_button.hide()
 	panel.hide()

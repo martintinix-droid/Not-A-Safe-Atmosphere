@@ -34,6 +34,7 @@ func _ready() -> void:
 	SignalManager.event_option_chosen.connect(_on_option_chosen)
 	SignalManager.event_dismissed.connect(_on_dismissed2)
 	SignalManager.game_won.connect(_on_game_won)
+	SignalManager.game_lost.connect(_on_game_won)  # Losing needs the same cleanup.
 	_start_timer()
 
 
@@ -49,8 +50,8 @@ func _start_timer() -> void:
 	_timer.start(DEBUG_INTERVAL if DEBUG else randf_range(MIN_INTERVAL, MAX_INTERVAL))
 
 
-## The game was won: stop scheduling events. The game stays paused by the win
-## screen, so nothing here may unpause it any more.
+## The game was won (or lost): stop scheduling events. The game stays paused by
+## the end screen, so nothing here may unpause it any more.
 func _on_game_won() -> void:
 	_game_won = true
 	_timer.stop()
