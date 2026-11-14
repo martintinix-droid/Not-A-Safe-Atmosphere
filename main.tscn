@@ -30,4 +30,9 @@ position = Vector2(327.99994, -886.0001)
 scale = Vector2(10.664795, 11.613373)
 texture = ExtResource("7_272bh")
 
+[node name="game_time" type="Timer" parent="." unique_id=1703760314]
+unique_name_in_owner = true
+wait_time = 100.0
+autostart = true
+
 [editable path="Camera Manager"]
