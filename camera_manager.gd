@@ -7,11 +7,26 @@ const ZOOM_MIN := 0.25
 const ZOOM_MAX := 4.0
 ## How much the zoom changes per zoom_in / zoom_out input.
 const ZOOM_STEP := 0.25
+## Largest size the game window can have (in pixels).
+const MAX_WINDOW_SIZE := Vector2i(1920, 1080)
 
 @onready var camera_2d: Camera2D = %Camera2D
 
 ## True while the panning action is held down.
 var is_panning := false
+
+
+func _ready() -> void: 
+	_limit_window_size()
+
+
+## Caps the game window at MAX_WINDOW_SIZE: it can't be resized or maximized
+## past it, and if it starts larger than that it is shrunk to fit.
+func _limit_window_size() -> void:
+	var window := get_window()
+	window.max_size = MAX_WINDOW_SIZE
+	window.size = window.size.min(MAX_WINDOW_SIZE)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Pan: drag the camera while panning is active.
