@@ -8,6 +8,16 @@ const WATER := "water"
 const BASALT_ROCK := "Basalt Rock"
 const REGOLITH := "Regolith"
 const ROCK_1 := "rock 1"
+const IRON_ORE := "Iron Ore"
+const ICE := "Ice"
+const SILICA := "Silica"
+const TITANIUM := "Titanium"
+const ALUMINUM := "Aluminum"
+const COPPER := "Copper"
+const NICKEL := "Nickel"
+const SULFUR := "Sulfur"
+const GYPSUM := "Gypsum"
+const SOLUBLE_SALTS := "Soluble Salts"
 
 const PLACEHOLDER_DIR := "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/"
 
@@ -18,6 +28,18 @@ const DATA := {
 	BASALT_ROCK: {"name": "Basalt Rock", "icon": PLACEHOLDER_DIR + "mineral1.jpg", "start": 10000},
 	REGOLITH: {"name": "Regolith", "icon": PLACEHOLDER_DIR + "mineral2.jpg", "start": 10000},
 	ROCK_1: {"name": "Rock 1", "icon": PLACEHOLDER_DIR + "rock1.jpg", "start": 10000},
+	# New resources: they start at 0 and need a generator/event to produce them.
+	IRON_ORE: {"name": "Iron Ore", "icon": PLACEHOLDER_DIR + "iron_ore.png", "start": 0},
+	ICE: {"name": "Ice", "icon": PLACEHOLDER_DIR + "ice.png", "start": 0},
+	SILICA: {"name": "Silica", "icon": PLACEHOLDER_DIR + "silica.png", "start": 0},
+	# Volcanic and hydrothermal minerals.
+	TITANIUM: {"name": "Titanium", "icon": PLACEHOLDER_DIR + "titanium.png", "start": 0},
+	ALUMINUM: {"name": "Aluminum", "icon": PLACEHOLDER_DIR + "aluminum.png", "start": 0},
+	COPPER: {"name": "Copper", "icon": PLACEHOLDER_DIR + "copper.png", "start": 0},
+	NICKEL: {"name": "Nickel", "icon": PLACEHOLDER_DIR + "nickel.png", "start": 0},
+	SULFUR: {"name": "Sulfur", "icon": PLACEHOLDER_DIR + "sulfur.png", "start": 0},
+	GYPSUM: {"name": "Gypsum", "icon": PLACEHOLDER_DIR + "gypsum.png", "start": 0},
+	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": PLACEHOLDER_DIR + "soluble_salts.png", "start": 0},
 }
 
 static func ids() -> Array:

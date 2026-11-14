@@ -10,14 +10,8 @@ extends Node
 ## Emitted whenever an amount changes. `amount` is the NEW total for that id.
 signal changed(id: String, amount: int)
 
-## id -> current amount. The values below are the starting stock.
-var _amounts := {
-	"energy": 100,
-	"water": 100,
-	"Basalt Rock": 10000,
-	"Regolith": 10000,
-	"rock 1": 10000,
-}
+## id -> current amount. Starting stock comes from Resources.DATA ("start").
+var _amounts := Resources.starting_stock()
 
 
 ## Returns the amount stored for `id` (0 if the id is unknown).
@@ -69,4 +63,3 @@ func reset() -> void:
 	_amounts = _starting_amounts.duplicate()
 	for id in _amounts:
 		changed.emit(id, _amounts[id])
-	

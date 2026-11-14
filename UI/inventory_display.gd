@@ -5,26 +5,6 @@ extends GridContainer
 ##
 ## The number of columns is set in the inspector (the "Columns" property).
 
-## Resource id -> icon path. If the id is missing or the file does not exist,
-## the slot is shown without an icon (only the amount).
-## NOTE: these are AI-generated placeholder icons; replace them before release.
-const ICON_PATHS := {
-	"energy": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/thunder.jpg",
-	"water": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/water.png",
-	"Basalt Rock": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral1.jpg",
-	"Regolith": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/mineral2.jpg",
-	"rock 1": "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/rock1.jpg",
-}
-
-## Resource id -> name shown in the tooltip. If missing, the id itself is used.
-const NAMES := {
-	"energy": "Energy",
-	"water": "Water",
-	"Basalt rock": "Basalt rock",
-	"Regolith": "Regolith",
-	"rock 1": "Rock 1",
-}
-
 @export var slot_size := Vector2(100, 100)
 
 ## Resource id -> Label showing that slot's amount.
@@ -56,7 +36,7 @@ func _create_slot(id: String) -> Label:
 	slot.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	slot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	slot.texture = _load_icon(id)
-	slot.tooltip_text = NAMES.get(id, id)
+	slot.tooltip_text = Resources.display_name(id)
 	# STOP: without it the tooltip does not appear, and as a side effect a click
 	# on the icon is not forwarded to the world (no rover is sent by clicking the UI).
 	slot.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -73,9 +53,6 @@ func _create_slot(id: String) -> Label:
 	return label
 
 
-## Loads the icon for `id`, or returns null if there is none (or the file is missing).
+## Loads the icon for `id` from Resources.DATA, or null if there is none.
 func _load_icon(id: String) -> Texture2D:
-	var path: String = ICON_PATHS.get(id, "")
-	if path != "" and ResourceLoader.exists(path):
-		return load(path) as Texture2D
-	return null
+	return Resources.load_icon(id)
