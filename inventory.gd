@@ -58,7 +58,15 @@ func spend(cost: Dictionary) -> bool:
 		add(id, -cost[id])
 	return true
 
-func reset()->void:
-	pass
-	#lock in mithun
+## Starting stock, copied once at startup so reset() can restore it.
+var _starting_amounts := {}
+
+func _ready() -> void:
+	_starting_amounts = _amounts.duplicate()
+
+## Puts every resource back to its starting amount (used by "Play Again").
+func reset() -> void:
+	_amounts = _starting_amounts.duplicate()
+	for id in _amounts:
+		changed.emit(id, _amounts[id])
 	
