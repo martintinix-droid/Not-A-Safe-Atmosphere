@@ -54,9 +54,9 @@ const DATA := {
 		"options": [
 			{
 				"text": "lose resources",
-				"requires": {"Basalt rock": 3},
+				"requires": {"Basalt Rock": 3},
 				"effects": [
-					{"type": "resource", "id": "Basalt rock", "amount": -3},
+					{"type": "resource", "id": "Basalt Rock", "amount": -3},
 				],
 				"result": "lost resources",
 			},
