@@ -42,3 +42,7 @@ signal event_resolved(result_text: String)
 
 ## UI -> EventManager: the player closed the result. Unpauses the game.
 signal event_dismissed
+
+# --- Research Mechanic ----
+
+signal research_done

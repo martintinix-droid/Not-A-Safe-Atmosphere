@@ -24,6 +24,8 @@ const SWAP_DURATION := 0.5
 @onready var regolith: Button = %Regolith
 @onready var h_box_container: HBoxContainer = %HBoxContainer
 @onready var back_button: Button = $"HBoxContainer/VBoxContainer2/Back Button"
+@onready var research_progerss: ProgressBar = %research_progerss
+@onready var research_lab: Button = %"Research Lab"
 ## Inventory background. The resource grid is its child, so it moves with it.
 @onready var inventory_panel: NinePatchRect = %NinePatchRect
 
@@ -34,7 +36,8 @@ const SWAP_DURATION := 0.5
 	"energy": energy,
 	"water": water,
 	"Basalt Rock": basatl_rock,
-	"Regolith": regolith
+	"Regolith": regolith,
+	"Research Lab" : research_lab
 }
 
 
@@ -66,7 +69,8 @@ func _ready() -> void:
 
 	_setup_building_panel()
 	_setup_inventory_panel()
-
+	
+	SignalManager.research_done.connect(increase_research)
 
 func _setup_building_panel() -> void:
 	_building_button_start_pos = building_button.position
@@ -201,3 +205,7 @@ func swap_inventory() -> void:
 		_inventory_tween.finished.connect(func() -> void:
 			inventory_panel.visible = false
 		)
+		
+# --- research mechanics ---
+func increase_research()-> void:
+	research_progerss.value += 1;

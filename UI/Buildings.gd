@@ -38,5 +38,9 @@ const DATA := {
 		"materials": {"energy": 15, "water": 15, "rock 1": 20, "Regolith": 5},
 		"build_time": 1.0,
 	},
-	
+	"Research Lab": {
+		"scene": preload("uid://cabh0jrbk6l7u"),
+		"materials": {"energy": 50, "water": 50, "rock 1": 20, "Regolith": 5},
+		"build_time": 10.0,
+	},
 }
