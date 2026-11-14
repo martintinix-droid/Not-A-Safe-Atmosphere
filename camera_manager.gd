@@ -120,10 +120,22 @@ func _apply_limits() -> void:
 func _clamp_to_map() -> void:
 	if _map_rect.size == Vector2.ZERO:
 		return
-	var half_view := get_viewport_rect().size / camera_2d.zoom * 0.5
-	var min_pos := _map_rect.position + half_view
-	var max_pos := _map_rect.end - half_view
-	# If the view is somehow larger than the map on an axis, center on the map.
+		
+	var half_view := get_viewport_rect().size / (camera_2d.zoom * 2.0)
 	var center := _map_rect.get_center()
-	global_position.x = clampf(global_position.x, min_pos.x, max_pos.x) if min_pos.x <= max_pos.x else center.x
-	global_position.y = clampf(global_position.y, min_pos.y, max_pos.y) if min_pos.y <= max_pos.y else center.y
+	
+	# Eje X
+	var min_pos_x := _map_rect.position.x + half_view.x
+	var max_pos_x := _map_rect.end.x - half_view.x
+	if min_pos_x <= max_pos_x:
+		global_position.x = clampf(global_position.x, min_pos_x, max_pos_x)
+	else:
+		global_position.x = center.x
+
+	# Eje Y
+	var min_pos_y := _map_rect.position.y + half_view.y
+	var max_pos_y := _map_rect.end.y - half_view.y
+	if min_pos_y <= max_pos_y:
+		global_position.y = clampf(global_position.y, min_pos_y, max_pos_y)
+	else:
+		global_position.y = center.y
