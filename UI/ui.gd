@@ -209,3 +209,24 @@ func swap_inventory() -> void:
 # --- research mechanics ---
 func increase_research()-> void:
 	research_progerss.value += 1;
+
+
+# with the other constants
+const WIN_SCREEN := preload("res://UI/win_screen.gd")
+
+# with the other state variables
+## True once the research bar hit 100% (so the win is only announced once).
+var _game_won := false
+
+# at the end of _ready(), after the research_done connect
+	add_child(WIN_SCREEN.new())  # Hidden until SignalManager.game_won is emitted.
+
+# replaces the old increase_research()
+func increase_research()-> void:
+	if _game_won:
+		return
+	research_progerss.value += 1
+	# 100% reached: tell everyone the game is won (win_screen.gd pauses the game).
+	if research_progerss.value >= research_progerss.max_value:
+		_game_won = true
+		SignalManager.game_won.emit()

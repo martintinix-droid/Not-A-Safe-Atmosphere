@@ -92,3 +92,22 @@ func _pick_event() -> String:
 		if roll <= 0.0:
 			return id
 	return ids.back()
+
+var _game_won := false  # Once true, no more events (the win screen is showing).
+
+# in _ready(), next to the other SignalManager connects
+	SignalManager.game_won.connect(_on_game_won)
+
+## The game was won: stop scheduling events. The game stays paused by the win
+## screen, so nothing here may unpause it any more.
+func _on_game_won() -> void:
+	_game_won = true
+	_timer.stop()
+
+func _on_timer_timeout() -> void:
+	if _game_won:
+		return 
+
+func _on_dismissed() -> void:
+	if _game_won:
+		return  # Keep the game paused behind the win screen.
