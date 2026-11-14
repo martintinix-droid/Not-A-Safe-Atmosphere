@@ -11,7 +11,10 @@ extends Node2D
 
 ## Group that every clickable node joins (see generator.gd and ground_resource.gd).
 const INTERACTABLE_GROUP := "interactables"
-@onready var game_time: Timer = %game_time
+## 100 second countdown. Normally it is a Timer node named "game_time" in
+## main.tscn; if the scene doesn't have one, _ready() creates it in code.
+@onready var game_time: Timer = get_node_or_null("%game_time")
+const GAME_TIME_SECONDS := 100.0
 
 ## Building currently in "ghost" mode (spawned but not placed yet), if any.
 ## Prevents spawning a second building before the first one is placed, and
@@ -22,6 +25,13 @@ var _placing_building: Node = null
 func _ready() -> void:
 	NodeRefs.main_ref = self
 	SignalManager.spawn_building.connect(_on_spawn_building)
+	if game_time == null:
+		game_time = Timer.new()
+		game_time.name = "game_time"
+		game_time.wait_time = GAME_TIME_SECONDS
+		game_time.one_shot = true
+		add_child(game_time)
+		game_time.start()
 	game_time.timeout.connect(func()-> void:
 		SignalManager.game_lost.emit()
 		)

@@ -15,6 +15,8 @@ const SWAP_OFFSET_X := 300.0
 const SWAP_DURATION := 0.5
 ## Win screen shown when the research bar reaches 100% (see win_screen.gd).
 const WIN_SCREEN := preload("res://UI/win_screen.gd")
+## Interactive tutorial, shown the first time the game starts (see tutorial.gd).
+const TUTORIAL := preload("res://UI/tutorial.gd")
 
 
 # --- Node references ---
@@ -77,6 +79,7 @@ func _ready() -> void:
 
 	SignalManager.research_done.connect(increase_research)
 	add_child(WIN_SCREEN.new())  # Hidden until SignalManager.game_won is emitted.
+	add_child(TUTORIAL.new())    # Only shows the first time the game starts.
 
 
 func _setup_building_panel() -> void:
