@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cabh0jrbk6l7u"]
 
-[ext_resource type="Texture2D" uid="uid://dl6xeulb4ot5x" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/space_outpost_buildings_separate/research_lab.png" id="1_u5bfg"]
+[ext_resource type="Texture2D" uid="uid://dl6xeulb4ot5x" path="res:space_outpost_buildings_separate/research_lab.png" id="1_u5bfg"]
 [ext_resource type="Script" uid="uid://bx84dgp15xpsl" path="res://Buildings/Research Lab/research_lab.gd" id="2_u5bfg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
