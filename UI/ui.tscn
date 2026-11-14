@@ -80,19 +80,10 @@ layout_mode = 2
 theme = ExtResource("1_2fwl4")
 text = "Basalt Rock"
 
-[node name="heat" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=673167593]
-layout_mode = 2
-theme = ExtResource("1_2fwl4")
-text = "Research lab"
-
 [node name="water" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=117816619]
 layout_mode = 2
 theme = ExtResource("1_2fwl4")
 text = "Water"
-
-[node name="Food" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1407068554]
-layout_mode = 2
-text = "Food"
 
 [node name="Regolith" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1967586162]
 unique_name_in_owner = true
