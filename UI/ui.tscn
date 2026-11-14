@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://1edswlo0air2" path="res://UI/inventory_display.gd" id="3_e6gg6"]
 [ext_resource type="Theme" uid="uid://eu3hs7he30ds" path="res://UI/inventory_theme.tres" id="3_hat8c"]
 [ext_resource type="Script" uid="uid://c6w7vq1ovsm7" path="res://UI/event_ui.gd" id="5_3sbvi"]
+[ext_resource type="Script" uid="uid://bkg7s7qhjebn8" path="res://UI/upgrade_panel.gd" id="5_nm1m0"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wv4nr"]
 
@@ -149,12 +150,38 @@ value = 99.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("5_nm1m0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/UpgradePanel" unique_id=1284487001]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="UI/UpgradePanel/VBoxContainer" unique_id=186854175]
+[node name="UTitleLabel" type="Label" parent="UI/UpgradePanel/VBoxContainer" unique_id=186854175]
+unique_name_in_owner = true
 layout_mode = 2
+
+[node name="StatsContainer" type="VBoxContainer" parent="UI/UpgradePanel/VBoxContainer" unique_id=1047460518]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="UI/UpgradePanel/VBoxContainer" unique_id=50257225]
+layout_mode = 2
+
+[node name="CostContainer" type="VBoxContainer" parent="UI/UpgradePanel/VBoxContainer" unique_id=549233269]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UpgradePanel/VBoxContainer" unique_id=1447882262]
+layout_mode = 2
+
+[node name="UpgradeButton" type="Button" parent="UI/UpgradePanel/VBoxContainer/HBoxContainer" unique_id=1010089996]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Upgrade"
+
+[node name="CloseButton" type="Button" parent="UI/UpgradePanel/VBoxContainer/HBoxContainer" unique_id=967449476]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Close"
 
 [node name="Event UI" type="Control" parent="." unique_id=2079854680]
 layout_mode = 3
