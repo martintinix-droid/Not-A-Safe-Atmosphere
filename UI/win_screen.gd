@@ -1,6 +1,8 @@
 extends CanvasLayer
-## "You Win!" screen. Built entirely in code (no scene needed): ui.gd adds it
-## as a child at startup and it stays hidden until SignalManager.game_won.
+## "You Win!" / "You Lose!" screen. Built entirely in code (no scene needed):
+## ui.gd adds it as a child at startup and it stays hidden until
+## SignalManager.game_won (research bar hit 100%) or SignalManager.game_lost
+## (the 100 second game_time timer in main.tscn ran out).
 ##
 ## When shown it PAUSES the whole game (rovers, generators, timers, events)
 ## and only this screen keeps running (process_mode = Always).
@@ -9,9 +11,16 @@ extends CanvasLayer
 
 const TITLE_TEXT := "You Win!"
 const MESSAGE_TEXT := "Thank you for playing our game!"
+const LOSE_TITLE_TEXT := "You Lose!"
+const LOSE_MESSAGE_TEXT := "Time ran out before the research was finished."
 const BUTTON_TEXT := "Play Again"
 
+const WIN_TITLE_COLOR := Color(1, 1, 1)
+const LOSE_TITLE_COLOR := Color(1.0, 0.3, 0.3)
+
 var _root: Control
+var _title_label: Label
+var _message_label: Label
 var _play_again_button: Button
 
 
@@ -24,6 +33,7 @@ func _ready() -> void:
 	_build()
 	_root.hide()
 	SignalManager.game_won.connect(_on_game_won)
+	SignalManager.game_lost.connect(_on_game_lost)
 
 
 ## Creates: dark overlay -> centered panel -> title, message and button.
@@ -64,17 +74,17 @@ func _build() -> void:
 	box.add_theme_constant_override("separation", 24)
 	panel.add_child(box)
 
-	var title := Label.new()
-	title.text = TITLE_TEXT
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 64)
-	box.add_child(title)
+	_title_label = Label.new()
+	_title_label.text = TITLE_TEXT
+	_title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_title_label.add_theme_font_size_override("font_size", 64)
+	box.add_child(_title_label)
 
-	var message := Label.new()
-	message.text = MESSAGE_TEXT
-	message.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	message.add_theme_font_size_override("font_size", 28)
-	box.add_child(message)
+	_message_label = Label.new()
+	_message_label.text = MESSAGE_TEXT
+	_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_message_label.add_theme_font_size_override("font_size", 28)
+	box.add_child(_message_label)
 
 	_play_again_button = Button.new()
 	_play_again_button.text = BUTTON_TEXT
@@ -84,10 +94,24 @@ func _build() -> void:
 	box.add_child(_play_again_button)
 
 
-## Research hit 100%: freeze the game and show the screen.
+## Research hit 100%: freeze the game and show the "You Win!" screen.
 func _on_game_won() -> void:
+	_show_screen(TITLE_TEXT, MESSAGE_TEXT, WIN_TITLE_COLOR)
+
+
+## The 100 second timer ran out: freeze the game and show "You Lose!".
+func _on_game_lost() -> void:
+	_show_screen(LOSE_TITLE_TEXT, LOSE_MESSAGE_TEXT, LOSE_TITLE_COLOR)
+
+
+## Shared by win and lose. The first one to arrive wins: if the screen is
+## already showing, any later signal is ignored.
+func _show_screen(title: String, message: String, title_color: Color) -> void:
 	if _root.visible:
 		return
+	_title_label.text = title
+	_title_label.add_theme_color_override("font_color", title_color)
+	_message_label.text = message
 	get_tree().paused = true
 	_root.show()
 	_play_again_button.grab_focus()
