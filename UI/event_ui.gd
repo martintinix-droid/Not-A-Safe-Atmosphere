@@ -1,13 +1,20 @@
 extends Control
-## Event HUD: corner alert button, then a panel with the description and the
-## options (built from EventsData), then the result text with an OK button.
+## Event HUD: a panel that pops up in the middle of the screen with the event
+## title and description, the options (built from EventsData) side by side
+## underneath, then the result text with an Accept button.
 ## Runs while the game is paused (process_mode = Always).
+##
+## AUTO_OPEN = true shows the panel as soon as the event fires. Set it to false
+## to go back to the old flow (corner alert button first, panel after pressing it).
+
+const AUTO_OPEN := true
+const OPTION_MIN_SIZE := Vector2(200, 80)
 
 @onready var alert_button: Button = %AlertButton
 @onready var panel: PanelContainer = %Panel
 @onready var title_label: Label = %TitleLabel
 @onready var description_label: Label = %DescriptionLabel
-@onready var options_container: VBoxContainer = %OptionsContainer
+@onready var options_container: HBoxContainer = %OptionsContainer
 
 var _event_id := ""
 
@@ -25,7 +32,10 @@ func _ready() -> void:
 
 func _on_event_available(event_id: String) -> void:
 	_event_id = event_id
-	alert_button.show()
+	if AUTO_OPEN:
+		_on_alert_pressed()
+	else:
+		alert_button.show()
 
 
 func _on_alert_pressed() -> void:
@@ -42,6 +52,10 @@ func _on_alert_pressed() -> void:
 		var option: Dictionary = options[i]
 		var button := Button.new()
 		button.text = option["text"]
+		# Options sit side by side, share the width equally and wrap long text.
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.custom_minimum_size = OPTION_MIN_SIZE
+		button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		button.disabled = not Inventory.can_afford(option["requires"])
 		button.pressed.connect(_on_option_pressed.bind(i))
 		options_container.add_child(button)
@@ -57,6 +71,8 @@ func _on_event_resolved(result_text: String) -> void:
 	description_label.text = result_text
 	var ok := Button.new()
 	ok.text = "Accept"
+	ok.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ok.custom_minimum_size = Vector2(0, 50)
 	ok.pressed.connect(_on_ok_pressed)
 	options_container.add_child(ok)
 
