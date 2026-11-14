@@ -9,6 +9,7 @@ extends Control
 
 const AUTO_OPEN := true
 const OPTION_MIN_SIZE := Vector2(200, 80)
+const PANEL_WIDTH := 700.0
 
 @onready var alert_button: Button = %AlertButton
 @onready var panel: PanelContainer = %Panel
@@ -23,11 +24,35 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	mouse_filter = Control.MOUSE_FILTER_IGNORE  # Don't swallow clicks meant for the game.
 	alert_button.hide()
+	_setup_panel_layout()
 	panel.hide()
 
 	alert_button.pressed.connect(_on_alert_pressed)
 	SignalManager.event_available.connect(_on_event_available)
 	SignalManager.event_resolved.connect(_on_event_resolved)
+
+
+## Centers the panel on the screen and lays the texts out above the options.
+## Done in code (as well as in ui.tscn) so it stays centered even if the scene
+## layout is changed or reset in the editor.
+func _setup_panel_layout() -> void:
+	# Anchor to the screen center and grow equally in every direction, so the
+	# panel stays centered whatever its content size is.
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.offset_left = 0.0
+	panel.offset_top = 0.0
+	panel.offset_right = 0.0
+	panel.offset_bottom = 0.0
+	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	panel.custom_minimum_size.x = PANEL_WIDTH
+
+	# Title and description on top, centered and wrapped to the panel width.
+	for label in [title_label, description_label]:
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	options_container.alignment = BoxContainer.ALIGNMENT_CENTER
 
 
 func _on_event_available(event_id: String) -> void:
