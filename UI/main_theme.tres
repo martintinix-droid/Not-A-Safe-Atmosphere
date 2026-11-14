@@ -2,15 +2,25 @@
 
 [ext_resource type="StyleBox" uid="uid://rfadgr0sbs0f" path="res://UI/UI resources/utton_test.tres" id="1_h32ur"]
 [ext_resource type="StyleBox" uid="uid://d4dsm4dtpvgtv" path="res://UI/UI resources/button_pressed_test.tres" id="2_7m7pu"]
+[ext_resource type="FontFile" uid="uid://ca3mkbilkvu6j" path="res://font/static/Inconsolata-Black.ttf" id="3_7m7pu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qm5hq"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [resource]
+default_font = ExtResource("3_7m7pu")
 Button/font_sizes/font_size = 40
+Button/styles/hover = SubResource("StyleBoxFlat_qm5hq")
 Button/styles/normal = ExtResource("1_h32ur")
 Button/styles/normal_mirrored = ExtResource("1_h32ur")
 Button/styles/pressed = ExtResource("2_7m7pu")
 HBoxContainer/constants/separation = 10
 ProgressBar/colors/font_color = Color(1, 1, 1, 1)
 ProgressBar/colors/font_outline_color = Color(0, 0, 0, 1)
+ProgressBar/constants/outline_size = 5
 TooltipLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 TooltipLabel/constants/outline_size = 4
 TooltipLabel/font_sizes/font_size = 25
