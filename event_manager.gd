@@ -18,6 +18,7 @@ var state := State.WAITING
 var _current_id := ""
 var _last_id := ""  # Avoids picking the same event twice in a row.
 var _timer := Timer.new()
+var _game_won := false  # Once true, no more events (the win screen is showing).
 
 
 func _ready() -> void:
@@ -32,6 +33,7 @@ func _ready() -> void:
 	SignalManager.event_open_requested.connect(_on_open_requested)
 	SignalManager.event_option_chosen.connect(_on_option_chosen)
 	SignalManager.event_dismissed.connect(_on_dismissed)
+	SignalManager.game_won.connect(_on_game_won)
 	_start_timer()
 
 
@@ -47,7 +49,16 @@ func _start_timer() -> void:
 	_timer.start(DEBUG_INTERVAL if DEBUG else randf_range(MIN_INTERVAL, MAX_INTERVAL))
 
 
+## The game was won: stop scheduling events. The game stays paused by the win
+## screen, so nothing here may unpause it any more.
+func _on_game_won() -> void:
+	_game_won = true
+	_timer.stop()
+
+
 func _on_timer_timeout() -> void:
+	if _game_won:
+		return
 	_current_id = _pick_event()
 	state = State.PENDING
 	get_tree().paused = true  # Only nodes with process_mode ALWAYS keep working.
@@ -72,6 +83,8 @@ func _on_option_chosen(index: int) -> void:
 
 
 func _on_dismissed() -> void:
+	if _game_won:
+		return  # Keep the game paused behind the win screen.
 	_last_id = _current_id
 	_current_id = ""
 	get_tree().paused = false
@@ -92,22 +105,3 @@ func _pick_event() -> String:
 		if roll <= 0.0:
 			return id
 	return ids.back()
-
-var _game_won := false  # Once true, no more events (the win screen is showing).
-
-# in _ready(), next to the other SignalManager connects
-	SignalManager.game_won.connect(_on_game_won)
-
-## The game was won: stop scheduling events. The game stays paused by the win
-## screen, so nothing here may unpause it any more.
-func _on_game_won() -> void:
-	_game_won = true
-	_timer.stop()
-
-func _on_timer_timeout() -> void:
-	if _game_won:
-		return 
-
-func _on_dismissed() -> void:
-	if _game_won:
-		return  # Keep the game paused behind the win screen.
