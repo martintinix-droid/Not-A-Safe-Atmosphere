@@ -13,6 +13,8 @@ extends Control
 const SWAP_OFFSET_X := 300.0
 ## Duration, in seconds, of every slide animation.
 const SWAP_DURATION := 0.5
+## Win screen shown when the research bar reaches 100% (see win_screen.gd).
+const WIN_SCREEN := preload("res://UI/win_screen.gd")
 
 
 # --- Node references ---
@@ -50,6 +52,9 @@ var _h_box_container_start_pos: Vector2
 
 var _current_building_tween: Tween
 
+## True once the research bar hit 100% (so the win is only announced once).
+var _game_won := false
+
 
 # --- Inventory panel state ---
 
@@ -69,8 +74,10 @@ func _ready() -> void:
 
 	_setup_building_panel()
 	_setup_inventory_panel()
-	
+
 	SignalManager.research_done.connect(increase_research)
+	add_child(WIN_SCREEN.new())  # Hidden until SignalManager.game_won is emitted.
+
 
 func _setup_building_panel() -> void:
 	_building_button_start_pos = building_button.position
@@ -205,24 +212,11 @@ func swap_inventory() -> void:
 		_inventory_tween.finished.connect(func() -> void:
 			inventory_panel.visible = false
 		)
-		
+
+
 # --- research mechanics ---
-func increase_research()-> void:
-	research_progerss.value += 1;
 
-
-# with the other constants
-const WIN_SCREEN := preload("res://UI/win_screen.gd")
-
-# with the other state variables
-## True once the research bar hit 100% (so the win is only announced once).
-var _game_won := false
-
-# at the end of _ready(), after the research_done connect
-	add_child(WIN_SCREEN.new())  # Hidden until SignalManager.game_won is emitted.
-
-# replaces the old increase_research()
-func increase_research()-> void:
+func increase_research() -> void:
 	if _game_won:
 		return
 	research_progerss.value += 1
