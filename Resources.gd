@@ -31,11 +31,9 @@ const DATA := {
 	# New resources: they start at 0 and need a generator/event to produce them.
 	IRON_ORE: {"name": "Iron Ore", "icon": PLACEHOLDER_DIR + "iron_ore.png", "start": 0},
 	ICE: {"name": "Ice", "icon": PLACEHOLDER_DIR + "ice.png", "start": 0},
-	SILICA: {"name": "Silica", "icon": PLACEHOLDER_DIR + "silica.png", "start": 0},
 	# Volcanic and hydrothermal minerals.
 	TITANIUM: {"name": "Titanium", "icon": PLACEHOLDER_DIR + "titanium.png", "start": 0},
 	ALUMINUM: {"name": "Aluminum", "icon": PLACEHOLDER_DIR + "aluminum.png", "start": 0},
-	COPPER: {"name": "Copper", "icon": PLACEHOLDER_DIR + "copper.png", "start": 0},
 	NICKEL: {"name": "Nickel", "icon": PLACEHOLDER_DIR + "nickel.png", "start": 0},
 	SULFUR: {"name": "Sulfur", "icon": PLACEHOLDER_DIR + "sulfur.png", "start": 0},
 	GYPSUM: {"name": "Gypsum", "icon": PLACEHOLDER_DIR + "gypsum.png", "start": 0},
