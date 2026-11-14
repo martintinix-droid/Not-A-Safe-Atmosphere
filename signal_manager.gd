@@ -56,3 +56,15 @@ signal game_lost
 ## A placed building (or the base) was clicked and can be upgraded.
 ## `target` must expose an `upgrade: UpgradeState` property.
 signal upgrade_requested(target: Node)
+
+# --- Audio feedback (see audio_manager.gd) ---
+
+## A ghost building was placed on the map (it now waits for its rover).
+signal building_placed
+
+## A rover arrived and a building started being constructed.
+## Emitted once per building; always paired with construction_finished.
+signal construction_started
+
+## A building finished being constructed (or left the scene mid-construction).
+signal construction_finished

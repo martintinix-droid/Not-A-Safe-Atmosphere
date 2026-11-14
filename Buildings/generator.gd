@@ -28,7 +28,7 @@ const COLOR_ACTIVE := Color(1, 1, 1, 1)
 const COLOR_DISABLED := Color(0.4, 0.4 ,0.4, 1)
 
 ## Id of the resource it produces (see Inventory). Set per scene.
-@export var resource_id := "energy"
+@export var resource_id := Resources.ENERGY
 @export var water_consumed := 1
 @export var energy_used := 1
 @onready var building_timer: Timer = $building_timer  # Construction duration.
@@ -47,6 +47,7 @@ var build_time := 0.0
 var building_id := ""
 var upgrade: UpgradeState
 
+var _construction_sound_on := false  # Keeps started/finished signals paired (see audio_manager.gd).
 var _rover_requested := false  # Already asked for its rover; avoids asking again on every re-click.
 
 var is_disabled:=false  # Switched off by an event.
@@ -60,6 +61,7 @@ var placeable: bool:
 
 
 func _ready() -> void:
+	assert(Resources.exists(resource_id), "Unknown resource_id: '%s'" % resource_id)
 	# Level 1 stats: output is 1, the rest comes from this scene's exports.
 	upgrade = UpgradeState.new(building_id, {
 		"output": 1,
@@ -108,6 +110,7 @@ func request_rover() -> bool:
 
 ## The rover arrived: construction starts.
 func start_rover_interaction() -> void:
+	_set_construction_sound(true)
 	if build_time > 0.0:
 		building_timer.start(build_time)
 	else:
@@ -129,12 +132,13 @@ func _on_clicked() -> void:
 	set_process(false)
 	state_changed.emit()
 	is_under_construction = true
+	SignalManager.building_placed.emit()
 
 
 func _on_production_tick() -> void:
 	Inventory.add(resource_id, upgrade.stats["output"])
-	Inventory.substract("water", upgrade.stats["water_consumed"])
-	Inventory.substract("energy", upgrade.stats["energy_used"])
+	Inventory.substract(Resources.WATER, upgrade.stats["water_consumed"])
+	Inventory.substract(Resources.ENERGY, upgrade.stats["energy_used"])
 
 
 func _on_state_changed() -> void:
@@ -142,6 +146,7 @@ func _on_state_changed() -> void:
 
 
 func _on_construction_finished() -> void:
+	_set_construction_sound(false)
 	is_under_construction = false
 	timer.start()
 	modulate = COLOR_ACTIVE
@@ -159,6 +164,23 @@ func _on_object_exited(_object: Node) -> void:
 	# Only turns green again once nothing is overlapping.
 	if is_placing and placeable:
 		modulate = COLOR_GHOST_VALID
+
+## If the building leaves the tree mid-construction (scene reload...), release its
+## share of the construction loop so the sound does not stay on forever.
+func _exit_tree() -> void:
+	_set_construction_sound(false)
+
+
+## Emits started/finished exactly once per change (see audio_manager.gd).
+func _set_construction_sound(on: bool) -> void:
+	if on == _construction_sound_on:
+		return
+	_construction_sound_on = on
+	if on:
+		SignalManager.construction_started.emit()
+	else:
+		SignalManager.construction_finished.emit()
+
 
 func is_active()-> bool:
 	return not is_placing and not is_under_construction
@@ -183,5 +205,3 @@ func destroy() -> void:
 	remove_from_group("buildings")
 	remove_from_group("interactables")
 	queue_free()
-	
-	
