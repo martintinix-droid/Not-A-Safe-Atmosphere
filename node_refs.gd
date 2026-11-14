@@ -6,3 +6,4 @@ extends Node
 ## can be deleted along with its entry in Project Settings > Autoload.
 
 var main_ref: Node
+var base_ref: Node  # base.gd registers itself; main.gd reads its build-time multiplier.

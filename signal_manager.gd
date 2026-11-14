@@ -46,3 +46,9 @@ signal event_dismissed
 # --- Research Mechanic ----
 
 signal research_done
+
+# --- Upgrades ---
+
+## A placed building (or the base) was clicked and can be upgraded.
+## `target` must expose an `upgrade: UpgradeState` property.
+signal upgrade_requested(target: Node)

@@ -177,6 +177,6 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="OptionsContainer" type="VBoxContainer" parent="Event UI/Panel/VBoxContainer" unique_id=2049405552]
+[node name="OptionsContainer" type="HBoxContainer" parent="Event UI/Panel/VBoxContainer" unique_id=895630382]
 unique_name_in_owner = true
 layout_mode = 2
