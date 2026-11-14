@@ -2,8 +2,9 @@ extends Node
 ## Autoload (singleton) that plays all the game's audio: background music,
 ## one-shot sound effects and the looping construction sound.
 ##
-## - Button clicks: every BaseButton that enters the scene tree is connected
-##   automatically (see _on_node_added), including buttons created by code.
+## - Button clicks: every BaseButton is connected automatically: the ones already
+##   in the scene (see _connect_existing_buttons) and the ones that appear later,
+##   including buttons created by code (see _on_node_added).
 ##   To silence a button: button.set_meta("no_click_sound", true).
 ## - Construction: generator.gd / research_lab.gd emit construction_started and
 ##   construction_finished through SignalManager. The loop plays while at least
@@ -48,6 +49,8 @@ func _ready() -> void:
 		_sfx_pool.append(player)
 
 	get_tree().node_added.connect(_on_node_added)
+	# Deferred: lets the main scene finish entering the tree before scanning it.
+	_connect_existing_buttons.call_deferred(get_tree().root)
 	SignalManager.building_placed.connect(play_sfx.bind(Sounds.PLACE))
 	SignalManager.construction_started.connect(_on_construction_started)
 	SignalManager.construction_finished.connect(_on_construction_finished)
@@ -121,10 +124,22 @@ func _prepare_loop(player: AudioStreamPlayer, stream: AudioStream) -> void:
 
 
 func _on_node_added(node: Node) -> void:
+	_connect_button(node)
+
+
+## node_added only reports nodes that enter the tree AFTER this autoload is ready,
+## so the buttons of the main scene (already in the tree) are connected here.
+func _connect_existing_buttons(node: Node) -> void:
+	_connect_button(node)
+	for child in node.get_children():
+		_connect_existing_buttons(child)
+
+
+func _connect_button(node: Node) -> void:
 	if not node is BaseButton:
 		return
 	var callback := _on_button_pressed.bind(node)
-	# A button that is reparented enters the tree again: never connect it twice.
+	# A button can be reached twice (scan + node_added, or a reparent): never connect it twice.
 	if not node.pressed.is_connected(callback):
 		node.pressed.connect(callback)
 
