@@ -2,7 +2,7 @@ extends CanvasLayer
 ## "You Win!" / "You Lose!" screen. Built entirely in code (no scene needed):
 ## ui.gd adds it as a child at startup and it stays hidden until
 ## SignalManager.game_won (research bar hit 100%) or SignalManager.game_lost
-## (the 100 second game_time timer in main.tscn ran out).
+## (the 100 second game_time timer ran out, or energy / water reached 0).
 ##
 ## When shown it PAUSES the whole game (rovers, generators, timers, events)
 ## and only this screen keeps running (process_mode = Always).
@@ -13,6 +13,8 @@ const TITLE_TEXT := "You Win!"
 const MESSAGE_TEXT := "Thank you for playing our game!"
 const LOSE_TITLE_TEXT := "You Lose!"
 const LOSE_MESSAGE_TEXT := "Time ran out before the research was finished."
+const LOSE_NO_ENERGY_TEXT := "You ran out of energy."
+const LOSE_NO_WATER_TEXT := "You ran out of water."
 const BUTTON_TEXT := "Play Again"
 
 const WIN_TITLE_COLOR := Color(1, 1, 1)
@@ -99,9 +101,15 @@ func _on_game_won() -> void:
 	_show_screen(TITLE_TEXT, MESSAGE_TEXT, WIN_TITLE_COLOR)
 
 
-## The 100 second timer ran out: freeze the game and show "You Lose!".
+## The game was lost: freeze it and show "You Lose!" with the reason (the
+## 100 second timer ran out, or energy / water hit 0).
 func _on_game_lost() -> void:
-	_show_screen(LOSE_TITLE_TEXT, LOSE_MESSAGE_TEXT, LOSE_TITLE_COLOR)
+	var message := LOSE_MESSAGE_TEXT
+	if Inventory.get_amount("energy") <= 0:
+		message = LOSE_NO_ENERGY_TEXT
+	elif Inventory.get_amount("water") <= 0:
+		message = LOSE_NO_WATER_TEXT
+	_show_screen(LOSE_TITLE_TEXT, message, LOSE_TITLE_COLOR)
 
 
 ## Shared by win and lose. The first one to arrive wins: if the screen is

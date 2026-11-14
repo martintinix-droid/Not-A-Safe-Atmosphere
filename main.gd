@@ -16,6 +16,12 @@ const INTERACTABLE_GROUP := "interactables"
 @onready var game_time: Timer = get_node_or_null("%game_time")
 const GAME_TIME_SECONDS := 100.0
 
+## Running out of any of these resources (reaching 0) loses the game.
+const CRITICAL_RESOURCES := ["energy", "water"]
+
+## True once the game was lost, so game_lost is only emitted once.
+var _game_over := false
+
 ## Building currently in "ghost" mode (spawned but not placed yet), if any.
 ## Prevents spawning a second building before the first one is placed, and
 ## gives the ghost priority when resolving a click.
@@ -32,10 +38,29 @@ func _ready() -> void:
 		game_time.one_shot = true
 		add_child(game_time)
 		game_time.start()
-	game_time.timeout.connect(func()-> void:
-		SignalManager.game_lost.emit()
-		)
+	game_time.timeout.connect(_lose_game)
+	Inventory.changed.connect(_on_inventory_changed)
 	_validate_resource_ids()
+
+
+## Energy or water reached 0: the outpost can't survive, so the game is lost.
+func _on_inventory_changed(id: String, amount: int) -> void:
+	if _game_over or amount > 0 or not CRITICAL_RESOURCES.has(id):
+		return
+	# The tutorial stops the timer while it runs, so it can't be lost there.
+	if game_time.is_stopped():
+		return
+	game_time.stop()
+	_lose_game()
+
+
+## Emits SignalManager.game_lost (win_screen.gd shows "You Lose!").
+func _lose_game() -> void:
+	if _game_over:
+		return
+	_game_over = true
+	SignalManager.game_lost.emit()
+
 
 # _unhandled_input (not _input): if a UI Control (e.g. a button) consumes the
 # click, it never reaches this function, so no rover is sent to the ground
