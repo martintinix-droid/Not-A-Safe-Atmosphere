@@ -47,6 +47,9 @@ signal event_dismissed
 
 signal research_done
 
+## The research bar reached 100%: the game is won. 
+signal game_won
+
 # --- Upgrades ---
 
 ## A placed building (or the base) was clicked and can be upgraded.
