@@ -7,8 +7,8 @@ extends RefCounted
 ##   "cost":  {resource id: amount}, paid with Inventory.spend().
 ##            Resource ids are ALWAYS Resources.* constants, never raw strings.
 ##   "stats": {stat name: NEW absolute value}. Stats not listed keep their value.
-## Level 1 values come from the node itself (generator.gd: output = 1 and its
-## exported energy_used / water_consumed; base.gd: max_rovers, multiplier).
+## Level 1 values come from the node itself (generator.gd: its exported output /
+## energy_used / water_consumed; base.gd: max_rovers, multiplier).
 ## Max level = levels.size() + 1.
 ##
 ## To make something upgradable: add an entry here and give the node an
@@ -27,12 +27,12 @@ const DATA := {
 		"name": "Energy generator",
 		"levels": [
 			{
-				"cost": {Resources.BASALT_ROCK: 20, Resources.REGOLITH: 10, Resources.ROCK_1: 4},
-				"stats": {"output": 2},
+				"cost": {Resources.BASALT_ROCK: 4, Resources.REGOLITH: 2},
+				"stats": {"output": 8},
 			},
 			{
-				"cost": {Resources.BASALT_ROCK: 40, Resources.REGOLITH: 25, Resources.ROCK_1: 10},
-				"stats": {"output": 3},
+				"cost": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 4},
+				"stats": {"output": 10},
 			},
 		],
 	},
@@ -40,26 +40,25 @@ const DATA := {
 		"name": "Water generator",
 		"levels": [
 			{
-				"cost": {Resources.BASALT_ROCK: 30, Resources.REGOLITH: 20, Resources.ROCK_1: 8},
-				"stats": {"output": 2},
+				"cost": {Resources.BASALT_ROCK: 5, Resources.REGOLITH: 3},
+				"stats": {"output": 8},
 			},
 			{
-				"cost": {Resources.BASALT_ROCK: 60, Resources.REGOLITH: 40, Resources.ROCK_1: 16},
-				"stats": {"output": 3},
+				"cost": {Resources.BASALT_ROCK: 10, Resources.REGOLITH: 6},
+				"stats": {"output": 10},
 			},
 		],
 	},
-	# Mining: more output, but it also eats more energy (adjust to your level-1 energy_used).
 	"Basalt Rock": {
 		"name": "Basalt miner",
 		"levels": [
 			{
-				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 30},
-				"stats": {"output": 2, "energy_used": 2},
+				"cost": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 10},
+				"stats": {"output": 3, "energy_used": 2},
 			},
 			{
-				"cost": {Resources.ENERGY: 40, Resources.WATER: 40, Resources.BASALT_ROCK: 60},
-				"stats": {"output": 3, "energy_used": 4},
+				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20},
+				"stats": {"output": 4, "energy_used": 3},
 			},
 		],
 	},
@@ -67,12 +66,12 @@ const DATA := {
 		"name": "Regolith miner",
 		"levels": [
 			{
-				"cost": {Resources.ENERGY: 30, Resources.WATER: 30, Resources.ROCK_1: 30},
+				"cost": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 10, Resources.REGOLITH: 3},
 				"stats": {"output": 2, "energy_used": 2},
 			},
 			{
-				"cost": {Resources.ENERGY: 60, Resources.WATER: 60, Resources.ROCK_1: 60},
-				"stats": {"output": 3, "energy_used": 4},
+				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 6},
+				"stats": {"output": 3, "energy_used": 3},
 			},
 		],
 	},
@@ -80,18 +79,12 @@ const DATA := {
 		"name": "Base",
 		"levels": [
 			{
-				"cost": {
-					Resources.ENERGY: 40, Resources.WATER: 40,
-					Resources.BASALT_ROCK: 40, Resources.REGOLITH: 20,
-				},
+				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 6},
 				"stats": {"max_rovers": 4, "build_time_multiplier": 0.8},
 			},
 			{
-				"cost": {
-					Resources.ENERGY: 80, Resources.WATER: 80,
-					Resources.BASALT_ROCK: 80, Resources.REGOLITH: 40,
-				},
-				"stats": {"max_rovers": 5, "build_time_multiplier": 0.6},
+				"cost": {Resources.ENERGY: 40, Resources.WATER: 40, Resources.BASALT_ROCK: 40, Resources.REGOLITH: 15},
+				"stats": {"max_rovers": 5, "build_time_multiplier": 0.65},
 			},
 		],
 	},

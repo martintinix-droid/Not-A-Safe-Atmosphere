@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://cw3vfrpecpoib"]
 
-[ext_resource type="Texture2D" uid="uid://byil7ukwswhfg" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/space_outpost_buildings_separate/mining_extractor.png" id="1_lqugl"]
+[ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_bpee3"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_l4tji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(352.945, 449.5501)
+size = Vector2(1346, 1239.7751)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-texture = ExtResource("1_lqugl")
+texture = ExtResource("1_bpee3")
 script = ExtResource("2_l4tji")
 resource_id = "Aluminum"
 
@@ -20,7 +20,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(-0.47250366, 0.22494507)
+position = Vector2(4.9999695, 6.1124573)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]

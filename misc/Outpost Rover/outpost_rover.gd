@@ -47,6 +47,7 @@ var base_position: Vector2     # Where the rover returns to afterwards.
 @export var texture_up_left: Texture2D
 @export var texture_up: Texture2D
 @export var texture_up_right: Texture2D
+@export var progress_font_size := 32
 @export_group("")
 
 # --- Runtime state ---
@@ -79,11 +80,11 @@ func _ready() -> void:
 	progress_bar.value = 0.0
 	progress_bar.visible = false
 	progress_bar.theme = theme
+	progress_bar.add_theme_font_size_override("font_size", progress_font_size)
 	progress_bar.z_index = 1
 	# Position it overhead (adjust X and Y offsets to fit your sprite size)
 	progress_bar.position = Vector2(-25, -45)
-	progress_bar.size = Vector2(50, 10)
-	
+	progress_bar.size = Vector2(500, 100)
 	add_child(progress_bar)
 
 

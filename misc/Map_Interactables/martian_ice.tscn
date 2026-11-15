@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dkvrqrl3q2x5v"]
+
+[ext_resource type="Texture2D" uid="uid://c4xh470cn462y" path="res://Resources Sprites/Martian_ice.png" id="1_5t785"]
+[ext_resource type="Script" uid="uid://ugu1k37uoa0e" path="res://misc/Map_Interactables/ground_resource.gd" id="2_vm7jw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wv4nr"]
+size = Vector2(496.45404, 277.30502)
+
+[node name="Sprite2D" type="Sprite2D" unique_id=1813133776]
+z_index = -2
+scale = Vector2(0.705, 0.705)
+texture = ExtResource("1_5t785")
+script = ExtResource("2_vm7jw")
+resource_id = "Ice"
+
+[node name="Timer" type="Timer" parent="." unique_id=1081491101]
+unique_name_in_owner = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1135118527]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1520663410]
+position = Vector2(82.2695, 23.04964)
+scale = Vector2(0.99999976, 0.99999994)
+shape = SubResource("RectangleShape2D_wv4nr")

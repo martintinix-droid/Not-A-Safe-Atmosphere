@@ -14,7 +14,7 @@ extends RefCounted
 ##           {"type": "resource", "id": String, "amount": int}
 ##           {"type": "disable_generator", "target": String, "count": int, "duration": float}
 ##           {"type": "destroy_generator", "target": String, "count": int}
-##           "target" is a generator resource_id ("energy", "water"...) or "any".
+##           "target" is a generator resource_id (Resources.ENERGY, Resources.WATER...) or "any".
 ##           "duration" <= 0 means the generator stays off permanently.
 ##       "result":   text shown after choosing.
 ##
@@ -27,23 +27,22 @@ const DATA := {
 		"weight": 1.0,
 		"options": [
 			{
-				## Reformat
-				"text": "Reinforce Your Generators (Requires: 5 Basalt Rocks and 5 Regolith)",
-				"requires": {"Basalt Rock": 5, "Regolith": 5},
+				"text": "Reinforce your generators (Requires: 8 Basalt Rock and 4 Regolith)",
+				"requires": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 4},
 				"effects": [
-					{"type": "resource", "id": "Basalt Rock", "amount": -5},
-					{"type": "resource", "id": "Regolith", "amount": -5},
+					{"type": "resource", "id": Resources.BASALT_ROCK, "amount": -8},
+					{"type": "resource", "id": Resources.REGOLITH, "amount": -4},
 				],
-				"result": "you lost some resources",
+				"result": "The reinforced generators ride out the storm. You used 8 Basalt Rock and 4 Regolith.",
 			},
 			{
-				"text": "extra resource and generator stops",
+				"text": "Squeeze extra power out of the storm",
 				"requires": {},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": 8},
-					{"type": "disable_generator", "target": "energy", "count": 1, "duration": 60.0},
+					{"type": "resource", "id": Resources.ENERGY, "amount": 10},
+					{"type": "disable_generator", "target": Resources.ENERGY, "count": 1, "duration": 45.0},
 				],
-				"result": "a generator jams for a minute",
+				"result": "You gain 10 energy, but a generator jams for 45 seconds.",
 			},
 		],
 	},
@@ -53,12 +52,12 @@ const DATA := {
 		"weight": 1.0,
 		"options": [
 			{
-				"text": "Reinforce the beam (Requires: 3 Basalt Rock)",
-				"requires": {"Basalt Rock": 3},
+				"text": "Reinforce the beam (Requires: 10 Basalt Rock)",
+				"requires": {Resources.BASALT_ROCK: 10},
 				"effects": [
-					{"type": "resource", "id": "Basalt Rock", "amount": -3},
+					{"type": "resource", "id": Resources.BASALT_ROCK, "amount": -10},
 				],
-				"result": "The beam is reinforced. You used 3 Basalt Rock.",
+				"result": "The beam is reinforced. You used 10 Basalt Rock.",
 			},
 			{
 				"text": "Leave it and keep working",
@@ -76,11 +75,11 @@ const DATA := {
 		"weight": 0.8,
 		"options": [
 			{
-				"text": "Raise a debris shield (Requires: 15 Basalt Rock and 10 Regolith)",
-				"requires": {"Basalt Rock": 15, "Regolith": 10},
+				"text": "Raise a debris shield (Requires: 15 Basalt Rock and 8 Regolith)",
+				"requires": {Resources.BASALT_ROCK: 15, Resources.REGOLITH: 8},
 				"effects": [
-					{"type": "resource", "id": "Basalt Rock", "amount": -15},
-					{"type": "resource", "id": "Regolith", "amount": -10},
+					{"type": "resource", "id": Resources.BASALT_ROCK, "amount": -15},
+					{"type": "resource", "id": Resources.REGOLITH, "amount": -8},
 				],
 				"result": "The shield holds. Meteors burn up harmlessly above the base.",
 			},
@@ -101,21 +100,21 @@ const DATA := {
 		"options": [
 			{
 				"text": "Shut down non-essential systems (Requires: 20 Energy)",
-				"requires": {"energy": 20},
+				"requires": {Resources.ENERGY: 20},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -20},
-					{"type": "disable_generator", "target": "energy", "count": 1, "duration": 30.0},
+					{"type": "resource", "id": Resources.ENERGY, "amount": -20},
+					{"type": "disable_generator", "target": Resources.ENERGY, "count": 1, "duration": 20.0},
 				],
-				"result": "You power down in time. Generators restart after 30 seconds.",
+				"result": "You power down in time. The generator restarts after 20 seconds.",
 			},
 			{
 				"text": "Ride it out",
 				"requires": {},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -15},
-					{"type": "disable_generator", "target": "energy", "count": 2, "duration": 60.0},
+					{"type": "resource", "id": Resources.ENERGY, "amount": -15},
+					{"type": "disable_generator", "target": Resources.ENERGY, "count": 2, "duration": 45.0},
 				],
-				"result": "The flare fries the circuits. Energy is lost and two generators go offline for a minute.",
+				"result": "The flare fries the circuits. Energy is lost and two generators go offline for 45 seconds.",
 			},
 		],
 	},
@@ -126,10 +125,10 @@ const DATA := {
 		"options": [
 			{
 				"text": "Patch the pipes (Requires: 8 Regolith)",
-				"requires": {"Regolith": 8},
+				"requires": {Resources.REGOLITH: 8},
 				"effects": [
-					{"type": "resource", "id": "Regolith", "amount": -8},
-					{"type": "resource", "id": "water", "amount": -5},
+					{"type": "resource", "id": Resources.REGOLITH, "amount": -8},
+					{"type": "resource", "id": Resources.WATER, "amount": -5},
 				],
 				"result": "The leak is sealed quickly. Only a little water escapes.",
 			},
@@ -137,8 +136,8 @@ const DATA := {
 				"text": "Ignore it and keep working",
 				"requires": {},
 				"effects": [
-					{"type": "resource", "id": "water", "amount": -20},
-					{"type": "disable_generator", "target": "water", "count": 1, "duration": 40.0},
+					{"type": "resource", "id": Resources.WATER, "amount": -20},
+					{"type": "disable_generator", "target": Resources.WATER, "count": 1, "duration": 40.0},
 				],
 				"result": "Water drains away and the water generator stalls for 40 seconds.",
 			},
@@ -151,9 +150,9 @@ const DATA := {
 		"options": [
 			{
 				"text": "Divert power to storage (Requires: 10 Energy)",
-				"requires": {"energy": 10},
+				"requires": {Resources.ENERGY: 10},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -10},
+					{"type": "resource", "id": Resources.ENERGY, "amount": -10},
 				],
 				"result": "The surge is absorbed. A small amount of energy is lost.",
 			},
@@ -161,8 +160,8 @@ const DATA := {
 				"text": "Let it pass through the grid",
 				"requires": {},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -10},
-					{"type": "disable_generator", "target": "energy", "count": 1, "duration": 45.0},
+					{"type": "resource", "id": Resources.ENERGY, "amount": -10},
+					{"type": "disable_generator", "target": Resources.ENERGY, "count": 1, "duration": 45.0},
 				],
 				"result": "A generator overloads and shuts down for 45 seconds.",
 			},
@@ -175,10 +174,10 @@ const DATA := {
 		"options": [
 			{
 				"text": "Repair it with spare parts (Requires: 10 Basalt Rock and 5 Regolith)",
-				"requires": {"Basalt Rock": 10, "Regolith": 5},
+				"requires": {Resources.BASALT_ROCK: 10, Resources.REGOLITH: 5},
 				"effects": [
-					{"type": "resource", "id": "Basalt Rock", "amount": -10},
-					{"type": "resource", "id": "Regolith", "amount": -5},
+					{"type": "resource", "id": Resources.BASALT_ROCK, "amount": -10},
+					{"type": "resource", "id": Resources.REGOLITH, "amount": -5},
 				],
 				"result": "The rover is repaired and running smoothly.",
 			},
@@ -199,9 +198,9 @@ const DATA := {
 		"options": [
 			{
 				"text": "Brace the structures (Requires: 20 Basalt Rock)",
-				"requires": {"Basalt Rock": 20},
+				"requires": {Resources.BASALT_ROCK: 20},
 				"effects": [
-					{"type": "resource", "id": "Basalt Rock", "amount": -20},
+					{"type": "resource", "id": Resources.BASALT_ROCK, "amount": -20},
 				],
 				"result": "The supports hold, and the quake passes.",
 			},
@@ -210,7 +209,7 @@ const DATA := {
 				"requires": {},
 				"effects": [
 					{"type": "destroy_generator", "target": "any", "count": 1},
-					{"type": "resource", "id": "Regolith", "amount": -10},
+					{"type": "resource", "id": Resources.REGOLITH, "amount": -10},
 				],
 				"result": "The quake cracks a building beyond repair and scatters some regolith.",
 			},
@@ -225,18 +224,18 @@ const DATA := {
 				"text": "Open the capsule carefully",
 				"requires": {},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": 15},
-					{"type": "resource", "id": "water", "amount": 15},
+					{"type": "resource", "id": Resources.ENERGY, "amount": 20},
+					{"type": "resource", "id": Resources.WATER, "amount": 20},
 				],
 				"result": "The capsule holds energy cells and water.",
 			},
 			{
 				"text": "Cut it open with a torch (Requires: 5 Energy)",
-				"requires": {"energy": 5},
+				"requires": {Resources.ENERGY: 5},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -5},
-					{"type": "resource", "id": "energy", "amount": 30},
-					{"type": "resource", "id": "water", "amount": 30},
+					{"type": "resource", "id": Resources.ENERGY, "amount": -5},
+					{"type": "resource", "id": Resources.ENERGY, "amount": 40},
+					{"type": "resource", "id": Resources.WATER, "amount": 40},
 				],
 				"result": "The torch gets at the supplies. Double the loot.",
 			},
@@ -249,9 +248,9 @@ const DATA := {
 		"options": [
 			{
 				"text": "Ground the buildings (Requires: 10 Regolith)",
-				"requires": {"Regolith": 10},
+				"requires": {Resources.REGOLITH: 10},
 				"effects": [
-					{"type": "resource", "id": "Regolith", "amount": -10},
+					{"type": "resource", "id": Resources.REGOLITH, "amount": -10},
 				],
 				"result": "The discharge goes harmlessly into the ground.",
 			},
@@ -259,8 +258,8 @@ const DATA := {
 				"text": "Wait it out",
 				"requires": {},
 				"effects": [
-					{"type": "resource", "id": "energy", "amount": -12},
-					{"type": "disable_generator", "target": "water", "count": 1, "duration": 35.0},
+					{"type": "resource", "id": Resources.ENERGY, "amount": -12},
+					{"type": "disable_generator", "target": Resources.WATER, "count": 1, "duration": 35.0},
 				],
 				"result": "Sparks arc across the base and the water generator trips offline for 35 seconds.",
 			},

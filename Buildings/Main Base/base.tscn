@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cqj5jm08bknao"]
 
-[ext_resource type="Texture2D" uid="uid://606qcmqxxfa" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/base.png" id="1_d0183"]
+[ext_resource type="Texture2D" uid="uid://wy0bl14p57lc" path="res://building_sprites/Isolated_Pixel-Art_Sci-Fi_Lander.png" id="1_d0183"]
 [ext_resource type="Script" uid="uid://b66yujwq7w4tl" path="res://Buildings/Main Base/base.gd" id="2_f5mig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wv4nr"]
-size = Vector2(245, 316)
+size = Vector2(852, 1211)
 
 [node name="Base" type="Sprite2D" unique_id=355884804]
 texture = ExtResource("1_d0183")
@@ -13,5 +13,5 @@ script = ExtResource("2_f5mig")
 [node name="Area2D" type="Area2D" parent="." unique_id=1846121810]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=522652822]
-position = Vector2(1.5, -2)
+position = Vector2(3, -26.5)
 shape = SubResource("RectangleShape2D_wv4nr")

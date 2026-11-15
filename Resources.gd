@@ -23,21 +23,21 @@ const PLACEHOLDER_DIR := "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/It
 const SPRITES_DIR := "res://Resources Sprites/"
 ## id -> { "name": UI text, "icon": texture path, "start": starting amount }
 const DATA := {
-	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 1000},
-	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 1000},
-	BASALT_ROCK: {"name": "Basalt Rock", "icon": PLACEHOLDER_DIR + "mineral1.jpg", "start": 10000},
-	REGOLITH: {"name": "Regolith", "icon": PLACEHOLDER_DIR + "mineral2.jpg", "start": 10000},
-	ROCK_1: {"name": "Rock 1", "icon": PLACEHOLDER_DIR + "rock1.jpg", "start": 10000},
+	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 100},
+	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 100},
+	BASALT_ROCK: {"name": "Basalt Rock", "icon": SPRITES_DIR + "basalt.png", "start": 0},
+	REGOLITH: {"name": "Regolith", "icon": SPRITES_DIR + "regolith.png", "start": 0},
+	ROCK_1: {"name": "Rock 1", "icon": PLACEHOLDER_DIR + "rock1.jpg", "start": 0},
 	# New resources: they start at 0 and need a generator/event to produce them.
 	IRON_ORE: {"name": "Iron Ore", "icon": PLACEHOLDER_DIR + "iron_ore.png", "start": 0},
-	ICE: {"name": "Ice", "icon": PLACEHOLDER_DIR + "ice.png", "start": 0},
+	ICE: {"name": "Ice", "icon": SPRITES_DIR + "Martian_ice.png", "start": 0},
 	# Volcanic and hydrothermal minerals.
 	TITANIUM: {"name": "Titanium", "icon": PLACEHOLDER_DIR + "titanium.png", "start": 0},
 	ALUMINUM: {"name": "Aluminum", "icon": PLACEHOLDER_DIR + "aluminum.png", "start": 0},
 	NICKEL: {"name": "Nickel", "icon": PLACEHOLDER_DIR + "nickel.png", "start": 0},
-	SULFUR: {"name": "Sulfur", "icon": PLACEHOLDER_DIR + "sulfur.png", "start": 0},
+	SULFUR: {"name": "Sulfur", "icon": SPRITES_DIR + "sulfur.png", "start": 0},
 	GYPSUM: {"name": "Gypsum", "icon": PLACEHOLDER_DIR + "gypsum.png", "start": 0},
-	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": PLACEHOLDER_DIR + "soluble_salts.png", "start": 0},
+	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": SPRITES_DIR + "Soluble_Salts.png", "start": 0},
 }
 
 static func ids() -> Array:

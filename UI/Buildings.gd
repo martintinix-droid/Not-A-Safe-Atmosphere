@@ -15,56 +15,56 @@ extends Node
 ## To add a building: add an entry here, plus a button and an entry in
 ## ui.gd (_building_buttons).
 
-##build_time for the thingies
-##E:8, W:15, B:5, R:10 RL: 10 I:7.5 ICE:15
+## Costs and build times come from the balance model (target: 10-15 min per game).
+## Rock 1 only comes from rocks on the map, so its costs are what limits expansion.
 const DATA := {
 	"energy": {
 		"scene": preload("uid://b7ux8e48tnrv3"),
-		"materials": {"Basalt Rock": 10, "Regolith": 2, "rock 1": 2},
-		"build_time": 1.0,
+		"materials": {Resources.BASALT_ROCK: 6, Resources.REGOLITH: 2, Resources.ROCK_1: 2},
+		"build_time": 8.0,
 	},
 	"water": {
 		"scene": preload("uid://cv1m1r8gxkird"),
-		"materials": {"Basalt Rock": 15, "Regolith": 10, "rock 1": 4},
-		"build_time": 1.0,
+		"materials": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 4, Resources.ROCK_1: 2},
+		"build_time": 15.0,
 	},
 	"Basalt Rock": {
 		"scene": preload("uid://di17c2btd7sur"),
-		"materials": {"energy": 10, "water": 10, "Basalt Rock": 15},
-		"build_time": 1.0,
+		"materials": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 8, Resources.ROCK_1: 2},
+		"build_time": 5.0,
 	},
 	"Regolith": {
 		"scene": preload("uid://cpwyv4m8w6jd0"),
-		"materials": {"energy": 15, "water": 15, "rock 1": 20, "Regolith": 5},
-		"build_time": 1.0,
+		"materials": {Resources.ENERGY: 12, Resources.WATER: 12, Resources.BASALT_ROCK: 10, Resources.REGOLITH: 3, Resources.ROCK_1: 2},
+		"build_time": 10.0,
 	},
 	"Research Lab": {
 		"scene": preload("uid://cabh0jrbk6l7u"),
-		"materials": {"energy": 50, "water": 50, "rock 1": 20, "Regolith": 5},
-		"build_time": 1.0,
+		"materials": {Resources.ENERGY: 40, Resources.WATER: 40, Resources.BASALT_ROCK: 25, Resources.REGOLITH: 10, Resources.ROCK_1: 4},
+		"build_time": 10.0,
 	},
 	"Iron_Ore": {
 		##Revisit to make it logical in game
 		"scene": preload("uid://dkq6dc5387vd"),
-		"materials": {"energy": 10, "water": 20, "rock 1": 12},
-		"build_time": 1.0,
+		"materials": {Resources.ENERGY: 12, Resources.WATER: 12, Resources.BASALT_ROCK: 12, Resources.ROCK_1: 2},
+		"build_time": 7.5,
 	},
 	"Ice": {
 		##PlaceHolder Image
 		"scene": preload("uid://bbsnx2ivayv5r"),
-		"materials": {"energy": 15, "water": 30 , "rock 1": 15, "Basalt Rock": 20},
-		"build_time": 1.0,
+		"materials": {Resources.ENERGY: 15, Resources.WATER: 15, Resources.BASALT_ROCK: 15, Resources.REGOLITH: 5, Resources.ROCK_1: 2},
+		"build_time": 15.0,
 	},
 	"Titanium": {
 		##PlaceHolder Image
 		"scene": preload("uid://cjgnr4alsge2n"),
-		"materials": {"energy": 20, "water": 20 , "rock 1": 15, "Basalt Rock": 20},
+		"materials": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 8, Resources.ROCK_1: 3},
 		"build_time": 10.0,
 	},
 	"Aluminum": {
 		##PlaceHolder Image
 		"scene": preload("uid://cw3vfrpecpoib"),
-		"materials": {"energy": 25, "water": 20 , "rock 1": 10, "Basalt Rock": 25},
+		"materials": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 8, Resources.ROCK_1: 3},
 		"build_time": 10.0,
 	},
 }

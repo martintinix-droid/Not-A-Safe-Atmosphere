@@ -29,6 +29,7 @@ const COLOR_DISABLED := Color(0.4, 0.4 ,0.4, 1)
 
 ## Id of the resource it produces (see Inventory). Set per scene.
 @export var resource_id := Resources.ENERGY
+@export var output := 1
 @export var water_consumed := 1
 @export var energy_used := 1
 @onready var building_timer: Timer = $building_timer  # Construction duration.
@@ -64,7 +65,7 @@ func _ready() -> void:
 	assert(Resources.exists(resource_id), "Unknown resource_id: '%s'" % resource_id)
 	# Level 1 stats: output is 1, the rest comes from this scene's exports.
 	upgrade = UpgradeState.new(building_id, {
-		"output": 1,
+		"output": output,
 		"energy_used": energy_used,
 		"water_consumed": water_consumed,
 	})

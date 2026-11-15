@@ -68,3 +68,8 @@ signal construction_started
 
 ## A building finished being constructed (or left the scene mid-construction).
 signal construction_finished
+
+# --- Game timer ---
+
+## Main -> UI: whole seconds left on the game timer. Only emitted when the number changes.
+signal time_left_changed(seconds_left: int)

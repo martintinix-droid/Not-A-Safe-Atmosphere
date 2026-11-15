@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://b7ux8e48tnrv3"]
 
-[ext_resource type="Texture2D" uid="uid://brsn0w3g7hjxi" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/space_outpost_buildings_separate/energy_building.png" id="1_aegjf"]
+[ext_resource type="Texture2D" uid="uid://8uy3ntjrq5qr" path="res://building_sprites/generator.png" id="1_aegjf"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_aegjf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(352.945, 449.5501)
+size = Vector2(1332, 1220)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
 texture = ExtResource("1_aegjf")
@@ -19,7 +19,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(-0.47250366, 0.22494507)
+position = Vector2(32.99997, 14.0000305)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]

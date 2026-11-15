@@ -4,8 +4,8 @@ extends Node
 ##       -> ACTIVE (panel open) -> result -> dismissed -> WAITING.
 ## The timer restarts when the event is dismissed, so intervals never stack.
 
-const MIN_INTERVAL := 300.0  # 5 min
-const MAX_INTERVAL := 360.0  # 6 min
+const MIN_INTERVAL := 90.0
+const MAX_INTERVAL := 120.0
 ## While DEBUG is true: events fire every DEBUG_INTERVAL seconds, and F12
 ## force-closes a pending/active event (emergency unpause).
 const DEBUG := false
@@ -32,7 +32,7 @@ func _ready() -> void:
 
 	SignalManager.event_open_requested.connect(_on_open_requested)
 	SignalManager.event_option_chosen.connect(_on_option_chosen)
-	SignalManager.event_dismissed.connect(_on_dismissed2)
+	SignalManager.event_dismissed.connect(_on_dismissed)
 	SignalManager.game_won.connect(_on_game_won)
 	SignalManager.game_lost.connect(_on_game_won)  # Losing needs the same cleanup.
 	_start_timer()
@@ -65,6 +65,7 @@ func _on_timer_timeout() -> void:
 	get_tree().paused = true  # Only nodes with process_mode ALWAYS keep working.
 	print("[EventManager] event available: ", _current_id)
 	SignalManager.event_available.emit(_current_id)
+
 
 func _on_open_requested() -> void:
 	if state != State.PENDING:
@@ -106,17 +107,3 @@ func _pick_event() -> String:
 		if roll <= 0.0:
 			return id
 	return ids.back()
-
-
-# in _ready(), next to the other SignalManager connects
-
-## The game was won: stop scheduling events. The game stays paused by the win
-## screen, so nothing here may unpause it any more.
-
-func _on_timer_timeout2() -> void:
-	if _game_won:
-		return 
-
-func _on_dismissed2() -> void:
-	if _game_won:
-		return  # Keep the game paused behind the win screen.

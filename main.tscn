@@ -19,7 +19,7 @@ position = Vector2(-199, -27)
 [node name="CanvasLayer" parent="Camera Manager/Camera2D" parent_id_path=PackedInt32Array(647902066, 713913534) index="0" unique_id=2096557628 instance=ExtResource("3_h2yge")]
 
 [node name="Sprite2D" parent="." unique_id=1813133776 instance=ExtResource("5_lquwl")]
-position = Vector2(152, -78)
+position = Vector2(611, -101)
 
 [node name="Event Manager" type="Node" parent="." unique_id=1431144764]
 script = ExtResource("6_7mycd")
@@ -32,7 +32,7 @@ texture = ExtResource("7_272bh")
 
 [node name="game_time" type="Timer" parent="." unique_id=1703760314]
 unique_name_in_owner = true
-wait_time = 100000000.0
+wait_time = 900.0
 autostart = true
 
 [editable path="Camera Manager"]

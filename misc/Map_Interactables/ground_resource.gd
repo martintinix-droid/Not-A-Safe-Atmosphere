@@ -1,7 +1,7 @@
 extends Sprite2D
 ## Gatherable resource placed on the map (e.g. a Basalt rock). The player
 ## clicks it, a rover is sent over, and after `interaction_time` seconds the
-## rock gives one unit of `resource_id` to the Inventory and removes itself.
+## rock gives `amount` units of `resource_id` to the Inventory and removes itself.
 ##
 ## It implements the interactable interface that base.gd and outpost_rover.gd
 ## expect (see outpost_rover.gd): request_rover(), start_rover_interaction()
@@ -20,6 +20,8 @@ signal clicked
 @export var resource_id := "Basalt Rock"
 ## Seconds the rover spends gathering once it arrives.
 @export var interaction_time := 5
+## Units it gives to the Inventory when gathered (see the balance numbers).
+@export var amount := 1
 
 @onready var timer: Timer = %Timer  # Gathering countdown.
 
@@ -60,6 +62,6 @@ func _on_clicked() -> void:
 ## Gathering finished: give the resource, let the rover head back, and remove
 ## this node from the map.
 func _on_interaction_finished() -> void:
-	Inventory.add(resource_id)
+	Inventory.add(resource_id, amount)
 	rover_interaction_finished.emit()
 	queue_free()

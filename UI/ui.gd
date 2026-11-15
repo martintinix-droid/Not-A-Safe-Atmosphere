@@ -34,6 +34,7 @@ const TUTORIAL := preload("res://UI/tutorial.gd")
 @onready var ice: Button = %Ice
 @onready var titanium: Button = %Titanium
 @onready var aluminum: Button = %Aluminum
+@onready var countdown: Label = %Countdown
 
 ## Inventory background. The resource grid is its child, so it moves with it.
 @onready var inventory_panel: NinePatchRect = %NinePatchRect
@@ -77,6 +78,7 @@ var _inventory_closed_pos: Vector2
 var _inventory_open := false
 var _inventory_tween: Tween
 
+const RESEARCH_PER_TICK := 0.005  # Fraction of the bar per lab tick.
 
 func _ready() -> void:
 	# This panel covers the whole screen; if the root Control absorbed clicks,
@@ -87,6 +89,7 @@ func _ready() -> void:
 	_setup_inventory_panel()
 
 	SignalManager.research_done.connect(increase_research)
+	SignalManager.time_left_changed.connect(_on_time_left_changed)
 	add_child(WIN_SCREEN.new())  # Hidden until SignalManager.game_won is emitted.
 	add_child(TUTORIAL.new())    # Only shows the first time the game starts.
 
@@ -231,8 +234,11 @@ func swap_inventory() -> void:
 func increase_research() -> void:
 	if _game_won:
 		return
-	research_progerss.value += 1
+	research_progerss.value += research_progerss.max_value * RESEARCH_PER_TICK
 	# 100% reached: tell everyone the game is won (win_screen.gd pauses the game).
 	if research_progerss.value >= research_progerss.max_value:
 		_game_won = true
 		SignalManager.game_won.emit()
+
+func _on_time_left_changed(seconds_left: int) -> void:
+	countdown.text ="Time Left: "+ "%d:%02d" % [floori(seconds_left / 60.0), seconds_left % 60]

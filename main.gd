@@ -42,6 +42,16 @@ func _ready() -> void:
 	Inventory.changed.connect(_on_inventory_changed)
 	_validate_resource_ids()
 
+var _last_seconds_left := -1  # -1 so the first frame always emits
+
+
+func _process(_delta: float) -> void:
+	# ceili: the label shows 0:01 until the very end, never 0:00 too early.
+	var seconds_left := ceili(game_time.time_left)
+	if seconds_left != _last_seconds_left:
+		_last_seconds_left = seconds_left
+		SignalManager.time_left_changed.emit(seconds_left)
+
 
 ## Energy or water reached 0: the outpost can't survive, so the game is lost.
 func _on_inventory_changed(id: String, amount: int) -> void:

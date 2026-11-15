@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://1rltwaxfma31"]
+
+[ext_resource type="Texture2D" uid="uid://bsfcwppf5sjjo" path="res://Resources Sprites/regolith.png" id="1_naah5"]
+[ext_resource type="Script" uid="uid://ugu1k37uoa0e" path="res://misc/Map_Interactables/ground_resource.gd" id="2_01yp7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wv4nr"]
+size = Vector2(665.30566, 281.6547)
+
+[node name="Sprite2D" type="Sprite2D" unique_id=1813133776]
+z_index = -2
+scale = Vector2(0.685, 0.695)
+texture = ExtResource("1_naah5")
+script = ExtResource("2_01yp7")
+resource_id = "Regolith"
+
+[node name="Timer" type="Timer" parent="." unique_id=1081491101]
+unique_name_in_owner = true
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1135118527]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1520663410]
+position = Vector2(29.391056, -9.892081)
+scale = Vector2(0.99999994, 1)
+shape = SubResource("RectangleShape2D_wv4nr")

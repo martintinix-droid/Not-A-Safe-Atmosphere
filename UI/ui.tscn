@@ -43,6 +43,7 @@ text = "Build"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI" unique_id=1125389659]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -206,6 +207,7 @@ theme_override_font_sizes/font_size = 25
 text = "Research:"
 
 [node name="Countdown" type="Label" parent="UI" unique_id=1964390860]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 1581.0
 offset_top = 38.0
