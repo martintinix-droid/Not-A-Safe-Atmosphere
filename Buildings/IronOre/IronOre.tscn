@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://dkq6dc5387vd"]
 
-[ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_8ns43"]
+[ext_resource type="Texture2D" uid="uid://cs6u8wjpu2tk4" path="res://building_sprites/0f4ff3be-54cf-4f68-9cc2-e50e8cb69eb2-removebg-preview.png" id="1_qicxg"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_q6crx"]
 [ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_qicxg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(1393, 1196)
+size = Vector2(385.86957, 410.86957)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-texture = ExtResource("1_8ns43")
+scale = Vector2(1.84, 1.84)
+texture = ExtResource("1_qicxg")
 script = ExtResource("2_q6crx")
 resource_id = "Iron Ore"
 popup_theme = ExtResource("3_qicxg")
@@ -22,7 +23,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(-1.5000305, 13.0000305)
+position = Vector2(13.586956, -7.065213)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]

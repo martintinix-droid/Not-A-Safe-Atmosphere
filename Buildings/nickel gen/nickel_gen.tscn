@@ -1,14 +1,15 @@
 [gd_scene format=3 uid="uid://c7c3j0mr7mt4e"]
 
-[ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_0adbq"]
+[ext_resource type="Texture2D" uid="uid://c7fk0708vjln3" path="res://building_sprites/91ce1be1-9c5b-4227-b178-1fa8a7ec4a45-removebg-preview.png" id="1_6hwbl"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_r1fyv"]
 [ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_6hwbl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(1408.4724, 1230.7751)
+size = Vector2(384.5815, 388.54626)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-texture = ExtResource("1_0adbq")
+scale = Vector2(2.27, 2.27)
+texture = ExtResource("1_6hwbl")
 script = ExtResource("2_r1fyv")
 resource_id = "Nickel"
 popup_theme = ExtResource("3_6hwbl")
@@ -22,7 +23,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(-11.236267, 4.612488)
+position = Vector2(17.841408, -26.431723)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]
