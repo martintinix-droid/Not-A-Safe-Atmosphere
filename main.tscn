@@ -95,4 +95,37 @@ position = Vector2(7487, 4150)
 [node name="Sprite2D20" parent="." unique_id=363779801 instance=ExtResource("10_efxa6")]
 position = Vector2(7741, 2651)
 
+[node name="Sprite2D21" parent="." unique_id=126662911 instance=ExtResource("5_lquwl")]
+position = Vector2(-1253, -1284)
+
+[node name="Sprite2D22" parent="." unique_id=563610332 instance=ExtResource("5_lquwl")]
+position = Vector2(997, -1883)
+
+[node name="Sprite2D23" parent="." unique_id=787784144 instance=ExtResource("5_lquwl")]
+position = Vector2(2159, 374)
+
+[node name="Sprite2D24" parent="." unique_id=261206388 instance=ExtResource("8_5vw27")]
+position = Vector2(-1223, -233)
+
+[node name="Sprite2D25" parent="." unique_id=1193637910 instance=ExtResource("8_5vw27")]
+position = Vector2(1211, -647)
+
+[node name="Sprite2D26" parent="." unique_id=677917369 instance=ExtResource("8_5vw27")]
+position = Vector2(-2711, -2327)
+
+[node name="Sprite2D27" parent="." unique_id=1651617538 instance=ExtResource("8_5vw27")]
+position = Vector2(1112, -2997)
+
+[node name="Sprite2D28" parent="." unique_id=1979396500 instance=ExtResource("5_lquwl")]
+position = Vector2(-123, -2596)
+
+[node name="Sprite2D29" parent="." unique_id=870245025 instance=ExtResource("5_lquwl")]
+position = Vector2(-2193, -2910)
+
+[node name="Sprite2D30" parent="." unique_id=987762492 instance=ExtResource("5_lquwl")]
+position = Vector2(-1564, 1706)
+
+[node name="Sprite2D31" parent="." unique_id=714041968 instance=ExtResource("8_5vw27")]
+position = Vector2(960, 1760)
+
 [editable path="Camera Manager"]

@@ -24,8 +24,8 @@ const ARRIVAL_DISTANCE := 3.0
 
 # --- Movement tuning ---
 var max_speed := 900.0
-var acceleration := 30.0       # Speed gained per physics frame while far from the destination.
-var friction := 40.0           # Speed lost per physics frame while braking.
+var acceleration := 1800.0     # Speed gained per second while far from the destination.
+var friction := 2400.0         # Speed lost per second while braking.
 var stopping_distance := 50.0  # Starts braking when closer than this to the destination.
 
 # --- Trip data (set by base.gd right after instantiating the rover) ---
@@ -104,21 +104,18 @@ func _physics_process(delta: float) -> void:
 	var distance := position.distance_to(destination)
 
 	if distance > ARRIVAL_DISTANCE:
-		_move_towards(destination, distance)
+		_move_towards(destination, distance, delta)
 	else:
 		current_speed = 0.0
-
-	# Arrived once it has come to a complete stop.
-	if current_speed == 0.0:
 		_on_reached_destination()
 
 
 ## Accelerates towards the destination, braking when it gets close.
-func _move_towards(destination: Vector2, distance: float) -> void:
+func _move_towards(destination: Vector2, distance: float, delta: float) -> void:
 	if distance > stopping_distance:
-		current_speed += acceleration
+		current_speed += acceleration * delta
 	else:
-		current_speed = maxf(current_speed - friction, 0.0)
+		current_speed = maxf(current_speed - friction * delta, 0.0)
 	current_speed = minf(current_speed, max_speed)
 
 	var direction := (destination - position).normalized()
