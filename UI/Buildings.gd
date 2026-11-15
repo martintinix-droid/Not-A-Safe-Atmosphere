@@ -14,57 +14,79 @@ extends Node
 ##
 ## To add a building: add an entry here, plus a button and an entry in
 ## ui.gd (_building_buttons).
+##
+## BALANCE (tools/balance_sim.py reads this file): target 10-15 min per game.
+## Tech chain, every resource ends up in the Research Lab recipe:
+##   Basalt + Regolith (map rocks, then miners) -> Iron -> Ice -> Titanium / Aluminum
+##   -> Nickel (Iron + Titanium) / Sulfur (Ice + Aluminum)
+##   -> Gypsum (Ice + Nickel) -> Soluble Salts (Sulfur + Gypsum) -> Research Lab
 
-## Costs and build times come from the balance model (target: 10-15 min per game).
-## Rock 1 only comes from rocks on the map, so its costs are what limits expansion.
 const DATA := {
 	"energy": {
 		"scene": preload("uid://b7ux8e48tnrv3"),
-		"materials": {Resources.BASALT_ROCK: 6, Resources.REGOLITH: 2, Resources.ROCK_1: 2},
+		"materials": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 3},
 		"build_time": 8.0,
 	},
 	"water": {
 		"scene": preload("uid://cv1m1r8gxkird"),
-		"materials": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 4, Resources.ROCK_1: 2},
-		"build_time": 15.0,
+		"materials": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 3},
+		"build_time": 10.0,
 	},
 	"Basalt Rock": {
 		"scene": preload("uid://di17c2btd7sur"),
-		"materials": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 8, Resources.ROCK_1: 2},
-		"build_time": 5.0,
+		"materials": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 8},
+		"build_time": 6.0,
 	},
 	"Regolith": {
 		"scene": preload("uid://cpwyv4m8w6jd0"),
-		"materials": {Resources.ENERGY: 12, Resources.WATER: 12, Resources.BASALT_ROCK: 10, Resources.REGOLITH: 3, Resources.ROCK_1: 2},
+		"materials": {Resources.ENERGY: 12, Resources.WATER: 12, Resources.BASALT_ROCK: 10, Resources.REGOLITH: 2},
+		"build_time": 8.0,
+	},
+	"Iron_Ore": {
+		"scene": preload("uid://dkq6dc5387vd"),
+		"materials": {Resources.ENERGY: 30, Resources.WATER: 30, Resources.BASALT_ROCK: 45, Resources.REGOLITH: 15},
 		"build_time": 10.0,
+	},
+	"Ice": {
+		"scene": preload("uid://bbsnx2ivayv5r"),
+		"materials": {Resources.ENERGY: 30, Resources.WATER: 30, Resources.BASALT_ROCK: 50, Resources.REGOLITH: 20, Resources.IRON_ORE: 25},
+		"build_time": 12.0,
+	},
+	"Titanium": {
+		"scene": preload("uid://cjgnr4alsge2n"),
+		"materials": {Resources.ENERGY: 45, Resources.WATER: 45, Resources.BASALT_ROCK: 70, Resources.REGOLITH: 30, Resources.IRON_ORE: 40, Resources.ICE: 25},
+		"build_time": 12.0,
+	},
+	"Aluminum": {
+		"scene": preload("uid://cw3vfrpecpoib"),
+		"materials": {Resources.ENERGY: 45, Resources.WATER: 45, Resources.BASALT_ROCK: 70, Resources.REGOLITH: 30, Resources.IRON_ORE: 40, Resources.ICE: 25},
+		"build_time": 12.0,
+	},
+	# TODO scenes for the four buildings below: duplicate the Aluminum scene, set its
+	# resource_id, then replace the placeholder uid. Until then they have no UI button.
+	"Nickel": {
+		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"materials": {Resources.ENERGY: 55, Resources.WATER: 55, Resources.BASALT_ROCK: 90, Resources.REGOLITH: 40, Resources.IRON_ORE: 50, Resources.TITANIUM: 35},
+		"build_time": 14.0,
+	},
+	"Sulfur": {
+		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"materials": {Resources.ENERGY: 55, Resources.WATER: 55, Resources.BASALT_ROCK: 90, Resources.REGOLITH: 40, Resources.ICE: 40, Resources.ALUMINUM: 35},
+		"build_time": 14.0,
+	},
+	"Gypsum": {
+		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"materials": {Resources.ENERGY: 65, Resources.WATER: 65, Resources.BASALT_ROCK: 110, Resources.REGOLITH: 50, Resources.ICE: 50, Resources.NICKEL: 30},
+		"build_time": 14.0,
+	},
+	"Soluble Salts": {
+		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"materials": {Resources.ENERGY: 65, Resources.WATER: 65, Resources.BASALT_ROCK: 110, Resources.REGOLITH: 50, Resources.SULFUR: 30, Resources.GYPSUM: 30},
+		"build_time": 14.0,
 	},
 	"Research Lab": {
 		"scene": preload("uid://cabh0jrbk6l7u"),
-		"materials": {Resources.ENERGY: 40, Resources.WATER: 40, Resources.BASALT_ROCK: 25, Resources.REGOLITH: 10, Resources.ROCK_1: 4},
-		"build_time": 10.0,
-	},
-	"Iron_Ore": {
-		##Revisit to make it logical in game
-		"scene": preload("uid://dkq6dc5387vd"),
-		"materials": {Resources.ENERGY: 12, Resources.WATER: 12, Resources.BASALT_ROCK: 12, Resources.ROCK_1: 2},
-		"build_time": 7.5,
-	},
-	"Ice": {
-		##PlaceHolder Image
-		"scene": preload("uid://bbsnx2ivayv5r"),
-		"materials": {Resources.ENERGY: 15, Resources.WATER: 15, Resources.BASALT_ROCK: 15, Resources.REGOLITH: 5, Resources.ROCK_1: 2},
-		"build_time": 15.0,
-	},
-	"Titanium": {
-		##PlaceHolder Image
-		"scene": preload("uid://cjgnr4alsge2n"),
-		"materials": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 8, Resources.ROCK_1: 3},
-		"build_time": 10.0,
-	},
-	"Aluminum": {
-		##PlaceHolder Image
-		"scene": preload("uid://cw3vfrpecpoib"),
-		"materials": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 8, Resources.ROCK_1: 3},
-		"build_time": 10.0,
+		"materials": {Resources.ENERGY: 400, Resources.WATER: 400, Resources.BASALT_ROCK: 500, Resources.REGOLITH: 250, Resources.IRON_ORE: 150, Resources.ICE: 100, Resources.TITANIUM: 80, Resources.ALUMINUM: 80, Resources.NICKEL: 60, Resources.SULFUR: 45, Resources.GYPSUM: 45, Resources.SOLUBLE_SALTS: 35},
+		"build_time": 12.0,
 	},
 }

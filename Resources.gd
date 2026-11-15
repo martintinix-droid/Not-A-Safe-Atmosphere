@@ -7,7 +7,6 @@ const ENERGY := "energy"
 const WATER := "water"
 const BASALT_ROCK := "Basalt Rock"
 const REGOLITH := "Regolith"
-const ROCK_1 := "rock 1"
 const IRON_ORE := "Iron Ore"
 const ICE := "Ice"
 const SILICA := "Silica"
@@ -27,8 +26,7 @@ const DATA := {
 	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 100},
 	BASALT_ROCK: {"name": "Basalt Rock", "icon": SPRITES_DIR + "basalt.png", "start": 0},
 	REGOLITH: {"name": "Regolith", "icon": SPRITES_DIR + "regolith.png", "start": 0},
-	ROCK_1: {"name": "Rock 1", "icon": PLACEHOLDER_DIR + "rock1.jpg", "start": 0},
-	# New resources: they start at 0 and need a generator/event to produce them.
+	# Everything below starts at 0 and needs a building to produce it.
 	IRON_ORE: {"name": "Iron Ore", "icon": PLACEHOLDER_DIR + "iron_ore.png", "start": 0},
 	ICE: {"name": "Ice", "icon": SPRITES_DIR + "Martian_ice.png", "start": 0},
 	# Volcanic and hydrothermal minerals.

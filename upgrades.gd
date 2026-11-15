@@ -13,6 +13,13 @@ extends RefCounted
 ##
 ## To make something upgradable: add an entry here and give the node an
 ## `upgrade: UpgradeState` and an upgrade_requested emit (see generator.gd).
+##
+## BALANCE: level 1 values the scenes must use (tools/balance_sim.py assumes them):
+##   energy gen 4/tick, water gen 4/tick (no upkeep), Basalt miner 2/tick (1 Energy + 1 Water),
+##   Regolith miner 1/tick (1 Energy + 1 Water), every other miner 1/tick (1 Energy + 1 Water),
+##   production Timer = 1.0 s everywhere. An upgrade costs about two fresh miners, but needs no
+##   rover trip, so it is the better buy once rovers are the bottleneck. The base upgrades are the
+##   big mid-game goal: +1 rover and faster construction each.
 
 const STAT_NAMES := {
 	"output": "Production",
@@ -27,12 +34,12 @@ const DATA := {
 		"name": "Energy generator",
 		"levels": [
 			{
-				"cost": {Resources.BASALT_ROCK: 4, Resources.REGOLITH: 2},
-				"stats": {"output": 8},
+				"cost": {Resources.BASALT_ROCK: 20, Resources.REGOLITH: 10},
+				"stats": {"output": 6},
 			},
 			{
-				"cost": {Resources.BASALT_ROCK: 8, Resources.REGOLITH: 4},
-				"stats": {"output": 10},
+				"cost": {Resources.BASALT_ROCK: 40, Resources.REGOLITH: 20, Resources.IRON_ORE: 15},
+				"stats": {"output": 8},
 			},
 		],
 	},
@@ -40,12 +47,12 @@ const DATA := {
 		"name": "Water generator",
 		"levels": [
 			{
-				"cost": {Resources.BASALT_ROCK: 5, Resources.REGOLITH: 3},
-				"stats": {"output": 8},
+				"cost": {Resources.BASALT_ROCK: 20, Resources.REGOLITH: 10},
+				"stats": {"output": 6},
 			},
 			{
-				"cost": {Resources.BASALT_ROCK: 10, Resources.REGOLITH: 6},
-				"stats": {"output": 10},
+				"cost": {Resources.BASALT_ROCK: 40, Resources.REGOLITH: 20, Resources.IRON_ORE: 15},
+				"stats": {"output": 8},
 			},
 		],
 	},
@@ -53,11 +60,11 @@ const DATA := {
 		"name": "Basalt miner",
 		"levels": [
 			{
-				"cost": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 10},
+				"cost": {Resources.ENERGY: 30, Resources.WATER: 30, Resources.BASALT_ROCK: 40, Resources.REGOLITH: 10},
 				"stats": {"output": 3, "energy_used": 2},
 			},
 			{
-				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20},
+				"cost": {Resources.ENERGY: 60, Resources.WATER: 60, Resources.BASALT_ROCK: 80, Resources.REGOLITH: 30, Resources.IRON_ORE: 20},
 				"stats": {"output": 4, "energy_used": 3},
 			},
 		],
@@ -66,11 +73,11 @@ const DATA := {
 		"name": "Regolith miner",
 		"levels": [
 			{
-				"cost": {Resources.ENERGY: 10, Resources.WATER: 10, Resources.BASALT_ROCK: 10, Resources.REGOLITH: 3},
+				"cost": {Resources.ENERGY: 30, Resources.WATER: 30, Resources.BASALT_ROCK: 40, Resources.REGOLITH: 15},
 				"stats": {"output": 2, "energy_used": 2},
 			},
 			{
-				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 6},
+				"cost": {Resources.ENERGY: 60, Resources.WATER: 60, Resources.BASALT_ROCK: 80, Resources.REGOLITH: 40, Resources.IRON_ORE: 20},
 				"stats": {"output": 3, "energy_used": 3},
 			},
 		],
@@ -79,11 +86,11 @@ const DATA := {
 		"name": "Base",
 		"levels": [
 			{
-				"cost": {Resources.ENERGY: 20, Resources.WATER: 20, Resources.BASALT_ROCK: 20, Resources.REGOLITH: 6},
+				"cost": {Resources.ENERGY: 50, Resources.WATER: 50, Resources.BASALT_ROCK: 80, Resources.REGOLITH: 30, Resources.IRON_ORE: 20},
 				"stats": {"max_rovers": 4, "build_time_multiplier": 0.8},
 			},
 			{
-				"cost": {Resources.ENERGY: 40, Resources.WATER: 40, Resources.BASALT_ROCK: 40, Resources.REGOLITH: 15},
+				"cost": {Resources.ENERGY: 120, Resources.WATER: 120, Resources.BASALT_ROCK: 200, Resources.REGOLITH: 100, Resources.IRON_ORE: 60, Resources.ICE: 40, Resources.TITANIUM: 20},
 				"stats": {"max_rovers": 5, "build_time_multiplier": 0.65},
 			},
 		],
