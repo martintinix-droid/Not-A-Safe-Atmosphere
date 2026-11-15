@@ -35,6 +35,10 @@ const TUTORIAL := preload("res://UI/tutorial.gd")
 @onready var titanium: Button = %Titanium
 @onready var aluminum: Button = %Aluminum
 @onready var countdown: Label = %Countdown
+@onready var nickel: Button = %Nickel
+@onready var sulfur: Button = %Sulfur
+@onready var gypsum: Button = %Gypsum
+@onready var salts: Button = %Salts
 
 ## Inventory background. The resource grid is its child, so it moves with it.
 @onready var inventory_panel: NinePatchRect = %NinePatchRect
@@ -51,7 +55,11 @@ const TUTORIAL := preload("res://UI/tutorial.gd")
 	"Iron_Ore" : iron,
 	"Ice" : ice,
 	"Titanium":titanium,
-	"Aluminum": aluminum
+	"Aluminum": aluminum,
+	"Nickel": nickel,
+	"Sulfur" : sulfur,
+	"Gypsum" : gypsum,
+	"Soluble Salts": salts
 }
 
 

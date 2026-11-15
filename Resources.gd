@@ -22,20 +22,20 @@ const PLACEHOLDER_DIR := "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/It
 const SPRITES_DIR := "res://Resources Sprites/"
 ## id -> { "name": UI text, "icon": texture path, "start": starting amount }
 const DATA := {
-	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 100},
-	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 100},
-	BASALT_ROCK: {"name": "Basalt Rock", "icon": SPRITES_DIR + "basalt.png", "start": 0},
-	REGOLITH: {"name": "Regolith", "icon": SPRITES_DIR + "regolith.png", "start": 0},
+	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 100000},
+	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 10000},
+	BASALT_ROCK: {"name": "Basalt Rock", "icon": SPRITES_DIR + "basalt.png", "start": 10000},
+	REGOLITH: {"name": "Regolith", "icon": SPRITES_DIR + "regolith.png", "start": 10000},
 	# Everything below starts at 0 and needs a building to produce it.
-	IRON_ORE: {"name": "Iron Ore", "icon": PLACEHOLDER_DIR + "iron_ore.png", "start": 0},
-	ICE: {"name": "Ice", "icon": SPRITES_DIR + "Martian_ice.png", "start": 0},
+	IRON_ORE: {"name": "Iron Ore", "icon": PLACEHOLDER_DIR + "iron_ore.png", "start": 10000},
+	ICE: {"name": "Ice", "icon": SPRITES_DIR + "Martian_ice.png", "start": 10000},
 	# Volcanic and hydrothermal minerals.
-	TITANIUM: {"name": "Titanium", "icon": PLACEHOLDER_DIR + "titanium.png", "start": 0},
-	ALUMINUM: {"name": "Aluminum", "icon": PLACEHOLDER_DIR + "aluminum.png", "start": 0},
-	NICKEL: {"name": "Nickel", "icon": PLACEHOLDER_DIR + "nickel.png", "start": 0},
-	SULFUR: {"name": "Sulfur", "icon": SPRITES_DIR + "sulfur.png", "start": 0},
-	GYPSUM: {"name": "Gypsum", "icon": PLACEHOLDER_DIR + "gypsum.png", "start": 0},
-	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": SPRITES_DIR + "Soluble_Salts.png", "start": 0},
+	TITANIUM: {"name": "Titanium", "icon": PLACEHOLDER_DIR + "titanium.png", "start": 10000},
+	ALUMINUM: {"name": "Aluminum", "icon": PLACEHOLDER_DIR + "aluminum.png", "start": 1000},
+	NICKEL: {"name": "Nickel", "icon": PLACEHOLDER_DIR + "nickel.png", "start":1000},
+	SULFUR: {"name": "Sulfur", "icon": SPRITES_DIR + "sulfur.png", "start": 10000},
+	GYPSUM: {"name": "Gypsum", "icon": PLACEHOLDER_DIR + "gypsum.png", "start": 11000},
+	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": SPRITES_DIR + "Soluble_Salts.png", "start": 10000},
 }
 
 static func ids() -> Array:

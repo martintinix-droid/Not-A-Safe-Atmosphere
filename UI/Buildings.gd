@@ -62,25 +62,23 @@ const DATA := {
 		"materials": {Resources.ENERGY: 45, Resources.WATER: 45, Resources.BASALT_ROCK: 70, Resources.REGOLITH: 30, Resources.IRON_ORE: 40, Resources.ICE: 25},
 		"build_time": 12.0,
 	},
-	# TODO scenes for the four buildings below: duplicate the Aluminum scene, set its
-	# resource_id, then replace the placeholder uid. Until then they have no UI button.
 	"Nickel": {
-		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"scene": preload("uid://c7c3j0mr7mt4e"),
 		"materials": {Resources.ENERGY: 55, Resources.WATER: 55, Resources.BASALT_ROCK: 90, Resources.REGOLITH: 40, Resources.IRON_ORE: 50, Resources.TITANIUM: 35},
 		"build_time": 14.0,
 	},
 	"Sulfur": {
-		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"scene": preload("uid://5qoyxyo6xm4q"),
 		"materials": {Resources.ENERGY: 55, Resources.WATER: 55, Resources.BASALT_ROCK: 90, Resources.REGOLITH: 40, Resources.ICE: 40, Resources.ALUMINUM: 35},
 		"build_time": 14.0,
 	},
 	"Gypsum": {
-		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"scene": preload("uid://b683kq5pykl37"),
 		"materials": {Resources.ENERGY: 65, Resources.WATER: 65, Resources.BASALT_ROCK: 110, Resources.REGOLITH: 50, Resources.ICE: 50, Resources.NICKEL: 30},
 		"build_time": 14.0,
 	},
 	"Soluble Salts": {
-		"scene": preload("uid://cw3vfrpecpoib"),  # PLACEHOLDER
+		"scene": preload("uid://de1va0voehns5"),
 		"materials": {Resources.ENERGY: 65, Resources.WATER: 65, Resources.BASALT_ROCK: 110, Resources.REGOLITH: 50, Resources.SULFUR: 30, Resources.GYPSUM: 30},
 		"build_time": 14.0,
 	},
