@@ -12,7 +12,7 @@ extends CanvasLayer
 const TITLE_TEXT := "You Win!"
 const MESSAGE_TEXT := "Thank you for playing our game!"
 const LOSE_TITLE_TEXT := "You Lose!"
-const LOSE_MESSAGE_TEXT := "Time ran out before the research was finished."
+const LOSE_MESSAGE_TEXT := "The mission ended. you did not acomplish your research objective..."
 const LOSE_NO_ENERGY_TEXT := "You ran out of energy."
 const LOSE_NO_WATER_TEXT := "You ran out of water."
 const BUTTON_TEXT := "Play Again"

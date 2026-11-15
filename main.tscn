@@ -35,7 +35,7 @@ texture = ExtResource("7_272bh")
 
 [node name="game_time" type="Timer" parent="." unique_id=1703760314]
 unique_name_in_owner = true
-wait_time = 900.0
+wait_time = 1200.0
 autostart = true
 
 [node name="Sprite2D2" parent="." unique_id=82426785 instance=ExtResource("5_lquwl")]
