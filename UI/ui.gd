@@ -30,6 +30,9 @@ const TUTORIAL := preload("res://UI/tutorial.gd")
 @onready var back_button: Button = $"HBoxContainer/VBoxContainer2/Back Button"
 @onready var research_progerss: ProgressBar = %research_progerss
 @onready var research_lab: Button = %"Research Lab"
+@onready var iron: Button = %Iron
+@onready var ice: Button = %Ice
+
 ## Inventory background. The resource grid is its child, so it moves with it.
 @onready var inventory_panel: NinePatchRect = %NinePatchRect
 
@@ -41,7 +44,9 @@ const TUTORIAL := preload("res://UI/tutorial.gd")
 	"water": water,
 	"Basalt Rock": basatl_rock,
 	"Regolith": regolith,
-	"Research Lab" : research_lab
+	"Research Lab" : research_lab,
+	"Iron_Ore" : iron,
+	"Ice" : ice
 }
 
 

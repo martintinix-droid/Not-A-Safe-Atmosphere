@@ -16,7 +16,7 @@ extends Node
 ## ui.gd (_building_buttons).
 
 ##build_time for the thingies
-##E:8, W:10, B:5, R:20
+##E:8, W:15, B:5, R:10 RL: 10 I:7.5 ICE:15
 const DATA := {
 	"energy": {
 		"scene": preload("uid://b7ux8e48tnrv3"),
@@ -41,6 +41,17 @@ const DATA := {
 	"Research Lab": {
 		"scene": preload("uid://cabh0jrbk6l7u"),
 		"materials": {"energy": 50, "water": 50, "rock 1": 20, "Regolith": 5},
-		"build_time": 10.0,
+		"build_time": 1.0,
+	},
+	"Iron_Ore": {
+		##Revisit to make it logical in game
+		"scene": preload("uid://dkq6dc5387vd"),
+		"materials": {"energy": 10, "water": 20, "rock 1": 12},
+		"build_time": 1.0,
+	},
+	"Ice": {
+		"scene": preload("uid://bbsnx2ivayv5r"),
+		"materials": {"energy": 15, "water": 30 , "rock 1": 15, "Basalt Rock": 20},
+		"build_time": 1.0,
 	},
 }
