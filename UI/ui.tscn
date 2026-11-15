@@ -40,17 +40,16 @@ text = "Build"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI" unique_id=1125389659]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -291.0
-offset_top = -223.0
+offset_left = -301.0
+offset_top = -435.0
 offset_right = -11.0
-offset_bottom = 41.0
+offset_bottom = -74.0
 grow_horizontal = 0
 grow_vertical = 2
 theme = ExtResource("1_2fwl4")
@@ -90,11 +89,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Regolith"
 
-[node name="Research Lab" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1540089333]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Research Lab"
-
 [node name="Iron" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=2078880838]
 unique_name_in_owner = true
 layout_mode = 2
@@ -104,6 +98,21 @@ text = "Iron"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Ice"
+
+[node name="Research Lab" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1540089333]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Research Lab"
+
+[node name="Titanium" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1177610617]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Titanium"
+
+[node name="Aluminum" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=2143215778]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Aluminum"
 
 [node name="NinePatchRect" type="NinePatchRect" parent="UI" unique_id=1318165581]
 unique_name_in_owner = true

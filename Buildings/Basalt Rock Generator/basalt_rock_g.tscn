@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://di17c2btd7sur"]
 
-[ext_resource type="Texture2D" uid="uid://byil7ukwswhfg" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/space_outpost_buildings_separate/mining_extractor.png" id="1_qgsyt"]
-[ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_emxv6"]
+[ext_resource type="Texture2D" uid="uid://byil7ukwswhfg" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/space_outpost_buildings_separate/mining_extractor.png" id="1_xixcy"]
+[ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_gpi85"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
 size = Vector2(352.945, 449.5501)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-texture = ExtResource("1_qgsyt")
-script = ExtResource("2_emxv6")
+texture = ExtResource("1_xixcy")
+script = ExtResource("2_gpi85")
 resource_id = "Basalt Rock"
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]

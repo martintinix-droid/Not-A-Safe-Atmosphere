@@ -20,7 +20,7 @@ const GYPSUM := "Gypsum"
 const SOLUBLE_SALTS := "Soluble Salts"
 
 const PLACEHOLDER_DIR := "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/Items/"
-
+const SPRITES_DIR := "res://Resources Sprites/"
 ## id -> { "name": UI text, "icon": texture path, "start": starting amount }
 const DATA := {
 	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 1000},

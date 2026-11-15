@@ -33,9 +33,27 @@ var target: Node               # Interactable to interact with on arrival (may b
 var target_position: Vector2   # Where the rover goes first.
 var base_position: Vector2     # Where the rover returns to afterwards.
 
+# --- Direction sprites ---
+## One texture per facing. The 4 cardinal ones are enough: if a diagonal is left
+## empty, the rover snaps to the nearest cardinal. Fill the 4 diagonals too for 8 directions.
+@export_group("Direction sprites")
+## Node whose texture changes. If empty, the first Sprite2D child is used.
+@export var sprite: Sprite2D
+@export var texture_right: Texture2D
+@export var texture_down_right: Texture2D
+@export var texture_down: Texture2D
+@export var texture_down_left: Texture2D
+@export var texture_left: Texture2D
+@export var texture_up_left: Texture2D
+@export var texture_up: Texture2D
+@export var texture_up_right: Texture2D
+@export_group("")
+
 # --- Runtime state ---
 var current_speed := 0.0
 var _state: State = State.GOING_TO_TARGET
+## The 8 textures in screen-clockwise order starting at "right" (see _face()).
+var _direction_textures: Array[Texture2D] = []
 
 # --- Progress Bar variables ---
 var progress_bar: ProgressBar
@@ -46,6 +64,15 @@ var tracking_progress: bool = false
 
 
 func _ready() -> void:
+	if sprite == null:
+		sprite = _find_sprite()
+	if sprite == null:
+		push_warning("OutpostRover: no Sprite2D found, direction sprites are disabled.")
+	_direction_textures = [
+		texture_right, texture_down_right, texture_down, texture_down_left,
+		texture_left, texture_up_left, texture_up, texture_up_right,
+	]
+
 	# Programmatically create the ProgressBar above the rover
 	progress_bar = ProgressBar.new()
 	progress_bar.max_value = 100.0
@@ -93,8 +120,35 @@ func _move_towards(destination: Vector2, distance: float) -> void:
 		current_speed = maxf(current_speed - friction, 0.0)
 	current_speed = minf(current_speed, max_speed)
 
-	velocity = (destination - position).normalized() * current_speed
+	var direction := (destination - position).normalized()
+	_face(direction)
+	velocity = direction * current_speed
 	move_and_slide()
+
+
+## First Sprite2D child of the rover (used when `sprite` is not set in the inspector).
+func _find_sprite() -> Sprite2D:
+	for child in get_children():
+		if child is Sprite2D:
+			return child
+	return null
+
+
+## Shows the texture that matches `direction` (a screen-space vector).
+## Angles: 0 = right, PI/2 = down (screen Y points down), so rounding the angle to
+## 8 sectors gives the clockwise order used by _direction_textures.
+func _face(direction: Vector2) -> void:
+	if sprite == null or direction.length_squared() < 0.01:
+		return
+	var angle := direction.angle()
+	var index := posmod(roundi(angle / (TAU / 8.0)), 8)
+	var texture := _direction_textures[index]
+	if texture == null:
+		# Diagonal not provided: snap to the nearest cardinal (even indexes).
+		index = posmod(roundi(angle / (TAU / 4.0)), 4) * 2
+		texture = _direction_textures[index]
+	if texture != null and texture != sprite.texture:
+		sprite.texture = texture
 
 
 ## Moves the rover to the next phase of its trip.

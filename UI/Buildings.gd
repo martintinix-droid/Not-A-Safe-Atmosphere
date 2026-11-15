@@ -55,4 +55,16 @@ const DATA := {
 		"materials": {"energy": 15, "water": 30 , "rock 1": 15, "Basalt Rock": 20},
 		"build_time": 1.0,
 	},
+	"Titanium": {
+		##PlaceHolder Image
+		"scene": preload("uid://cjgnr4alsge2n"),
+		"materials": {"energy": 20, "water": 20 , "rock 1": 15, "Basalt Rock": 20},
+		"build_time": 10.0,
+	},
+	"Aluminum": {
+		##PlaceHolder Image
+		"scene": preload("uid://cw3vfrpecpoib"),
+		"materials": {"energy": 25, "water": 20 , "rock 1": 10, "Basalt Rock": 25},
+		"build_time": 10.0,
+	},
 }

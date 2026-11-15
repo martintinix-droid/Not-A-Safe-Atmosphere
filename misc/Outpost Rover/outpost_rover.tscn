@@ -2,11 +2,20 @@
 
 [ext_resource type="Script" uid="uid://b2hyk733bchm0" path="res://misc/Outpost Rover/outpost_rover.gd" id="1_jet0e"]
 [ext_resource type="Texture2D" uid="uid://c0ovcji07wmgt" path="res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/rover.png" id="2_a2a4v"]
+[ext_resource type="Texture2D" uid="uid://baq511ijhut0x" path="res://misc/Outpost Rover/rover_sprites/rover_2.png" id="2_movix"]
 [ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="2_uexry"]
+[ext_resource type="Texture2D" uid="uid://dhjakmdxpp24b" path="res://misc/Outpost Rover/rover_sprites/rover_3.png" id="3_7sw1i"]
+[ext_resource type="Texture2D" uid="uid://duuf4ee602m6c" path="res://misc/Outpost Rover/rover_sprites/rover_4.png" id="4_i1cyn"]
+[ext_resource type="Texture2D" uid="uid://da7mmxwhbmec2" path="res://misc/Outpost Rover/rover_sprites/rover_1.png" id="5_pdfxy"]
 
-[node name="outpost rover" type="CharacterBody2D" unique_id=559955422]
+[node name="outpost rover" type="CharacterBody2D" unique_id=559955422 node_paths=PackedStringArray("sprite")]
 z_index = -1
 script = ExtResource("1_jet0e")
+sprite = NodePath("Sprite2D")
+texture_right = ExtResource("2_movix")
+texture_down = ExtResource("3_7sw1i")
+texture_left = ExtResource("4_i1cyn")
+texture_up = ExtResource("5_pdfxy")
 theme = ExtResource("2_uexry")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1942634719]
