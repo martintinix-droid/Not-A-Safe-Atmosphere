@@ -12,6 +12,7 @@ scale = Vector2(0.685, 0.695)
 texture = ExtResource("1_naah5")
 script = ExtResource("2_01yp7")
 resource_id = "Regolith"
+amount = 3
 
 [node name="Timer" type="Timer" parent="." unique_id=1081491101]
 unique_name_in_owner = true

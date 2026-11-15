@@ -9,6 +9,8 @@ size = Vector2(1295, 1095.7751)
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
 texture = ExtResource("1_u5bfg")
 script = ExtResource("2_u5bfg")
+water_consumed = 3
+energy_used = 2
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true
@@ -23,4 +25,5 @@ position = Vector2(-49.50003, -0.8875427)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]
+wait_time = 1.25
 one_shot = true

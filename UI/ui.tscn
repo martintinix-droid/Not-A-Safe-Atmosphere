@@ -237,7 +237,6 @@ theme_override_font_sizes/font_size = 22
 text = "Time left xx:xx"
 
 [node name="Event UI" type="Control" parent="." unique_id=2079854680]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

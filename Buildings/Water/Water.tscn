@@ -10,6 +10,8 @@ size = Vector2(1233, 1105)
 texture = ExtResource("1_fag14")
 script = ExtResource("1_6nrb1")
 resource_id = "water"
+output = 4
+water_consumed = 0
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

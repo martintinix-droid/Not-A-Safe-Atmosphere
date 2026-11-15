@@ -11,6 +11,7 @@ z_index = -2
 scale = Vector2(1.27, 1.28)
 texture = ExtResource("1_1vbrf")
 script = ExtResource("2_1vbrf")
+amount = 5
 
 [node name="Timer" type="Timer" parent="." unique_id=1081491101]
 unique_name_in_owner = true

@@ -12,6 +12,7 @@ scale = Vector2(0.705, 0.705)
 texture = ExtResource("1_hngkd")
 script = ExtResource("2_c1vfk")
 resource_id = "Ice"
+amount = 6
 
 [node name="Timer" type="Timer" parent="." unique_id=1081491101]
 unique_name_in_owner = true

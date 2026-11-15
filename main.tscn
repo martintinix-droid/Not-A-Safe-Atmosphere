@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://c0korjqmjc5se" path="res://misc/Map_Interactables/Basalt_rock.tscn" id="5_lquwl"]
 [ext_resource type="Script" uid="uid://bnf5daxp5k2ka" path="res://event_manager.gd" id="6_7mycd"]
 [ext_resource type="Texture2D" uid="uid://hktvgtadfwhs" path="res://summer-258s-room@2x.png" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://1rltwaxfma31" path="res://misc/Map_Interactables/regolith.tscn" id="8_5vw27"]
+[ext_resource type="PackedScene" uid="uid://kayh2ph6o150" path="res://misc/Map_Interactables/souluble_salts.tscn" id="9_4c57u"]
+[ext_resource type="PackedScene" uid="uid://dsi4thd7vhj8h" path="res://misc/Map_Interactables/sulfur_rock.tscn" id="10_efxa6"]
 
 [node name="main" type="Node2D" unique_id=1255075818]
 script = ExtResource("1_ig7tw")
@@ -34,5 +37,62 @@ texture = ExtResource("7_272bh")
 unique_name_in_owner = true
 wait_time = 900.0
 autostart = true
+
+[node name="Sprite2D2" parent="." unique_id=82426785 instance=ExtResource("5_lquwl")]
+position = Vector2(-1936, 245)
+
+[node name="Sprite2D3" parent="." unique_id=385592986 instance=ExtResource("5_lquwl")]
+position = Vector2(-33, 1988)
+
+[node name="Sprite2D4" parent="." unique_id=1807578396 instance=ExtResource("5_lquwl")]
+position = Vector2(-82, -1401)
+
+[node name="Sprite2D5" parent="." unique_id=584441007 instance=ExtResource("5_lquwl")]
+position = Vector2(-2456, -1174)
+
+[node name="Sprite2D6" parent="." unique_id=561362566 instance=ExtResource("5_lquwl")]
+position = Vector2(-4298, -1204)
+
+[node name="Sprite2D7" parent="." unique_id=861411743 instance=ExtResource("5_lquwl")]
+position = Vector2(1917, -642)
+
+[node name="Sprite2D8" parent="." unique_id=579012828 instance=ExtResource("8_5vw27")]
+position = Vector2(-2377, 1801)
+
+[node name="Sprite2D9" parent="." unique_id=486891083 instance=ExtResource("8_5vw27")]
+position = Vector2(1622, 2352)
+
+[node name="Sprite2D10" parent="." unique_id=1375452214 instance=ExtResource("8_5vw27")]
+position = Vector2(1809, -1479)
+
+[node name="Sprite2D11" parent="." unique_id=1537388199 instance=ExtResource("8_5vw27")]
+position = Vector2(-5165, -2297)
+
+[node name="Sprite2D12" parent="." unique_id=165610296 instance=ExtResource("8_5vw27")]
+position = Vector2(-2899, 47)
+
+[node name="Sprite2D13" parent="." unique_id=607883926 instance=ExtResource("9_4c57u")]
+position = Vector2(-8119, -1382)
+
+[node name="Sprite2D14" parent="." unique_id=788071099 instance=ExtResource("9_4c57u")]
+position = Vector2(-9079, -2726)
+
+[node name="Sprite2D15" parent="." unique_id=1495002367 instance=ExtResource("9_4c57u")]
+position = Vector2(9923, -2429)
+
+[node name="Sprite2D16" parent="." unique_id=1564232836 instance=ExtResource("9_4c57u")]
+position = Vector2(5317, -5832)
+
+[node name="Sprite2D17" parent="." unique_id=1919502135 instance=ExtResource("10_efxa6")]
+position = Vector2(-4020, 3644)
+
+[node name="Sprite2D18" parent="." unique_id=18967160 instance=ExtResource("10_efxa6")]
+position = Vector2(900, 4446)
+
+[node name="Sprite2D19" parent="." unique_id=1725980399 instance=ExtResource("10_efxa6")]
+position = Vector2(7487, 4150)
+
+[node name="Sprite2D20" parent="." unique_id=363779801 instance=ExtResource("10_efxa6")]
+position = Vector2(7741, 2651)
 
 [editable path="Camera Manager"]

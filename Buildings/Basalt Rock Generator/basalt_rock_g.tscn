@@ -10,6 +10,7 @@ size = Vector2(1331, 1268.7751)
 texture = ExtResource("1_qgsyt")
 script = ExtResource("2_gpi85")
 resource_id = "Basalt Rock"
+output = 2
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

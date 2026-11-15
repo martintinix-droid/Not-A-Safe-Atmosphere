@@ -9,6 +9,9 @@ size = Vector2(1332, 1220)
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
 texture = ExtResource("1_aegjf")
 script = ExtResource("2_aegjf")
+output = 4
+water_consumed = 0
+energy_used = 0
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

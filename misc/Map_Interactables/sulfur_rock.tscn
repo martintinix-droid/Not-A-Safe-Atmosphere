@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://ugu1k37uoa0e" path="res://misc/Map_Interactables/ground_resource.gd" id="2_1lr16"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wv4nr"]
-size = Vector2(2150.0005, 1733.3335)
+size = Vector2(2366.6675, 2000.0002)
 
 [node name="Sprite2D" type="Sprite2D" unique_id=1813133776]
 z_index = -2
@@ -12,6 +12,7 @@ scale = Vector2(0.06, 0.06)
 texture = ExtResource("1_e7me8")
 script = ExtResource("2_1lr16")
 resource_id = "Sulfur"
+amount = 10
 
 [node name="Timer" type="Timer" parent="." unique_id=1081491101]
 unique_name_in_owner = true
@@ -19,6 +20,6 @@ unique_name_in_owner = true
 [node name="Area2D" type="Area2D" parent="." unique_id=1135118527]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1520663410]
-position = Vector2(-158.33331, -199.99994)
-scale = Vector2(0.99999976, 0.9999999)
+position = Vector2(-49.99989, -66.66659)
+scale = Vector2(0.9999997, 0.9999998)
 shape = SubResource("RectangleShape2D_wv4nr")
