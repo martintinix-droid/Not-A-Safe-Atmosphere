@@ -50,6 +50,7 @@ const DATA := {
 		"build_time": 1.0,
 	},
 	"Ice": {
+		##PlaceHolder Image
 		"scene": preload("uid://bbsnx2ivayv5r"),
 		"materials": {"energy": 15, "water": 30 , "rock 1": 15, "Basalt Rock": 20},
 		"build_time": 1.0,
