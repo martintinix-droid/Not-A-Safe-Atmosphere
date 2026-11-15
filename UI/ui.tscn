@@ -143,9 +143,9 @@ unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.38431373)
 layout_mode = 0
 offset_left = 40.0
-offset_top = 590.0
+offset_top = 832.0
 offset_right = 761.0
-offset_bottom = 1073.0
+offset_bottom = 1315.0
 mouse_filter = 0
 texture = SubResource("PlaceholderTexture2D_wv4nr")
 metadata/_edit_group_ = true
@@ -237,6 +237,7 @@ theme_override_font_sizes/font_size = 22
 text = "Time left xx:xx"
 
 [node name="Event UI" type="Control" parent="." unique_id=2079854680]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

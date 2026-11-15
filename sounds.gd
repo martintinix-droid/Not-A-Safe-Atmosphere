@@ -19,7 +19,7 @@ const MUSIC_MAIN := "music_main"
 const DATA := {
 	CLICK: {"path": "res://sounds and music/click_sf.mp3", "volume_db": -6.0},
 	PLACE: {"path": "res://sounds and music/placing_oXGypbso.mp3", "volume_db": 20.0},
-	CONSTRUCTION_LOOP: {"path": "res://audio/sfx/construction_loop.ogg", "volume_db": -8.0},
+	CONSTRUCTION_LOOP: {"path": "res://sounds and music/several_metallic_sou_#1-1794766556938.mp3", "volume_db": -8.0},
 	MUSIC_MAIN: {"path": "res://sounds and music/main_theme.mp3", "volume_db": -12.0},
 }
 
