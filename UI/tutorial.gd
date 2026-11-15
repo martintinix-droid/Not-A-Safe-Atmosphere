@@ -1,197 +1,236 @@
+
 extends CanvasLayer
-## Quick interactive tutorial. Built entirely in code (no scene needed): ui.gd
-## adds it as a child at startup, like win_screen.gd.
-##
-## Each step shows a short instruction at the top of the screen and waits for
-## the player to actually do it (click the ground, open the inventory, build a
-## generator...). Steps listen to the same SignalManager signals the game uses,
-## so nothing else in the game had to change.
-##
-## While the tutorial runs the 100 second game_time timer is stopped, and the
-## research bar is held at 0 so the tutorial itself can't end the game.
-## When the player finishes it, the game restarts from scratch (fresh
-## inventory, no buildings, full 100 seconds). Skipping just starts the timer.
-## It only appears the first time: "Play Again" does not show it again.
-##
-## To change the tutorial, edit STEPS below.
+## First-run interactive tutorial for Not A Safe Atmosphere.
+## The tutorial pauses the game clock and random-event schedule until the player
+## starts or skips the real game. Completing the tutorial restarts with a clean
+## colony; skipping keeps anything the player has already built.
 
-## Set to false to turn the tutorial off completely.
 const ENABLED := true
+const HIGHLIGHT_COLOR := Color(1.0, 0.85, 0.2)
 
-## "wait" says what finishes the step:
-##   "next"      the Next button
-##   "ground"    click free ground (a rover is sent)
-##   "rock"      click a gatherable rock
-##   "inventory" press the inventory key twice (open + close)
-##   "menu"      press the Building button
-##   "spawn"     pick the building named in "building"
-##   "place"     put the ghost building down
-##   "built"     wait until "count" buildings are finished
-## "highlight" (optional) pulses a border around a UI control.
+## Starter production buildings each cost 8 Basalt Rock + 3 Regolith.
+## Collect enough for one Energy Generator and one Water Generator.
+const STARTER_RESOURCE_REQUIREMENTS := {
+	Resources.BASALT_ROCK: 16,
+	Resources.REGOLITH: 6,
+}
+
+## "wait" controls how a step completes:
+##   "next"      - the player presses Next
+##   "resources" - the inventory reaches the required starting stock
+##   "inventory" - the player opens and closes the inventory
+##   "menu"      - the player opens the Build menu
+##   "spawn"     - the player chooses the named building
+##   "place"     - the selected ghost building is placed
+##   "built"     - the named building finishes construction
+## "highlight" optionally pulses a border around a HUD control.
+
 const STEPS := [
 	{
-		"text": "Welcome to Not A Safe Atmosphere!\n\nYour goal: build a Research Lab and fill the research bar to 100% before the 100 second timer runs out. Let's learn the basics. You can hold the right mouse button and drag to pan the camera, and scroll to zoom.",
+		"text": "Welcome to Not A Safe Atmosphere!\n\nYour mission is to establish a working Martian outpost, construct a Research Lab, and fill the research bar to 100% before the {duration} game timer expires. Energy and Water must stay above zero or the colony is lost.\n\nThis tutorial walks through the opening setup and explains the full production chain.",
 		"wait": "next",
 	},
 	{
-		"text": "Click anywhere on the ground. Your base will send a rover to that spot.",
-		"wait": "ground",
+		"text": "CAMERA AND ROVERS\n\nHold the RIGHT mouse button and drag to pan around the map. Use the mouse wheel to zoom in and out.\n\nLeft-clicking an open area sends a rover to that location and back. Clicking a resource deposit sends a rover to collect it. The base can have up to 3 rovers active at once; additional resource jobs wait until a rover is free.",
+		"wait": "next",
 	},
 	{
-		"text": "Rovers can also gather resources. Click the rock to send a rover to mine it. (Can't see it? Pan the camera around.)",
-		"wait": "rock",
+		"text": "GATHER THE STARTING MATERIALS\n\nFind Basalt Rock and Regolith deposits around the map and left-click them. A rover travels to each deposit, gathers its resources, and returns them to your inventory.\n\nCollect at least 16 Basalt Rock and 6 Regolith. That is enough to build one Energy Generator and one Water Generator. The counters below update as each rover finishes its job.",
+		"wait": "resources",
+		"requirements": STARTER_RESOURCE_REQUIREMENTS,
 	},
 	{
-		"text": "Press {key} to open your inventory and see what you have. Press {key} again to close it.",
+		"text": "CHECK YOUR INVENTORY\n\nPress {key} to open the inventory and review your resource totals. Press {key} again to close it. Resource amounts update automatically as rovers gather materials and buildings produce resources.",
 		"wait": "inventory",
 	},
 	{
-		"text": "Now let's build something. Click the Building button to open the build menu.",
+		"text": "OPEN THE BUILD MENU\n\nClick the Build button to reveal the available production buildings. Hover over a building button to read its material cost before choosing it.",
 		"wait": "menu",
 		"highlight": "building_button",
 	},
 	{
-		"text": "Choose Energy to build an energy generator. Hover over any building button to see its cost; it is paid as soon as you pick it.",
+		"text": "SELECT AN ENERGY GENERATOR\n\nChoose Energy from the build menu. The cost is deducted as soon as you select the building, not when you place it. Hover over the button to review the cost again.",
 		"wait": "spawn",
 		"building": "energy",
 		"highlight": "energy",
 	},
 	{
-		"text": "The building follows your mouse. Green means you can place it, red means something is in the way. Click on a free spot to place it.",
+		"text": "PLACE THE ENERGY GENERATOR\n\nThe building preview follows your mouse. GREEN means the location is clear; RED means it overlaps another object. Move it to an open area and left-click to place it.",
 		"wait": "place",
 	},
 	{
-		"text": "A rover is flying out to construct it. Wait until it turns white: that means it is finished and producing.",
+		"text": "WAIT FOR CONSTRUCTION\n\nAfter placement, the building turns BLUE while it is under construction. A rover travels to it and starts the construction timer when it arrives. Wait until the building turns WHITE; it is now active and producing Energy.",
 		"wait": "built",
-		"count": 1,
+		"building": "energy",
 	},
 	{
-		"text": "Now build the Research Lab. It is how you win, and it costs 50 energy and 50 water. (Reopen the build menu if it closed.)",
+		"text": "SELECT A WATER GENERATOR\n\nChoose Water from the build menu. It also costs 8 Basalt Rock and 3 Regolith. The menu may still be open; otherwise click Build again. The cost is paid immediately when you select it.",
 		"wait": "spawn",
-		"building": "Research Lab",
-		"highlight": "lab",
+		"building": "water",
+		"highlight": "water",
 	},
 	{
-		"text": "Place the Research Lab on a free spot, the same way as before.",
+		"text": "PLACE THE WATER GENERATOR\n\nMove the green building preview to a clear spot and left-click to place it. Avoid overlapping the base, resource deposits, or other buildings.",
 		"wait": "place",
 	},
 	{
-		"text": "Research Labs take longer to build. Wait for the rover to finish it.",
+		"text": "WAIT FOR THE WATER GENERATOR\n\nWait for the rover to finish construction. When the building turns WHITE, it is active. The Energy Generator produces 4 Energy every 2 seconds without upkeep. The Water Generator produces 4 Water every 2 seconds and consumes 1 Energy per cycle.",
 		"wait": "built",
-		"count": 2,
+		"building": "water",
 	},
 	{
-		"text": "Done! Each research tick fills the research bar a little. Fill it to 100% before the timer runs out, or you lose. Labs use energy and water, so keep your generators running. Random events can also shake things up.\n\nPress Start Game to begin for real. The 100 seconds start now!",
+		"text": "UPGRADES AND RANDOM EVENTS\n\nClick the main Base or an active, upgradeable production building to open its upgrade panel. Base upgrades add rover capacity and reduce construction time. Energy, Water, Basalt Rock, and Regolith producers can also be upgraded.\n\nRandom events occur during the game, usually about every 90–120 seconds. The game pauses while an event is on screen. Read each option carefully: its requirements are shown, and some choices can disable or destroy production buildings.",
+		"wait": "next",
+	},
+	{
+		"text": "THE RESOURCE PRODUCTION CHAIN\n\nBuild Basalt Rock and Regolith producers to automate your starting materials. Then expand through the technology chain:\n\nIron Ore → Ice → Titanium and Aluminum\nTitanium + Iron Ore → Nickel\nAluminum + Ice → Sulfur\nNickel + Ice → Gypsum\nSulfur + Gypsum → Soluble Salts\n\nThese resources, together with Energy, Water, Basalt Rock, and Regolith, are required to construct the Research Lab.",
+		"wait": "next",
+	},
+	{
+		"text": "THE RESEARCH LAB\n\nThe current Research Lab construction cost is:\n{lab_cost}\n\nOnce active, the Lab completes a research cycle every 2 seconds. Each cycle adds 0.5% to the research bar and consumes 2 Energy and 3 Water. Keep your generators running and protect your supplies while research progresses.",
+		"wait": "next",
+	},
+	{
+		"text": "YOU ARE READY\n\nWin by filling the research bar to 100% before the {duration} timer runs out. You lose if time expires or Energy or Water reaches zero.\n\nThe tutorial has not kept any of your practice buildings. Press Start Game to begin a fresh colony with the full timer. Good luck on Mars!",
 		"wait": "next",
 		"highlight": "research_bar",
 	},
 ]
 
-const HIGHLIGHT_COLOR := Color(1.0, 0.85, 0.2)
-
-## Remembered between scene reloads (static), so "Play Again" skips the tutorial.
+## Static so Play Again / a tutorial restart does not show it a second time.
 static var already_shown := false
 
-var _ui  # The HUD (ui.gd). Untyped on purpose: we read its @onready buttons.
+var _ui
 var _root: Control
 var _panel: PanelContainer
 var _step_label: Label
 var _text_label: Label
+var _progress_label: Label
 var _next_button: Button
 var _highlight: Panel
 
 var _step := -1
 var _inventory_presses := 0
-var _ghost_seen := false   # The ghost building appeared (so we can tell when it is placed).
-var _place_wait := 0.0     # Time waiting for the ghost to appear (spawn can fail).
+var _ghost_seen := false
+var _place_wait := 0.0
 var _finished := false
 
 
 func _init() -> void:
-	layer = 90  # Above the HUD, below the win/lose screen (100).
+	layer = 90
 
 
 func _ready() -> void:
 	if not ENABLED or already_shown:
 		queue_free()
 		return
+
 	_ui = get_parent()
 	_build()
 
-	SignalManager.ground_clicked.connect(_on_ground_clicked)
-	SignalManager.interactable_clicked.connect(_on_interactable_clicked)
 	SignalManager.inventory_actioned.connect(_on_inventory_actioned)
 	SignalManager.spawn_building.connect(_on_spawn_building)
 	_ui.building_button.pressed.connect(_on_building_button_pressed)
 
-	# main.gd registers itself in NodeRefs AFTER the HUD is ready, so wait a frame.
 	_begin.call_deferred()
 
 
 func _begin() -> void:
 	var main = NodeRefs.main_ref
 	if main != null:
-		main.game_time.stop()  # The 100 seconds start when the tutorial ends.
-	_ui.research_progerss.value = 0  # So the tutorial can't win the game.
+		main.game_time.stop()
+		_set_event_schedule_paused(true)
+
+	if _ui != null and _ui.research_progerss != null:
+		_ui.research_progerss.value = 0
+
 	_go_to(0)
 
 
-# --- UI ---
+# --------------------------------------------------
+# UI
+# --------------------------------------------------
 
 func _build() -> void:
 	_root = Control.new()
 	_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE  # The game stays clickable.
+	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 	if _ui is Control:
 		_root.theme = _ui.theme
+
 	add_child(_root)
 
-	# Pulsing border around the control the current step is about.
 	_highlight = Panel.new()
+
 	var border := StyleBoxFlat.new()
 	border.bg_color = Color(0, 0, 0, 0)
 	border.border_color = HIGHLIGHT_COLOR
 	border.set_border_width_all(4)
 	border.set_corner_radius_all(8)
+
 	_highlight.add_theme_stylebox_override("panel", border)
 	_highlight.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_highlight.hide()
+
 	_root.add_child(_highlight)
+
 	var pulse := create_tween().set_loops()
 	pulse.tween_property(_highlight, "modulate:a", 0.35, 0.5)
 	pulse.tween_property(_highlight, "modulate:a", 1.0, 0.5)
 
-	# Instruction panel, top center.
 	_panel = PanelContainer.new()
+
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.07, 0.08, 0.1, 0.92)
+	style.bg_color = Color(0.07, 0.08, 0.1, 0.94)
 	style.border_color = HIGHLIGHT_COLOR
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(6)
+
 	style.content_margin_left = 24
 	style.content_margin_right = 24
 	style.content_margin_top = 16
 	style.content_margin_bottom = 16
+
 	_panel.add_theme_stylebox_override("panel", style)
-	_panel.custom_minimum_size.x = 640.0
-	_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP, Control.PRESET_MODE_MINSIZE, 24)
+	_panel.custom_minimum_size.x = 700.0
+
+	_panel.set_anchors_and_offsets_preset(
+		Control.PRESET_CENTER_TOP,
+		Control.PRESET_MODE_MINSIZE,
+		24
+	)
+
 	_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	_root.add_child(_panel)
 
 	var box := VBoxContainer.new()
-	box.add_theme_constant_override("separation", 12)
+	box.add_theme_constant_override("separation", 10)
 	_panel.add_child(box)
 
 	_step_label = Label.new()
 	_step_label.add_theme_font_size_override("font_size", 18)
-	_step_label.add_theme_color_override("font_color", HIGHLIGHT_COLOR)
+	_step_label.add_theme_color_override(
+		"font_color",
+		HIGHLIGHT_COLOR
+	)
 	box.add_child(_step_label)
 
 	_text_label = Label.new()
-	_text_label.add_theme_font_size_override("font_size", 24)
+	_text_label.add_theme_font_size_override("font_size", 21)
 	_text_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_text_label.custom_minimum_size.x = 592.0
+	_text_label.custom_minimum_size.x = 652.0
 	box.add_child(_text_label)
+
+	_progress_label = Label.new()
+	_progress_label.add_theme_font_size_override("font_size", 18)
+	_progress_label.add_theme_color_override(
+		"font_color",
+		Color(0.65, 0.9, 1.0)
+	)
+	_progress_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_progress_label.hide()
+	box.add_child(_progress_label)
 
 	var buttons := HBoxContainer.new()
 	box.add_child(buttons)
@@ -211,18 +250,44 @@ func _build() -> void:
 	buttons.add_child(_next_button)
 
 
-# --- Step flow ---
+# --------------------------------------------------
+# Step flow
+# --------------------------------------------------
 
 func _go_to(index: int) -> void:
+	if index < 0 or index >= STEPS.size():
+		return
+
 	_step = index
 	_inventory_presses = 0
 	_ghost_seen = false
 	_place_wait = 0.0
+
 	var data: Dictionary = STEPS[index]
-	_step_label.text = "Tutorial  %d / %d" % [index + 1, STEPS.size()]
-	_text_label.text = String(data["text"]).format({"key": _inventory_key_name()})
+
+	_step_label.text = "Tutorial  %d / %d" % [
+		index + 1,
+		STEPS.size()
+	]
+
+	_text_label.text = String(data["text"]).format({
+		"key": _inventory_key_name(),
+		"duration": _game_duration_text(),
+		"lab_cost": _lab_cost_text(),
+	})
+
+	_progress_label.visible = data["wait"] == "resources"
+
+	if _progress_label.visible:
+		_update_resource_progress()
+
 	_next_button.visible = data["wait"] == "next"
-	_next_button.text = "Start Game" if index == STEPS.size() - 1 else "Next"
+
+	_next_button.text = (
+		"Start Game"
+		if index == STEPS.size() - 1
+		else "Next"
+	)
 
 
 func _advance() -> void:
@@ -231,7 +296,7 @@ func _advance() -> void:
 
 
 func _wait() -> String:
-	return STEPS[_step]["wait"]
+	return String(STEPS[_step]["wait"])
 
 
 func _on_next_pressed() -> void:
@@ -245,43 +310,55 @@ func _on_skip_pressed() -> void:
 	_finish(false)
 
 
-## restart_game = true: fresh game (like "Play Again"). false (skip): keep
-## whatever the player built and just start the timer.
+## restart_game=true: start clean, as with Play Again.
+## restart_game=false: preserve the tutorial session and start its game clock.
+
 func _finish(restart_game: bool) -> void:
 	if _finished:
 		return
+
 	_finished = true
 	already_shown = true
+
 	if restart_game:
 		for child in get_tree().root.get_children():
 			if child is OutpostRover:
 				child.queue_free()
+
 		Inventory.reset()
 		get_tree().reload_current_scene()
+
 	else:
-		NodeRefs.main_ref.game_time.start()
+		_set_event_schedule_paused(false)
+
+		var main = NodeRefs.main_ref
+		if main != null:
+			main.game_time.start()
+
 		queue_free()
 
 
-# --- Detecting what the player did ---
+func _set_event_schedule_paused(paused: bool) -> void:
+	var main = NodeRefs.main_ref
 
-func _on_ground_clicked(_click_position: Vector2) -> void:
-	if _step >= 0 and _wait() == "ground":
-		_advance()
-
-
-func _on_interactable_clicked(target: Node) -> void:
-	if _step < 0 or _wait() != "rock":
+	if main == null:
 		return
-	# Anything clickable that is not the base or a building is a gatherable.
-	if is_instance_valid(target) and target != NodeRefs.base_ref \
-			and not target.is_in_group("buildings"):
-		_advance()
 
+	var event_manager = main.get_node_or_null("Event Manager")
+
+	if event_manager != null \
+			and event_manager.has_method("set_tutorial_active"):
+		event_manager.set_tutorial_active(paused)
+
+
+# --------------------------------------------------
+# Detecting player actions
+# --------------------------------------------------
 
 func _on_inventory_actioned() -> void:
 	if _step >= 0 and _wait() == "inventory":
 		_inventory_presses += 1
+
 		if _inventory_presses >= 2:
 			_advance()
 
@@ -292,54 +369,124 @@ func _on_building_button_pressed() -> void:
 
 
 func _on_spawn_building(building_id: String) -> void:
-	if _step >= 0 and _wait() == "spawn" and building_id == STEPS[_step]["building"]:
+	if _step >= 0 \
+			and _wait() == "spawn" \
+			and building_id == STEPS[_step]["building"]:
 		_advance()
 
 
 func _process(delta: float) -> void:
 	if _step < 0 or _finished:
 		return
+
 	_update_highlight()
+
 	match _wait():
+		"resources":
+			if _update_resource_progress():
+				_advance()
+
 		"place":
 			_check_placing(delta)
+
 		"built":
-			if _active_buildings() >= int(STEPS[_step]["count"]):
+			if _is_building_active(
+				String(STEPS[_step]["building"])
+			):
 				_advance()
 
 
-## The ghost exists while the player is placing it. When it disappears it was
-## placed. If it never shows up, the spawn failed (not enough materials).
+## Updates live material counters and checks requirements.
+
+func _update_resource_progress() -> bool:
+	var requirements: Dictionary = STEPS[_step].get(
+		"requirements",
+		{}
+	)
+
+	var lines: Array[String] = []
+	var complete := true
+
+	for id in requirements:
+		var required: int = int(requirements[id])
+		var current: int = Inventory.get_amount(id)
+
+		lines.append(
+			"%s: %d / %d" % [
+				Resources.display_name(id),
+				current,
+				required
+			]
+		)
+
+		if current < required:
+			complete = false
+
+	_progress_label.text = (
+		"Materials collected\n"
+		+ "     ".join(lines)
+	)
+
+	return complete
+
+
+## Checks whether the selected building has been placed.
+
 func _check_placing(delta: float) -> void:
 	var main = NodeRefs.main_ref
-	var ghost = main.get("_placing_building") if main != null else null
+
+	var ghost = (
+		main.get("_placing_building")
+		if main != null
+		else null
+	)
+
 	if is_instance_valid(ghost):
 		_ghost_seen = true
+
 	elif _ghost_seen:
 		_advance()
+
 	else:
 		_place_wait += delta
+
 		if _place_wait > 0.6:
 			_go_to(_step - 1)
-			_text_label.text = "Not enough materials. Check the cost and try again.\n\n" + _text_label.text
+
+			_text_label.text = (
+				"The building could not be created. "
+				+ "Check the inventory and try again.\n\n"
+				+ _text_label.text
+			)
 
 
-func _active_buildings() -> int:
-	var count := 0
+## Checks whether a building is active.
+
+func _is_building_active(building_id: String) -> bool:
 	for building in get_tree().get_nodes_in_group("buildings"):
-		if building.has_method("is_active") and building.is_active():
-			count += 1
-	return count
+
+		if String(building.get("building_id")) == building_id \
+				and building.has_method("is_active") \
+				and building.is_active():
+
+			return true
+
+	return false
 
 
-# --- Helpers ---
+# --------------------------------------------------
+# UI highlights
+# --------------------------------------------------
 
 func _update_highlight() -> void:
 	var target := _highlight_target()
+
 	if target == null or not target.is_visible_in_tree():
 		_highlight.hide()
 		return
+
 	var rect := target.get_global_rect().grow(6.0)
+
 	_highlight.position = rect.position
 	_highlight.size = rect.size
 	_highlight.show()
@@ -347,23 +494,79 @@ func _update_highlight() -> void:
 
 func _highlight_target() -> Control:
 	match STEPS[_step].get("highlight", ""):
+
 		"building_button":
 			return _ui.building_button
+
 		"energy":
 			return _ui.energy
-		"lab":
-			return _ui.research_lab
+
+		"water":
+			return _ui.water
+
 		"research_bar":
 			return _ui.research_progerss
+
 	return null
 
 
-## Name of the key bound to the "inventory" action (e.g. "Tab").
+# --------------------------------------------------
+# Dynamic game information
+# --------------------------------------------------
+
+## Reads the actual scene timer.
+
+func _game_duration_text() -> String:
+	var main = NodeRefs.main_ref
+	var total_seconds := 900
+
+	if main != null and main.game_time != null:
+		total_seconds = roundi(main.game_time.wait_time)
+
+	var minutes := floori(total_seconds / 60.0)
+	var seconds := total_seconds % 60
+
+	if minutes > 0 and seconds == 0:
+		return "%d minutes" % minutes
+
+	if minutes > 0:
+		return "%d minutes %d seconds" % [
+			minutes,
+			seconds
+		]
+
+	return "%d seconds" % total_seconds
+
+
+## Gets the Research Lab cost directly from the building catalog.
+
+func _lab_cost_text() -> String:
+	var cost: Dictionary = Buildings.DATA["Research Lab"]["materials"]
+
+	var parts: Array[String] = []
+
+	for id in cost:
+		parts.append(
+			"%s: %d" % [
+				Resources.display_name(id),
+				int(cost[id])
+			]
+		)
+
+	return ", ".join(parts)
+
+
+## Gets the inventory key from the Input Map.
+
 func _inventory_key_name() -> String:
 	for event in InputMap.action_get_events("inventory"):
+
 		if event is InputEventKey:
 			var code: Key = event.physical_keycode
+
 			if code == KEY_NONE:
 				code = event.keycode
+
 			return OS.get_keycode_string(code)
+
 	return "the inventory key"
