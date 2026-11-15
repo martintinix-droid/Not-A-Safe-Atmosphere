@@ -2,12 +2,11 @@
 
 [ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="1_2fwl4"]
 [ext_resource type="Script" uid="uid://nfxhy08pqcqs" path="res://UI/ui.gd" id="1_dajm1"]
+[ext_resource type="Texture2D" uid="uid://b7m8p7tlyjg04" path="res://UI/AHiVA1nAhL_z4_SiTPwQTomIBQzRAiV-Q_I70KeQAuGddjU5Zui2k7Ue8_Ov5TZnsxNdaI1mPje-XJHdq-PH3xMxKCx9mPOtX3NtKK5lb8siv3DGFwYwIwLAJdtHPYku2L6dBq4jfoJ_aJpZCHDi6Z1GNjtKpKTltnKTkZIIOFTkQRJmh_Jdmgs1024-rw-removebg-.png" id="3_c7tqi"]
 [ext_resource type="Script" uid="uid://1edswlo0air2" path="res://UI/inventory_display.gd" id="3_e6gg6"]
 [ext_resource type="Theme" uid="uid://eu3hs7he30ds" path="res://UI/inventory_theme.tres" id="3_hat8c"]
 [ext_resource type="Script" uid="uid://c6w7vq1ovsm7" path="res://UI/event_ui.gd" id="5_3sbvi"]
 [ext_resource type="Script" uid="uid://bkg7s7qhjebn8" path="res://UI/upgrade_panel.gd" id="5_nm1m0"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wv4nr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7m7pu"]
 bg_color = Color(2.8878452e-07, 0.58434814, 0.70979893, 1)
@@ -142,12 +141,12 @@ text = "Soluble Salts"
 unique_name_in_owner = true
 self_modulate = Color(1, 1, 1, 0.38431373)
 layout_mode = 0
-offset_left = 40.0
-offset_top = 832.0
-offset_right = 761.0
-offset_bottom = 1315.0
+offset_left = -25.0
+offset_top = 749.0
+offset_right = 862.0
+offset_bottom = 1434.0
 mouse_filter = 0
-texture = SubResource("PlaceholderTexture2D_wv4nr")
+texture = ExtResource("3_c7tqi")
 metadata/_edit_group_ = true
 
 [node name="inventory_display" type="GridContainer" parent="UI/NinePatchRect" unique_id=22789871]
