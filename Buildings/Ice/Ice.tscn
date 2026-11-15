@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://bbsnx2ivayv5r"]
 
-[ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_bclu4"]
+[ext_resource type="Texture2D" uid="uid://dvhij28i1vp78" path="res://building_sprites/blue.png" id="1_bclu4"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_ulggt"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_x0tpy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(1321, 1218.7751)
+size = Vector2(172.9524, 163.23808)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
+scale = Vector2(5.25, 5.25)
 texture = ExtResource("1_bclu4")
 script = ExtResource("2_ulggt")
 resource_id = "Ice"
+popup_theme = ExtResource("3_x0tpy")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true
@@ -20,7 +23,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(-10.5000305, 18.612457)
+position = Vector2(5.523809, -4.3809524)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]

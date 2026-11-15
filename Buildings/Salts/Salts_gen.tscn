@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://de1va0voehns5"]
 
-[ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_1vvfc"]
+[ext_resource type="Texture2D" uid="uid://bgwlqwi2dsra6" path="res://building_sprites/orange.png" id="1_q7qd7"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_hhihc"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_si0rh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(1341, 1277.7751)
+size = Vector2(170.33733, 167.70837)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-texture = ExtResource("1_1vvfc")
+scale = Vector2(5.04, 5.04)
+texture = ExtResource("1_q7qd7")
 script = ExtResource("2_hhihc")
 resource_id = "Soluble Salts"
+popup_theme = ExtResource("3_si0rh")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true
@@ -20,7 +23,8 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(2.4999695, 10.112457)
+position = Vector2(18.105145, 2.3065405)
+scale = Vector2(0.99999964, 0.99999964)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]

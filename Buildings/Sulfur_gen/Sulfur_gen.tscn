@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://5qoyxyo6xm4q"]
 
-[ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_c6n6q"]
+[ext_resource type="Texture2D" uid="uid://bply0utwifbpn" path="res://building_sprites/yellow.png" id="1_djfkh"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_4hsmc"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_0fxss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(1341, 1277.7751)
+size = Vector2(166.87224, 157.1806)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
-texture = ExtResource("1_c6n6q")
+scale = Vector2(5.675, 5.675)
+texture = ExtResource("1_djfkh")
 script = ExtResource("2_4hsmc")
 resource_id = "Sulfur"
+popup_theme = ExtResource("3_0fxss")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true
@@ -20,7 +23,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(2.4999695, 10.112457)
+position = Vector2(7.2246695, -10.92511)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]

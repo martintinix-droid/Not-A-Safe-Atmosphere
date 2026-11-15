@@ -22,12 +22,12 @@ const PLACEHOLDER_DIR := "res://AI place holders (DO NOT IMPLEMENT FOR FINAL)/It
 const SPRITES_DIR := "res://Resources Sprites/"
 ## id -> { "name": UI text, "icon": texture path, "start": starting amount }
 const DATA := {
-	ENERGY: {"name": "Energy", "icon": PLACEHOLDER_DIR + "thunder.jpg", "start": 100},
-	WATER: {"name": "Water", "icon": PLACEHOLDER_DIR + "water.png", "start": 100},
+	ENERGY: {"name": "Energy", "icon": SPRITES_DIR + "energy.png", "start": 100},
+	WATER: {"name": "Water", "icon": SPRITES_DIR + "pani.png", "start": 100},
 	BASALT_ROCK: {"name": "Basalt Rock", "icon": SPRITES_DIR + "basalt.png", "start": 0},
 	REGOLITH: {"name": "Regolith", "icon": SPRITES_DIR + "regolith.png", "start": 0},
 	# Everything below starts at 0 and needs a building to produce it.
-	IRON_ORE: {"name": "Iron Ore", "icon": SPRITES_DIR + "nickel_.png", "start": 0},
+	IRON_ORE: {"name": "Iron Ore", "icon": SPRITES_DIR + "iron_ore.png", "start": 0},
 	ICE: {"name": "Ice", "icon": SPRITES_DIR + "Martian_ice.png", "start": 0},
 	# Volcanic and hydrothermal minerals.
 	TITANIUM: {"name": "Titanium", "icon": SPRITES_DIR + "Titanium_rock.png", "start": 0},
@@ -35,7 +35,7 @@ const DATA := {
 	NICKEL: {"name": "Nickel", "icon": SPRITES_DIR + "nickel_.png", "start":0},
 	SULFUR: {"name": "Sulfur", "icon": SPRITES_DIR + "sulfur.png", "start": 0},
 	GYPSUM: {"name": "Gypsum", "icon": SPRITES_DIR + "Gypsum_Mars.png", "start": 0},
-	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": SPRITES_DIR + "Soluble_Salts.png", "start": 0},
+	SOLUBLE_SALTS: {"name": "Soluble Salts", "icon": SPRITES_DIR + "Soluble_Salts.png", "start":0},
 }
 
 static func ids() -> Array:

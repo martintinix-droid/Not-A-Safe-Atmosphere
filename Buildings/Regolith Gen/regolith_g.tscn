@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_g3btj"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_1cygp"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_d57xf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
 size = Vector2(1359, 1202)
@@ -10,6 +11,7 @@ size = Vector2(1359, 1202)
 texture = ExtResource("1_g3btj")
 script = ExtResource("2_1cygp")
 resource_id = "Regolith"
+popup_theme = ExtResource("3_d57xf")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

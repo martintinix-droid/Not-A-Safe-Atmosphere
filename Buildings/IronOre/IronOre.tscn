@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_8ns43"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_q6crx"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_qicxg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
 size = Vector2(1393, 1196)
@@ -10,6 +11,7 @@ size = Vector2(1393, 1196)
 texture = ExtResource("1_8ns43")
 script = ExtResource("2_q6crx")
 resource_id = "Iron Ore"
+popup_theme = ExtResource("3_qicxg")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

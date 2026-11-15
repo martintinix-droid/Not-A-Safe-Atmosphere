@@ -23,8 +23,8 @@ enum State { GOING_TO_TARGET, INTERACTING_WITH_TARGET, RETURNING_TO_BASE }
 const ARRIVAL_DISTANCE := 3.0
 
 # --- Movement tuning ---
-var max_speed := 300.0
-var acceleration := 10.0       # Speed gained per physics frame while far from the destination.
+var max_speed := 900.0
+var acceleration := 30.0       # Speed gained per physics frame while far from the destination.
 var friction := 40.0           # Speed lost per physics frame while braking.
 var stopping_distance := 50.0  # Starts braking when closer than this to the destination.
 

@@ -32,6 +32,14 @@ const COLOR_DISABLED := Color(0.4, 0.4 ,0.4, 1)
 @export var output := 1
 @export var water_consumed := 1
 @export var energy_used := 1
+## --- Production popup (see production_popup.gd) ---
+@export_group("Production popup")
+## Theme used for the popup text. Assign the same Theme as the rest of the UI.
+@export var popup_theme: Theme
+## Font size in world pixels. 0 = automatic (a fraction of the sprite's height).
+@export var popup_font_size := 0
+@export_group("")
+
 @onready var building_timer: Timer = $building_timer  # Construction duration.
 @onready var timer: Timer = %Timer                    # Production interval.
 @onready var area_2d: Area2D = %Area2D                # Detects overlaps while placing.
@@ -137,9 +145,22 @@ func _on_clicked() -> void:
 
 
 func _on_production_tick() -> void:
-	Inventory.add(resource_id, upgrade.stats["output"])
-	Inventory.substract(Resources.WATER, upgrade.stats["water_consumed"])
-	Inventory.substract(Resources.ENERGY, upgrade.stats["energy_used"])
+	var produced: int = upgrade.stats["output"]
+	var water: int = upgrade.stats["water_consumed"]
+	var energy: int = upgrade.stats["energy_used"]
+	Inventory.add(resource_id, produced)
+	Inventory.substract(Resources.WATER, water)
+	Inventory.substract(Resources.ENERGY, energy)
+	_show_production_popup(produced, water, energy)
+
+
+## "+N" for what it produced and a red "-N" for each resource it consumed.
+func _show_production_popup(produced: int, water: int, energy: int) -> void:
+	ProductionPopup.spawn(self, [
+		{"id": resource_id, "amount": produced},
+		{"id": Resources.WATER, "amount": -water},
+		{"id": Resources.ENERGY, "amount": -energy},
+	], popup_theme, popup_font_size)
 
 
 func _on_state_changed() -> void:

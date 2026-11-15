@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_0adbq"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_r1fyv"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_6hwbl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
 size = Vector2(1408.4724, 1230.7751)
@@ -10,6 +11,7 @@ size = Vector2(1408.4724, 1230.7751)
 texture = ExtResource("1_0adbq")
 script = ExtResource("2_r1fyv")
 resource_id = "Nickel"
+popup_theme = ExtResource("3_6hwbl")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true

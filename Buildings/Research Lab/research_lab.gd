@@ -31,6 +31,14 @@ const COLOR_DISABLED := Color(0.4, 0.4 ,0.4, 1)
 @export var resource_id := Resources.ENERGY
 @export var water_consumed := 1
 @export var energy_used := 1
+## --- Production popup (see production_popup.gd) ---
+@export_group("Production popup")
+## Theme used for the popup text. Assign the same Theme as the rest of the UI.
+@export var popup_theme: Theme
+## Font size in world pixels. 0 = automatic (a fraction of the sprite's height).
+@export var popup_font_size := 0
+@export_group("")
+
 @onready var building_timer: Timer = $building_timer  # Construction duration.
 @onready var timer: Timer = %Timer                    # Production interval.
 @onready var area_2d: Area2D = %Area2D                # Detects overlaps while placing.
@@ -139,6 +147,11 @@ func _on_production_tick() -> void:
 	SignalManager.research_done.emit()
 	Inventory.substract(Resources.WATER, water_consumed)
 	Inventory.substract(Resources.ENERGY, energy_used)
+	# The lab produces no resource: it only shows what it consumes (red "-N").
+	ProductionPopup.spawn(self, [
+		{"id": Resources.WATER, "amount": -water_consumed},
+		{"id": Resources.ENERGY, "amount": -energy_used},
+	], popup_theme, popup_font_size)
 
 func _on_object_entered(_object: Node) -> void:
 	overlap_count += 1

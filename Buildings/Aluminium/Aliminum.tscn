@@ -2,14 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://dqcdhlnj8xw81" path="res://building_sprites/mining.png" id="1_bpee3"]
 [ext_resource type="Script" uid="uid://bjvqv20kx6qco" path="res://Buildings/generator.gd" id="2_l4tji"]
+[ext_resource type="Theme" uid="uid://pwebyi8hkqss" path="res://UI/main_theme.tres" id="3_v8ukg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2m5a4"]
-size = Vector2(1346, 1239.7751)
+size = Vector2(853, 1042)
 
 [node name="Generator" type="Sprite2D" unique_id=1520271605]
 texture = ExtResource("1_bpee3")
 script = ExtResource("2_l4tji")
 resource_id = "Aluminum"
+popup_theme = ExtResource("3_v8ukg")
 
 [node name="Timer" type="Timer" parent="." unique_id=1618890997]
 unique_name_in_owner = true
@@ -20,7 +22,7 @@ autostart = true
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1009359081]
-position = Vector2(4.9999695, 6.1124573)
+position = Vector2(107.499985, -40.999985)
 shape = SubResource("RectangleShape2D_2m5a4")
 
 [node name="building_timer" type="Timer" parent="." unique_id=1445649432]
