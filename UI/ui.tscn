@@ -42,6 +42,7 @@ text = "Build"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI" unique_id=1125389659]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -235,7 +236,6 @@ theme_override_font_sizes/font_size = 22
 text = "Time left xx:xx"
 
 [node name="Event UI" type="Control" parent="." unique_id=2079854680]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

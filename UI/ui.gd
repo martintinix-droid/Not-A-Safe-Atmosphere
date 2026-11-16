@@ -72,6 +72,11 @@ var _h_box_container_start_pos: Vector2
 
 var _current_building_tween: Tween
 
+## Card with the cost of the building under the mouse (see building_cost_card.gd).
+var _cost_card: BuildingCostCard
+## building id -> whether the player can pay for it now (to recolor buttons only on change).
+var _affordable := {}
+
 ## True once the research bar hit 100% (so the win is only announced once).
 var _game_won := false
 
@@ -108,10 +113,22 @@ func _setup_building_panel() -> void:
 
 	building_button.pressed.connect(_swap_building_ui)
 	back_button.pressed.connect(_reset_building_ui)
+
+	_cost_card = BuildingCostCard.new()
+	add_child(_cost_card)
+	_cost_card.setup(building_button.get_theme_font_size("font_size"))
+	# If the panel closes while the mouse is over a button, don't leave the card behind.
+	h_box_container.visibility_changed.connect(_on_building_panel_visibility_changed)
+
 	for building_id in _building_buttons:
 		var button: Button = _building_buttons[building_id]
 		button.pressed.connect(_request_building.bind(building_id))
-		button.tooltip_text = _get_cost_tooltip(building_id)
+		button.mouse_entered.connect(_show_cost_card.bind(building_id))
+		button.mouse_exited.connect(_cost_card.hide_card)
+
+	# Buttons turn red while their building is not affordable.
+	Inventory.changed.connect(func(_id: String, _amount: int) -> void: _refresh_affordability())
+	_refresh_affordability()
 
 
 func _setup_inventory_panel() -> void:
@@ -134,13 +151,26 @@ func _request_building(building_id: String) -> void:
 	SignalManager.spawn_building.emit(building_id)
 
 
-## Tooltip text for a building button: one "resource: amount" line per material it costs.
-func _get_cost_tooltip(building_id: String) -> String:
-	var lines: Array[String] = []
-	var cost: Dictionary = Buildings.DATA[building_id]["materials"]
-	for id in cost:
-		lines.append("%s: %d" % [id, cost[id]])
-	return "\n".join(lines)
+func _show_cost_card(building_id: String) -> void:
+	var button: Button = _building_buttons[building_id]
+	_cost_card.show_for(building_id, button.text, h_box_container)
+
+
+func _on_building_panel_visibility_changed() -> void:
+	if not h_box_container.visible:
+		_cost_card.hide_card()
+
+
+## Colors a building's button red while the Inventory can't pay its cost.
+func _refresh_affordability() -> void:
+	for building_id in _building_buttons:
+		if not Buildings.DATA.has(building_id):
+			continue
+		var affordable := Inventory.can_afford(Buildings.DATA[building_id]["materials"])
+		if _affordable.get(building_id) == affordable:
+			continue  # Nothing changed for this button.
+		_affordable[building_id] = affordable
+		BuildingCostCard.mark_button(_building_buttons[building_id], affordable)
 
 
 ## Slides building_button out and h_box_container in.
