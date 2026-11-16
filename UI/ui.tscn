@@ -31,10 +31,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -176.0
-offset_top = -96.0
-offset_right = -67.0
-offset_bottom = -33.0
+offset_left = -181.0
+offset_top = -214.0
+offset_right = -72.0
+offset_bottom = -151.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("1_2fwl4")
@@ -42,7 +42,6 @@ text = "Build"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI" unique_id=1125389659]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -76,16 +75,16 @@ layout_mode = 2
 theme = ExtResource("1_2fwl4")
 text = "Energy"
 
+[node name="water" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=117816619]
+layout_mode = 2
+theme = ExtResource("1_2fwl4")
+text = "Water"
+
 [node name="Basatl Rock" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=883965661]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_2fwl4")
 text = "Basalt Rock"
-
-[node name="water" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=117816619]
-layout_mode = 2
-theme = ExtResource("1_2fwl4")
-text = "Water"
 
 [node name="Regolith" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1967586162]
 unique_name_in_owner = true
@@ -101,11 +100,6 @@ text = "Iron"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Ice"
-
-[node name="Research Lab" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1540089333]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Research Lab"
 
 [node name="Titanium" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1177610617]
 unique_name_in_owner = true
@@ -136,6 +130,11 @@ text = "Gypsum"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Soluble Salts"
+
+[node name="Research Lab" type="Button" parent="UI/HBoxContainer/VBoxContainer" unique_id=1540089333]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Research Lab"
 
 [node name="NinePatchRect" type="NinePatchRect" parent="UI" unique_id=1318165581]
 unique_name_in_owner = true
@@ -172,10 +171,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -208.0
-offset_top = 11.0
-offset_right = -69.0
-offset_bottom = 33.0
+offset_left = -427.0
+offset_top = 12.0
+offset_right = -288.0
+offset_bottom = 34.0
 grow_horizontal = 0
 theme_override_styles/fill = SubResource("StyleBoxFlat_7m7pu")
 
@@ -218,24 +217,25 @@ text = "Close"
 
 [node name="Label" type="Label" parent="UI" unique_id=2125276044]
 layout_mode = 0
-offset_left = 1581.0
-offset_top = 6.0
-offset_right = 1694.0
-offset_bottom = 36.0
+offset_left = 1380.0
+offset_top = 8.0
+offset_right = 1493.0
+offset_bottom = 38.0
 theme_override_font_sizes/font_size = 25
 text = "Research:"
 
 [node name="Countdown" type="Label" parent="UI" unique_id=1964390860]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 1581.0
-offset_top = 38.0
-offset_right = 1746.0
-offset_bottom = 62.0
+offset_left = 1380.0
+offset_top = 34.0
+offset_right = 1545.0
+offset_bottom = 58.0
 theme_override_font_sizes/font_size = 22
 text = "Time left xx:xx"
 
 [node name="Event UI" type="Control" parent="." unique_id=2079854680]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
