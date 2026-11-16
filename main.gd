@@ -11,16 +11,18 @@ extends Node2D
 
 ## Group that every clickable node joins (see generator.gd and ground_resource.gd).
 const INTERACTABLE_GROUP := "interactables"
-## 100 second countdown. Normally it is a Timer node named "game_time" in
-## main.tscn; if the scene doesn't have one, _ready() creates it in code.
+## Countdown selected on the start screen. The timer is configured here and
+## starts only after the tutorial (if shown) or after duration confirmation.
 @onready var game_time: Timer = get_node_or_null("%game_time")
-const GAME_TIME_SECONDS := 100.0
 
 ## Running out of any of these resources (reaching 0) loses the game.
 const CRITICAL_RESOURCES := ["energy", "water"]
 
 ## True once the game was lost, so game_lost is only emitted once.
 var _game_over := false
+## False during the duration screen and tutorial, so the HUD shows the selected
+## full duration instead of 0:00 while the countdown is intentionally stopped.
+var _game_started := false
 
 ## Building currently in "ghost" mode (spawned but not placed yet), if any.
 ## Prevents spawning a second building before the first one is placed, and
@@ -34,10 +36,11 @@ func _ready() -> void:
 	if game_time == null:
 		game_time = Timer.new()
 		game_time.name = "game_time"
-		game_time.wait_time = GAME_TIME_SECONDS
-		game_time.one_shot = true
 		add_child(game_time)
-		game_time.start()
+	game_time.one_shot = true
+	game_time.autostart = false
+	game_time.wait_time = GameSettings.selected_duration_seconds
+	game_time.stop()
 	game_time.timeout.connect(_lose_game)
 	Inventory.changed.connect(_on_inventory_changed)
 	_validate_resource_ids()
@@ -47,10 +50,21 @@ var _last_seconds_left := -1  # -1 so the first frame always emits
 
 func _process(_delta: float) -> void:
 	# ceili: the label shows 0:01 until the very end, never 0:00 too early.
-	var seconds_left := ceili(game_time.time_left)
+	var seconds_left := ceili(game_time.time_left) if _game_started else GameSettings.selected_duration_seconds
 	if seconds_left != _last_seconds_left:
 		_last_seconds_left = seconds_left
 		SignalManager.time_left_changed.emit(seconds_left)
+
+
+## Starts the selected countdown after the duration screen and tutorial are done.
+func start_game_timer() -> void:
+	if _game_over or game_time == null:
+		return
+	_game_started = true
+	game_time.stop()
+	game_time.wait_time = GameSettings.selected_duration_seconds
+	game_time.start()
+	_last_seconds_left = -1
 
 
 ## Energy or water reached 0: the outpost can't survive, so the game is lost.
