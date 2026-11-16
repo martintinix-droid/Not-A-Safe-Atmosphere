@@ -319,8 +319,12 @@ func _finish(restart_game: bool) -> void:
 
 	_finished = true
 	already_shown = true
+	GameSettings.tutorial_completed = true
 
 	if restart_game:
+		# This reload clears the tutorial's practice colony. Keep the chosen
+		# duration and bypass the selector for this one internal reload.
+		GameSettings.skip_duration_selection_once = true
 		for child in get_tree().root.get_children():
 			if child is OutpostRover:
 				child.queue_free()
@@ -333,7 +337,7 @@ func _finish(restart_game: bool) -> void:
 
 		var main = NodeRefs.main_ref
 		if main != null:
-			main.game_time.start()
+			main.start_game_timer()
 
 		queue_free()
 
