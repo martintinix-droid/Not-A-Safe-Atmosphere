@@ -17,6 +17,8 @@ const SWAP_DURATION := 0.5
 const WIN_SCREEN := preload("res://UI/win_screen.gd")
 ## Interactive tutorial, shown the first time the game starts (see tutorial.gd).
 const TUTORIAL := preload("res://UI/tutorial.gd")
+## Mission duration selection shown before each new run.
+const DURATION_SELECTION := preload("res://UI/duration_selection.gd")
 
 
 # --- Node references ---
@@ -104,7 +106,39 @@ func _ready() -> void:
 	SignalManager.research_done.connect(increase_research)
 	SignalManager.time_left_changed.connect(_on_time_left_changed)
 	add_child(WIN_SCREEN.new())  # Hidden until SignalManager.game_won is emitted.
-	add_child(TUTORIAL.new())    # Only shows the first time the game starts.
+	# Defer until main.gd has assigned NodeRefs.main_ref and configured its timer.
+	_show_initial_start_screen.call_deferred()
+
+
+func _show_initial_start_screen() -> void:
+	# Tutorial completion reloads the scene once to remove practice buildings.
+	# That internal reload should start the selected-length run directly, while
+	# every actual Play Again reload returns to the duration selector.
+	if GameSettings.consume_skip_duration_selection_once():
+		get_tree().paused = false
+		var main = NodeRefs.main_ref
+		if main != null:
+			main.start_game_timer()
+		return
+
+	var selector = DURATION_SELECTION.new()
+	selector.duration_selected.connect(_on_duration_selected)
+	add_child(selector)
+
+
+func _on_duration_selected(duration_seconds: int) -> void:
+	if not GameSettings.set_duration_seconds(duration_seconds):
+		return
+	get_tree().paused = false
+
+	# The tutorial is shown on the first run only. Later runs start immediately
+	# with the newly selected duration.
+	if GameSettings.tutorial_completed:
+		var main = NodeRefs.main_ref
+		if main != null:
+			main.start_game_timer()
+	else:
+		add_child(TUTORIAL.new())
 
 
 func _setup_building_panel() -> void:
