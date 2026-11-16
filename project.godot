@@ -25,6 +25,7 @@ SignalManager="*uid://ckh5uvym6baxn"
 NodeRefs="*uid://daqeb83dm6076"
 Inventory="*uid://hwylbhp724qj"
 AudioManager="*uid://cbxibldstcecv"
+GameSettings="*res://GameSettings.gd"
 
 [display]
 
