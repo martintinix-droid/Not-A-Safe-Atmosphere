@@ -7,7 +7,7 @@ extends CanvasLayer
 ## When shown it PAUSES the whole game (rovers, generators, timers, events)
 ## and only this screen keeps running (process_mode = Always).
 ## "Play Again" restarts the entire game: resources back to the start, rovers
-## removed, main scene reloaded (research bar, buildings, events all reset).
+## removed, and the main scene reloads to show the duration selector again.
 
 const TITLE_TEXT := "You Win!"
 const MESSAGE_TEXT := "Thank you for playing our game!"
@@ -102,7 +102,7 @@ func _on_game_won() -> void:
 
 
 ## The game was lost: freeze it and show "You Lose!" with the reason (the
-## 100 second timer ran out, or energy / water hit 0).
+## selected mission timer ran out, or energy / water hit 0).
 func _on_game_lost() -> void:
 	var message := LOSE_MESSAGE_TEXT
 	if Inventory.get_amount("energy") <= 0:
